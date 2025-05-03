@@ -92,7 +92,7 @@ class WisataController extends Controller
     public function show(Wisata $wisata)
     {
         // Muat relasi
-        $wisata->load(['pemilik', 'kategori', 'gambar', 'ulasan']);
+        $wisata->load(['pemilik', 'kategori', 'gambar', 'ulasan.pengguna']);
         return view('admin.wisata.show', compact('wisata'));
     }
 
