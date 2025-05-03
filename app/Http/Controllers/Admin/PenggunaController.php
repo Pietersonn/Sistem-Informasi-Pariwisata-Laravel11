@@ -89,8 +89,7 @@ class PenggunaController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin.pengguna.index')
-            ->with('success', 'Pengguna berhasil ditambahkan');
+        return redirect()->route('admin.pengguna.index');
     }
 
     public function show(User $pengguna)
@@ -149,8 +148,7 @@ class PenggunaController extends Controller
 
         $pengguna->save();
 
-        return redirect()->route('admin.pengguna.index')
-            ->with('success', 'Pengguna berhasil diperbarui');
+        return redirect()->route('admin.pengguna.index');
     }
 
     public function destroy(User $pengguna)
@@ -198,7 +196,6 @@ class PenggunaController extends Controller
         // Hapus pengguna
         $pengguna->delete();
 
-        return redirect()->route('admin.pengguna.index')
-            ->with('success', 'Pengguna berhasil dihapus');
+        return redirect()->route('admin.pengguna.index');
     }
 }

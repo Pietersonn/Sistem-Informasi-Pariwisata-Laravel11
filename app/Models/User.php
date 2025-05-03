@@ -6,6 +6,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+
 use Illuminate\Support\Str;
 
 class User extends Authenticatable
@@ -15,15 +18,15 @@ class User extends Authenticatable
     protected $table = 'users';
 
     protected $fillable = [
-        'name', 
-        'email', 
-        'password', 
-        'foto_profil', 
+        'name',
+        'email',
+        'password',
+        'foto_profil',
         'role'
     ];
 
     protected $hidden = [
-        'password', 
+        'password',
         'remember_token'
     ];
 
@@ -66,9 +69,11 @@ class User extends Authenticatable
     // Accessor untuk URL foto profil
     public function getFotoProfilUrlAttribute()
     {
-        return $this->foto_profil && $this->foto_profil != 'default.jpg'
-            ? asset('storage/' . $this->foto_profil) 
-            : asset('assets/img/default-avatar.png');
+        if ($this->foto_profil && $this->foto_profil != 'default.jpg') {
+            return Storage::url($this->foto_profil);
+        }
+
+         return '../assets/img/profil.jpg';
     }
 
     // Cek role
