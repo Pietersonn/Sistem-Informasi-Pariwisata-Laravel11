@@ -22,9 +22,10 @@
                         <div class="card">
                             <div class="card-body text-center">
                                 <img src="{{ $pengguna->foto_profil_url }}" class="rounded-circle img-fluid"
-                                    style="max-width: 200px;" alt="{{ $pengguna->nama }}">
-                                <h4 class="mt-3">{{ $pengguna->nama }}</h4>
+                                    style="max-width: 200px;" alt="{{ $pengguna->name }}">
+                                <h4 class="mt-3">{{ $pengguna->name }}</h4>
                                 <p class="text-muted">{{ $pengguna->email }}</p>
+
                                 <div class="mb-2">
                                     <span
                                         class="badge 
@@ -78,6 +79,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Nama Wisata</th>
+                                                        <th>Kategori</th>
                                                         <th>Status</th>
                                                         <th>Aksi</th>
                                                     </tr>
@@ -87,9 +89,16 @@
                                                         <tr>
                                                             <td>{{ $wisata->nama }}</td>
                                                             <td>
+                                                                @foreach ($wisata->kategori as $kategori)
+                                                                    <span class="badge bg-primary me-1">
+                                                                        {{ $kategori->nama }}
+                                                                    </span>
+                                                                @endforeach
+                                                            </td>
+                                                            <td>
                                                                 <span
                                                                     class="badge 
-                                                        {{ $wisata->status == 'aktif' ? 'bg-success' : ($wisata->status == 'nonaktif' ? 'bg-secondary' : 'bg-warning') }}">
+                                                                {{ $wisata->status == 'aktif' ? 'bg-success' : ($wisata->status == 'nonaktif' ? 'bg-secondary' : 'bg-warning') }}">
                                                                     {{ ucfirst($wisata->status) }}
                                                                 </span>
                                                             </td>
@@ -125,13 +134,18 @@
                                                     <th>Rating</th>
                                                     <th>Komentar</th>
                                                     <th>Tanggal</th>
-                                                    <th>Aksi</th>
+                                                    <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($pengguna->ulasan as $ulasan)
                                                     <tr>
-                                                        <td>{{ $ulasan->wisata->nama }}</td>
+                                                        <td>
+                                                            <a
+                                                                href="{{ route('admin.wisata.show', $ulasan->wisata->id) }}">
+                                                                {{ $ulasan->wisata->nama }}
+                                                            </a>
+                                                        </td>
                                                         <td>
                                                             @for ($i = 1; $i <= 5; $i++)
                                                                 <i
@@ -141,10 +155,15 @@
                                                         <td>{{ Str::limit($ulasan->komentar, 50) }}</td>
                                                         <td>{{ $ulasan->created_at->format('d M Y') }}</td>
                                                         <td>
-                                                            <a href="{{ route('admin.ulasan.show', $ulasan->id) }}"
-                                                                class="btn btn-info btn-sm">
-                                                                <i class="fas fa-eye"></i>
-                                                            </a>
+                                                            <span
+                                                                class="badge 
+                                                            {{ $ulasan->status == 'ditampilkan'
+                                                                ? 'bg-success'
+                                                                : ($ulasan->status == 'disembunyikan'
+                                                                    ? 'bg-secondary'
+                                                                    : 'bg-warning') }}">
+                                                                {{ ucfirst(str_replace('_', ' ', $ulasan->status)) }}
+                                                            </span>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -207,3 +226,20 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        // Optional: Tambahkan interaksi atau fungsi tambahan jika diperlukan
+        document.addEventListener('DOMContentLoaded', function() {
+            // Contoh: Konfirmasi sebelum menghapus
+            const deleteButtons = document.querySelectorAll('.btn-delete');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    if (!confirm('Yakin ingin menghapus data ini?')) {
+                        e.preventDefault();
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
