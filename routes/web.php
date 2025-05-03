@@ -7,6 +7,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\Admin\WisataController;
+use App\Http\Controllers\Admin\KategoriWisataController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -38,12 +39,15 @@ Route::group(['middleware' => 'auth', 'role:admin'], function () {
 		return view('tables');
 	})->name('tables');
 
+
+
 	Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/wisata', [WisataController::class, 'index'])->name('wisata.index');
-    });
+		Route::get('/wisata', [WisataController::class, 'index'])->name('wisata.index');
+		Route::get('/wisata', [WisataController::class, 'create'])->name('wisata.create'); // Menambahkan route create
+	});
+	
 
-
-
+	
 
     Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/user-profile', [InfoUserController::class, 'create']);

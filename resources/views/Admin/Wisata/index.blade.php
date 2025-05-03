@@ -8,7 +8,7 @@
                 <h6>Daftar Wisata</h6>
                 <a href="{{ route('admin.wisata.create') }}" class="btn bg-gradient-primary btn-sm">
                     Tambah Wisata Baru
-                </a>
+                </a>                
             </div>
             
             {{-- Filter dan Pencarian --}}
