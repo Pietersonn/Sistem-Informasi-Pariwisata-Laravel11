@@ -46,8 +46,9 @@ class WisataController extends Controller
 
     public function create()
     {
-        $kategori = KategoriWisata::all(); // Mengambil semua kategori
-        return view('admin.wisata.create', compact('kategori')); 
+        // Ambil kategori untuk dropdown
+        $kategori = KategoriWisata::all();
+        return view('Admin.Wisata.create', compact('kategori'));
     }
 
     public function store(Request $request)
