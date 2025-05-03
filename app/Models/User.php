@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
-
 use Illuminate\Support\Str;
 
 class User extends Authenticatable
@@ -33,6 +32,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
     // Definisi konstanta role
     public const ROLE_ADMIN = 'admin';
     public const ROLE_PEMILIK_WISATA = 'pemilik_wisata';
@@ -66,14 +66,41 @@ class User extends Authenticatable
         }
     }
 
-    // Accessor untuk URL foto profil
+    // Accessor untuk URL foto profil yang lebih robust
     public function getFotoProfilUrlAttribute()
     {
-        if ($this->foto_profil && $this->foto_profil != 'default.jpg') {
-            return Storage::url($this->foto_profil);
+        // Jika foto profil tidak ada atau default
+        if (empty($this->foto_profil) || $this->foto_profil == 'default.jpg') {
+            return asset('assets/img/profil.jpg');
         }
 
-         return '../assets/img/profil.jpg';
+        // Coba beberapa kemungkinan path
+        $potentialPaths = [
+            // 1. Path dengan public/ prefix (untuk file di public/uploads)
+            $this->foto_profil,
+
+            // 2. Path dengan storage/ prefix (untuk file yang melalui symbolic link)
+            'storage/' . $this->foto_profil,
+
+            // 3. Path langsung ke direktori profil
+            'storage/profil/' . basename($this->foto_profil),
+
+            // 4. Path ke uploads/profil (jika disimpan langsung ke public)
+            'uploads/profil/' . basename($this->foto_profil)
+        ];
+
+        // Periksa jika file secara fisik ada di server
+        foreach ($potentialPaths as $path) {
+            if (file_exists(public_path($path))) {
+                return asset($path);
+            }
+        }
+
+        // Log jika tidak menemukan file
+        Log::warning("Foto profil tidak ditemukan untuk user {$this->id}: {$this->foto_profil}");
+
+        // Default fallback
+        return asset('assets/img/profil.jpg');
     }
 
     // Cek role
