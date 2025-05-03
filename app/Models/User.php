@@ -30,7 +30,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
     // Definisi konstanta role
     public const ROLE_ADMIN = 'admin';
     public const ROLE_PEMILIK_WISATA = 'pemilik_wisata';
@@ -54,18 +53,22 @@ class User extends Authenticatable
         return $this->hasMany(Favorit::class, 'id_pengguna');
     }
 
-    // Mutator untuk enkripsi password
     public function setPasswordAttribute($value)
     {
-        $this->attributes['password'] = Hash::make($value);
+        // Hanya hash password jika belum di-hash
+        if ($value && !preg_match('/^\$2y\$/', $value)) {
+            $this->attributes['password'] = Hash::make($value);
+        } else {
+            $this->attributes['password'] = $value;
+        }
     }
 
     // Accessor untuk URL foto profil
     public function getFotoProfilUrlAttribute()
     {
-        return $this->foto_profil 
+        return $this->foto_profil && $this->foto_profil != 'default.jpg'
             ? asset('storage/' . $this->foto_profil) 
-            : asset('images/default-avatar.png');
+            : asset('assets/img/default-avatar.png');
     }
 
     // Cek role

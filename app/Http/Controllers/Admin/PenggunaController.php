@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Wisata;
+use App\Models\Ulasan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -29,9 +31,9 @@ class PenggunaController extends Controller
 
         // Filter berdasarkan pencarian
         if ($request->filled('search')) {
-            $query->where(function($q) use ($request) {
+            $query->where(function ($q) use ($request) {
                 $q->where('name', 'like', '%' . $request->search . '%')
-                  ->orWhere('email', 'like', '%' . $request->search . '%');
+                    ->orWhere('email', 'like', '%' . $request->search . '%');
             });
         }
 
@@ -70,8 +72,12 @@ class PenggunaController extends Controller
 
         // Buat pengguna baru
         $user = new User();
-        $user->fill($validasi);
-        $user->password = $validasi['password'];
+        $user->fill([
+            'name' => $validasi['name'],
+            'email' => $validasi['email'],
+            'password' => $validasi['password'], // Hash via mutator
+            'role' => $validasi['role']
+        ]);
 
         // Proses upload foto profil
         if ($request->hasFile('foto_profil')) {
@@ -109,8 +115,8 @@ class PenggunaController extends Controller
         $validasi = $request->validate([
             'name' => 'required|max:255',
             'email' => [
-                'required', 
-                'email', 
+                'required',
+                'email',
                 Rule::unique('users', 'email')->ignore($pengguna->id)
             ],
             'password' => 'nullable|min:8|confirmed',
@@ -119,7 +125,9 @@ class PenggunaController extends Controller
         ]);
 
         // Update data pengguna
-        $pengguna->fill($validasi);
+        $pengguna->name = $validasi['name'];
+        $pengguna->email = $validasi['email'];
+        $pengguna->role = $validasi['role'];
 
         // Update password jika diisi
         if ($request->filled('password')) {
@@ -152,10 +160,40 @@ class PenggunaController extends Controller
             Storage::delete('public/' . $pengguna->foto_profil);
         }
 
-        // Hapus relasi
-        $pengguna->ulasan()->delete();
-        $pengguna->favorit()->delete();
-        $pengguna->wisata()->delete();
+        // Periksa dan hapus relasi
+        if ($pengguna->ulasan()->count() > 0) {
+            $pengguna->ulasan()->delete();
+        }
+
+        if ($pengguna->favorit()->count() > 0) {
+            $pengguna->favorit()->delete();
+        }
+
+        if ($pengguna->wisata()->count() > 0) {
+            // Untuk setiap wisata, tangani dependensi
+            foreach ($pengguna->wisata as $wisata) {
+                // Hapus relasi kategori
+                $wisata->kategori()->detach();
+
+                // Hapus gambar wisata
+                foreach ($wisata->gambar as $gambar) {
+                    Storage::delete('public/' . $gambar->file_gambar);
+                    $gambar->delete();
+                }
+
+                // Hapus event wisata
+                $wisata->event()->delete();
+
+                // Hapus ulasan untuk wisata ini
+                $wisata->ulasan()->delete();
+
+                // Hapus favorit untuk wisata ini
+                $wisata->favorit()->delete();
+            }
+
+            // Hapus wisata
+            $pengguna->wisata()->delete();
+        }
 
         // Hapus pengguna
         $pengguna->delete();

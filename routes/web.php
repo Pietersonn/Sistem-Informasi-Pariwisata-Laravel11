@@ -11,7 +11,6 @@ use App\Http\Controllers\Admin\KategoriWisataController;
 use App\Http\Controllers\Admin\UlasanController;
 use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\LaporanController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use Illuminate\Http\Request;
@@ -28,7 +27,6 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
     Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
     Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 // Route untuk user yang sudah login dan memiliki role admin
@@ -40,6 +38,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('profile', function () {
         return view('profile');
     })->name('profile');
+    Route::get('tables', function () {
+        return view('tables');
+    })->name('tables');
     Route::get('/logout', [SessionsController::class, 'destroy']);
     Route::get('/user-profile', [InfoUserController::class, 'create']);
     Route::post('/user-profile', [InfoUserController::class, 'store']);
