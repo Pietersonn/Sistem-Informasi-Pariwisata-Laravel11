@@ -203,6 +203,87 @@ class PenggunaController extends Controller
         return redirect()->route('admin.pengguna.index')->with('success', 'Pengguna berhasil diperbarui');
     }
 
+    // Add this method to your PenggunaController class
+private function resizeImage($file, $uploadPath, $namaFile, $width = 300, $height = 300)
+{
+    // Get image info
+    list($origWidth, $origHeight, $type) = getimagesize($file->getRealPath());
+    
+    // Create new image with desired dimensions
+    $newImage = imagecreatetruecolor($width, $height);
+    
+    // Create source image based on file type
+    switch ($type) {
+        case IMAGETYPE_JPEG:
+            $sourceImage = imagecreatefromjpeg($file->getRealPath());
+            break;
+        case IMAGETYPE_PNG:
+            $sourceImage = imagecreatefrompng($file->getRealPath());
+            // Preserve transparency for PNG
+            imagealphablending($newImage, false);
+            imagesavealpha($newImage, true);
+            $transparent = imagecolorallocatealpha($newImage, 255, 255, 255, 127);
+            imagefilledrectangle($newImage, 0, 0, $width, $height, $transparent);
+            break;
+        case IMAGETYPE_GIF:
+            $sourceImage = imagecreatefromgif($file->getRealPath());
+            break;
+        default:
+            // For unsupported types, just move the file without resizing
+            $file->move($uploadPath, $namaFile);
+            return 'uploads/profil/' . $namaFile;
+    }
+    
+    // Calculate dimensions to maintain aspect ratio and cover the area
+    $sourceRatio = $origWidth / $origHeight;
+    $targetRatio = $width / $height;
+    
+    if ($sourceRatio > $targetRatio) {
+        // Source image is wider
+        $newWidth = $origWidth * ($height / $origHeight);
+        $newHeight = $height;
+        $srcX = ($origWidth - ($origHeight * $targetRatio)) / 2;
+        $srcY = 0;
+        $srcWidth = $origWidth - (2 * $srcX);
+        $srcHeight = $origHeight;
+    } else {
+        // Source image is taller
+        $newWidth = $width;
+        $newHeight = $origHeight * ($width / $origWidth);
+        $srcX = 0;
+        $srcY = ($origHeight - ($origWidth / $targetRatio)) / 2;
+        $srcWidth = $origWidth;
+        $srcHeight = $origHeight - (2 * $srcY);
+    }
+    
+    // Perform resizing with cropping to make square images
+    imagecopyresampled(
+        $newImage, $sourceImage,
+        0, 0, $srcX, $srcY,
+        $width, $height, $srcWidth, $srcHeight
+    );
+    
+    // Save the resized image
+    $filepath = $uploadPath . '/' . $namaFile;
+    switch ($type) {
+        case IMAGETYPE_JPEG:
+            imagejpeg($newImage, $filepath, 90);
+            break;
+        case IMAGETYPE_PNG:
+            imagepng($newImage, $filepath, 8);
+            break;
+        case IMAGETYPE_GIF:
+            imagegif($newImage, $filepath);
+            break;
+    }
+    
+    // Free memory
+    imagedestroy($sourceImage);
+    imagedestroy($newImage);
+    
+    return 'uploads/profil/' . $namaFile;
+}
+
     public function destroy(User $pengguna)
     {
         try {
