@@ -3,7 +3,6 @@
         <div class="row g-4">
             <div class="col-lg-4 col-md-6">
                 <div class="footer-logo d-flex align-items-center mb-4">
-                    <img src="{{ asset('images/logo-white.png') }}" alt="Wisata HST" height="50" class="me-2">
                     <div>
                         <h3 class="text-white mb-0">WISATA HST</h3>
                         <p class="text-light mb-0 small">Hulu Sungai Tengah</p>
@@ -93,16 +92,14 @@
             </div>
         </div>
     </div>
-    
-    <div class="footer-bottom py-3 mt-4" style="background-color: rgba(0, 0, 0, 0.2);">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="mb-0">&copy; {{ date('Y') }} Wisata Hulu Sungai Tengah. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <a href="#" class="text-light text-decoration-none me-3">Privacy Policy</a>
-                    <a href="#" class="text-light text-decoration-none">Terms of Service</a>
+    <div class="container-fluid">
+        <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+                <div class="copyright text-center text-sm text-muted text-lg-start">
+                    © <script>
+                        document.write(new Date().getFullYear())
+                    </script>, made with <i class="fa fa-heart"></i> by
+                    <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim 3</a>
                 </div>
             </div>
         </div>

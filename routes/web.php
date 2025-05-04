@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Password;
 // Route untuk guest
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/', [HomeController::class, 'index']);
-    Route::get('/register', [RegisterController::class, 'create']);
+    Route::get('/register', [RegisterController::class, 'create'])->name('register');
     Route::post('/register', [RegisterController::class, 'store']);
     Route::get('/login', [SessionsController::class, 'create'])->name('login');
     Route::post('/session', [SessionsController::class, 'store']);

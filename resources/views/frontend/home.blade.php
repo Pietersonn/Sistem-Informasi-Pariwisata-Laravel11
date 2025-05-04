@@ -144,7 +144,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto text-center">
-                    <h1 class="display-4 fw-bold mb-4 text-white">Jelajahi Keindahan Kabupaten HST</h1>
+                    <h1 class="display-4 fw-bold mb-4 text-white">Jelajahi Keindahan Kabupaten Hulu Sungai Tengah</h1>
                     <p class="lead text-white mb-5">Temukan destinasi wisata menakjubkan dan pengalaman tak terlupakan di
                         Hulu Sungai Tengah</p>
 

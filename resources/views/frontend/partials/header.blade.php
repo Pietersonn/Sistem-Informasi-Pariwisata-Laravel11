@@ -2,7 +2,6 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-                <img src="{{ asset('images/logo.png') }}" alt="Wisata HST" height="40" class="me-2">
                 <div>
                     <span class="fw-bold text-primary">WISATA</span>
                     <span class="fw-bold text-dark d-block" style="margin-top: -8px;">Hulu Sungai Tengah</span>
