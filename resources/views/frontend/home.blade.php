@@ -8,23 +8,29 @@
             background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ asset('images/hero-image.jpg') }}');
             background-size: cover;
             background-position: center;
-            padding: 150px 0;
-            color: white;
+            height: 85vh;
+            position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .search-box {
             background: white;
-            border-radius: 10px;
+            border-radius: 15px;
             padding: 30px;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
             margin-top: 30px;
         }
 
         .category-card {
-            transition: all 0.3s ease;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
+            transition: all 0.3s ease;
+            background-color: #fff;
+            text-align: center;
+            padding: 25px 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            height: 100%;
         }
 
         .category-card:hover {
@@ -33,27 +39,29 @@
         }
 
         .category-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: #f8f9fa;
             color: var(--primary-color);
         }
 
-        .category-card img {
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .featured-destinations {
-            background-color: #f8f9fa;
-            padding: 80px 0;
+        .category-icon img {
+            max-width: 40px;
+            max-height: 40px;
         }
 
         .card-destination {
             border: none;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: var(--card-shadow);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
+            height: 100%;
         }
 
         .card-destination:hover {
@@ -66,308 +74,167 @@
             object-fit: cover;
         }
 
-        .rating {
-            color: #ffc107;
+        .destination-info {
+            padding: 20px;
         }
 
-        .testimonial-section {
-            background-color: white;
-            padding: 80px 0;
-        }
-
-        .testimonial-card {
-            padding: 30px;
-            border-radius: 10px;
-            background: white;
-            box-shadow: var(--card-shadow);
-        }
-
-        .testimonial-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .city-card {
-            position: relative;
+        .event-card {
+            border-radius: 15px;
             overflow: hidden;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: var(--card-shadow);
-        }
-
-        .city-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .city-card:hover img {
-            transform: scale(1.05);
-        }
-
-        .city-info {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 15px;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
-            color: white;
-        }
-
-        .steps-section {
-            padding: 80px 0;
-            background-color: #f8f9fa;
-        }
-
-        .step-card {
-            text-align: center;
-            padding: 30px;
-            border-radius: 10px;
-            background: white;
-            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            background-color: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             height: 100%;
         }
 
-        .step-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #e6f7ff;
-            border-radius: 50%;
-            color: var(--primary-color);
-            font-size: 2rem;
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-card .event-date {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        .event-card .event-info {
+            padding: 20px;
+        }
+
+        .section-heading {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-heading:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -15px;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .section-heading-center:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .rating-stars .fas {
+            color: #FFC107;
+        }
+
+        .badge-category {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 20px;
         }
     </style>
 @endpush
 
 @section('content')
     <!-- Hero Section with Search -->
-    <section class="hero-section text-center">
-        <div class="container">
-            <h1 class="display-4 fw-bold mb-4">Jelajahi Keindahan Kabupaten HST</h1>
-            <p class="lead mb-5">Temukan destinasi wisata menakjubkan dan pengalaman tak terlupakan di Hulu Sungai Tengah</p>
-
-            <div class="search-box">
-                <form action="{{ route('wisata.index') }}" method="GET">
-                    <div class="row g-3">
-                        <div class="col-md-5">
-                            <input type="text" class="form-control form-control-lg" name="q"
-                                placeholder="Cari destinasi wisata...">
-                        </div>
-                        <div class="col-md-4">
-                            <select class="form-select form-select-lg" name="kategori">
-                                <option value="">Semua Kategori</option>
-                                @foreach ($kategori as $kat)
-                                    <option value="{{ $kat->id }}">{{ $kat->nama }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <button type="submit" class="btn btn-primary btn-lg w-100">
-                                <i class="fas fa-search me-2"></i> Cari
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Cities -->
-    <section class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Temukan Properti di Kota Ini</h2>
-
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="city-card">
-                        <img src="{{ asset('images/cities/chicago.jpg') }}" alt="Chicago">
-                        <div class="city-info">
-                            <h4 class="mb-0">Chicago</h4>
-                            <p class="mb-0">5 Properti</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="city-card">
-                        <img src="{{ asset('images/cities/los-angeles.jpg') }}" alt="Los Angeles">
-                        <div class="city-info">
-                            <h4 class="mb-0">Los Angeles</h4>
-                            <p class="mb-0">3 Properti</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="city-card">
-                        <img src="{{ asset('images/cities/miami.jpg') }}" alt="Miami">
-                        <div class="city-info">
-                            <h4 class="mb-0">Miami</h4>
-                            <p class="mb-0">4 Properti</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="city-card">
-                        <img src="{{ asset('images/cities/new-york.jpg') }}" alt="New York">
-                        <div class="city-info">
-                            <h4 class="mb-0">New York</h4>
-                            <p class="mb-0">6 Properti</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section class="steps-section">
+    <section class="hero-section">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="steps-image mb-4 mb-md-0">
-                        <div class="row">
-                            <div class="col-6 mb-4">
-                                <img src="{{ asset('images/steps/step1.jpg') }}" alt="Finding Home"
-                                    class="img-fluid rounded shadow">
-                            </div>
-                            <div class="col-6">
-                                <img src="{{ asset('images/steps/step2.jpg') }}" alt="Happy Family"
-                                    class="img-fluid rounded shadow">
-                            </div>
-                            <div class="col-12 mt-4">
-                                <img src="{{ asset('images/steps/step3.jpg') }}" alt="Modern Home"
-                                    class="img-fluid rounded shadow">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="ps-md-5">
-                        <h2>How It Works?</h2>
-                        <h3 class="mb-4">Find a perfect home</h3>
-                        <p class="text-muted mb-5">Temukan rumah impian dengan mudah. Layanan kami menyediakan berbagai
-                            properti yang sesuai dengan kebutuhan Anda.</p>
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4 text-white">Jelajahi Keindahan Kabupaten HST</h1>
+                    <p class="lead text-white mb-5">Temukan destinasi wisata menakjubkan dan pengalaman tak terlupakan di
+                        Hulu Sungai Tengah</p>
 
-                        <div class="d-flex mb-4">
-                            <div
-                                class="step-icon-sm bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-3">
-                                <i class="fas fa-search"></i>
+                    <div class="search-box">
+                        <form action="{{ route('wisata.index') }}" method="GET">
+                            <div class="row g-3">
+                                <div class="col-md-5">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white border-end-0">
+                                            <i class="fas fa-search text-muted"></i>
+                                        </span>
+                                        <input type="text" class="form-control border-start-0" name="q"
+                                            placeholder="Cari destinasi wisata...">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-select" name="kategori">
+                                        <option value="">Semua Kategori</option>
+                                        @foreach ($kategori as $kat)
+                                            <option value="{{ $kat->id }}">{{ $kat->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="fas fa-search me-2"></i> Cari
+                                    </button>
+                                </div>
                             </div>
-                            <div>
-                                <h5>Find Real Estate</h5>
-                                <p class="text-muted">Cari properti yang sesuai dengan kebutuhan Anda</p>
-                            </div>
-                        </div>
-
-                        <div class="d-flex mb-4">
-                            <div
-                                class="step-icon-sm bg-info text-white rounded-circle d-flex align-items-center justify-content-center me-3">
-                                <i class="fas fa-user-tie"></i>
-                            </div>
-                            <div>
-                                <h5>Meet Realtor</h5>
-                                <p class="text-muted">Bertemu dengan agen properti profesional</p>
-                            </div>
-                        </div>
-
-                        <div class="d-flex">
-                            <div
-                                class="step-icon-sm bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3">
-                                <i class="fas fa-key"></i>
-                            </div>
-                            <div>
-                                <h5>Take The Keys</h5>
-                                <p class="text-muted">Dapatkan kunci dan nikmati rumah baru Anda</p>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials -->
+    <!-- Kategori Wisata -->
     <section class="py-5">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h2>Apa yang Pelanggan Kami Katakan?</h2>
-                    <div class="d-flex mb-3">
-                        <h3 class="me-3">10M+</h3>
-                        <p class="text-muted">Happy People</p>
+            <div class="text-center mb-5">
+                <h2 class="section-heading section-heading-center d-inline-block">Kategori Wisata</h2>
+                <p class="text-muted mt-4">Pilih kategori wisata yang sesuai keinginan Anda</p>
+            </div>
+
+            <div class="row g-4">
+                @foreach ($kategori as $kat)
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <a href="{{ url('/kategori/' . $kat->slug) }}" class="text-decoration-none">
+                            <div class="category-card">
+                                <div class="category-icon">
+                                    @if ($kat->ikon)
+                                        <img src="{{ asset('storage/' . $kat->ikon) }}" alt="{{ $kat->nama }}">
+                                    @else
+                                        <i class="fas fa-map-marker-alt fa-2x text-primary"></i>
+                                    @endif
+                                </div>
+                                <h5 class="mt-3">{{ $kat->nama }}</h5>
+                            </div>
+                        </a>
                     </div>
-                    <div class="d-flex">
-                        <h3 class="me-3">4.8</h3>
-                        <p class="text-muted">Overall Rating</p>
-                    </div>
-                    <div class="mt-4 d-flex">
-                        <img src="{{ asset('images/testimonials/user1.jpg') }}" alt="User"
-                            class="rounded-circle me-2" width="40" height="40">
-                        <blockquote class="blockquote">
-                            <p class="mb-0">"Layanan yang sangat memuaskan! Saya bisa menemukan properti sesuai keinginan
-                                dengan cepat."</p>
-                            <footer class="blockquote-footer mt-2">Cameron Williamson</footer>
-                        </blockquote>
-                    </div>
-                    <div class="mt-3">
-                        <button class="btn btn-sm btn-light rounded-circle me-2">&larr;</button>
-                        <button class="btn btn-sm btn-light rounded-circle">&rarr;</button>
-                    </div>
-                </div>
-                <div class="col-md-6 mt-4 mt-md-0">
-                    <img src="{{ asset('images/testimonials/family.jpg') }}" alt="Happy Family"
-                        class="img-fluid rounded">
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
 
-    <!-- Partner Logos -->
+    <!-- Wisata Populer -->
     <section class="py-5 bg-light">
         <div class="container">
-            <p class="text-center text-muted mb-5">Thousands of world's leading companies trust Space</p>
-            <div class="row justify-content-center align-items-center">
-                <div class="col-md-2 col-6 text-center mb-4 mb-md-0">
-                    <img src="{{ asset('images/partners/amazon.png') }}" alt="Amazon" height="30">
-                </div>
-                <div class="col-md-2 col-6 text-center mb-4 mb-md-0">
-                    <img src="{{ asset('images/partners/amd.png') }}" alt="AMD" height="30">
-                </div>
-                <div class="col-md-2 col-6 text-center mb-4 mb-md-0">
-                    <img src="{{ asset('images/partners/cisco.png') }}" alt="Cisco" height="30">
-                </div>
-                <div class="col-md-2 col-6 text-center mb-4 mb-md-0">
-                    <img src="{{ asset('images/partners/dropbox.png') }}" alt="Dropbox" height="30">
-                </div>
-                <div class="col-md-2 col-6 text-center">
-                    <img src="{{ asset('images/partners/spotify.png') }}" alt="Spotify" height="30">
-                </div>
+            <div class="d-flex justify-content-between align-items-center mb-5">
+                <h2 class="section-heading mb-0">Wisata Populer</h2>
+                <a href="{{ route('wisata.index') }}" class="btn btn-outline-primary">Lihat Semua</a>
             </div>
-        </div>
-    </section>
 
-    <!-- Featured Destinations -->
-    <section class="featured-destinations">
-        <div class="container">
-            <h2 class="text-center mb-5">Wisata Populer</h2>
-
-            <div class="row">
+            <div class="row g-4">
                 @foreach ($wisata_populer as $wisata)
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card card-destination h-100">
-                            <img src="{{ $wisata->gambar->first()->url ?? asset('images/placeholder-wisata.jpg') }}"
-                                class="card-img-top" alt="{{ $wisata->nama }}">
-                            <div class="card-body">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card-destination h-100">
+                            <div class="position-relative">
+                                <img src="{{ $wisata->gambarUtama ? $wisata->gambarUtama->url : asset('images/placeholder-wisata.jpg') }}"
+                                    class="card-img-top" alt="{{ $wisata->nama }}">
+                                <div class="position-absolute top-0 end-0 m-3">
+                                    <span class="badge bg-primary rounded-pill">
+                                        <i class="fas fa-eye me-1"></i> {{ $wisata->jumlah_dilihat }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="destination-info">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="badge bg-primary">{{ $wisata->kategori->first()->nama ?? 'Umum' }}</span>
-                                    <div class="rating">
+                                    <span class="badge-category">{{ $wisata->kategori->first()->nama ?? 'Umum' }}</span>
+                                    <div class="rating-stars">
                                         @for ($i = 1; $i <= 5; $i++)
                                             @if ($i <= $wisata->rata_rata_rating)
                                                 <i class="fas fa-star"></i>
@@ -377,12 +244,12 @@
                                                 <i class="far fa-star"></i>
                                             @endif
                                         @endfor
-                                        <span class="ms-1 text-muted">({{ $wisata->ulasan->count() }})</span>
+                                        <span class="ms-1 text-muted small">({{ $wisata->ulasan->count() }})</span>
                                     </div>
                                 </div>
                                 <h5 class="card-title">{{ $wisata->nama }}</h5>
                                 <p class="card-text text-muted mb-3">
-                                    <i class="fas fa-map-marker-alt me-1"></i> {{ Str::limit($wisata->alamat, 50) }}
+                                    <i class="fas fa-map-marker-alt me-2"></i> {{ Str::limit($wisata->alamat, 50) }}
                                 </p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     @if ($wisata->harga_tiket > 0)
@@ -392,36 +259,105 @@
                                         <p class="mb-0 fw-bold text-success">Gratis</p>
                                     @endif
                                     <a href="{{ route('wisata.detail', $wisata->slug) }}"
-                                        class="btn btn-outline-primary">Lihat Detail</a>
+                                        class="btn btn-sm btn-primary">Lihat Detail</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
-
-            <div class="text-center mt-4">
-                <a href="{{ route('wisata.index') }}" class="btn btn-primary">Lihat Semua Destinasi</a>
-            </div>
         </div>
     </section>
 
-    <!-- Categories Section -->
-    <section class="py-5">
+    <!-- Event Mendatang -->
+    @if ($event_mendatang && $event_mendatang->count() > 0)
+        <section class="py-5">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center mb-5">
+                    <h2 class="section-heading mb-0">Event Mendatang</h2>
+                </div>
+
+                <div class="row g-4">
+                    @foreach ($event_mendatang as $event)
+                        <div class="col-lg-4 col-md-6">
+                            <div class="event-card">
+                                <div class="event-date">
+                                    <div class="day">{{ $event->tanggal_mulai->format('d') }}</div>
+                                    <div class="month">{{ $event->tanggal_mulai->format('M Y') }}</div>
+                                </div>
+                                <div class="event-info">
+                                    <h5>{{ $event->nama }}</h5>
+                                    <p class="text-muted">
+                                        <i class="fas fa-map-marker-alt me-2"></i> {{ $event->wisata->nama }}
+                                    </p>
+                                    <p>{{ Str::limit($event->deskripsi, 100) }}</p>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="text-muted small">
+                                            <i class="far fa-calendar me-1"></i>
+                                            {{ $event->tanggal_mulai->format('d M') }} -
+                                            {{ $event->tanggal_selesai->format('d M Y') }}
+                                        </span>
+                                        <a href="#" class="btn btn-sm btn-outline-primary">Detail</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
+    <!-- Wisata Rekomendasi -->
+    <section class="py-5 bg-light">
         <div class="container">
-            <h2 class="text-center mb-5">Kategori Wisata</h2>
+            <div class="d-flex justify-content-between align-items-center mb-5">
+                <h2 class="section-heading mb-0">Rekomendasi Untuk Anda</h2>
+            </div>
 
-            <div class="row">
-                @foreach ($kategori as $kat)
-                    <div class="col-lg-3 col-md-6 mb-4">
-                        <div class="card category-card h-100">
-                            <img src="{{ asset('storage/' . $kat->ikon) ?? asset('images/kategori/' . $kat->slug . '.jpg') }}"
-                                class="card-img-top" alt="{{ $kat->nama }}">
-                            <div class="card-body text-center">
-                                <h5 class="card-title">{{ $kat->nama }}</h5>
-                                <p class="card-text text-muted">{{ Str::limit($kat->deskripsi, 60) }}</p>
-
-                                    class="btn btn-outline-primary">Jelajahi</a>
+            <div class="row g-4">
+                @foreach ($wisata_rekomendasi as $wisata)
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card-destination h-100">
+                            <div class="position-relative">
+                                <img src="{{ $wisata->gambarUtama ? $wisata->gambarUtama->url : asset('images/placeholder-wisata.jpg') }}"
+                                    class="card-img-top" alt="{{ $wisata->nama }}">
+                                <div class="position-absolute top-0 start-0 m-3">
+                                    <span class="badge bg-danger rounded-pill">
+                                        <i class="fas fa-heart me-1"></i> Top
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="destination-info">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge-category">{{ $wisata->kategori->first()->nama ?? 'Umum' }}</span>
+                                    <div class="rating-stars">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $wisata->rata_rata_rating)
+                                                <i class="fas fa-star"></i>
+                                            @elseif($i - 0.5 <= $wisata->rata_rata_rating)
+                                                <i class="fas fa-star-half-alt"></i>
+                                            @else
+                                                <i class="far fa-star"></i>
+                                            @endif
+                                        @endfor
+                                        <span class="ms-1 text-muted small">({{ $wisata->ulasan->count() }})</span>
+                                    </div>
+                                </div>
+                                <h5 class="card-title">{{ $wisata->nama }}</h5>
+                                <p class="card-text text-muted mb-3">
+                                    <i class="fas fa-map-marker-alt me-2"></i> {{ Str::limit($wisata->alamat, 50) }}
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    @if ($wisata->harga_tiket > 0)
+                                        <p class="mb-0 fw-bold">Rp {{ number_format($wisata->harga_tiket, 0, ',', '.') }}
+                                        </p>
+                                    @else
+                                        <p class="mb-0 fw-bold text-success">Gratis</p>
+                                    @endif
+                                    <a href="{{ route('wisata.detail', $wisata->slug) }}"
+                                        class="btn btn-sm btn-primary">Lihat Detail</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -429,4 +365,42 @@
             </div>
         </div>
     </section>
+
+    <!-- Call to action -->
+    <section class="py-5 bg-primary text-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8 text-lg-start text-center">
+                    <h2 class="mb-3">Ingin menjelajahi lebih banyak destinasi?</h2>
+                    <p class="mb-0">Temukan semua destinasi wisata menarik di Kabupaten Hulu Sungai Tengah.</p>
+                </div>
+                <div class="col-lg-4 text-lg-end text-center mt-4 mt-lg-0">
+                    <a href="{{ route('wisata.index') }}" class="btn btn-light btn-lg">Jelajahi Sekarang</a>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection
+
+@push('scripts')
+    <script>
+        // Optional: Add animation effects when scrolling
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.category-card, .card-destination, .event-card');
+
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight;
+
+                    if (elementPosition < screenPosition) {
+                        element.classList.add('animate__animated', 'animate__fadeInUp');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on page load
+        });
+    </script>
+@endpush
