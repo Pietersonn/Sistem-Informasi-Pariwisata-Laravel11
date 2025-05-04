@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ChangePasswordController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
@@ -11,14 +10,15 @@ use App\Http\Controllers\Admin\KategoriWisataController;
 use App\Http\Controllers\Admin\UlasanController;
 use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\LaporanController;
+use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
-
 // Route untuk guest
 Route::group(['middleware' => 'guest'], function () {
+    Route::get('/', [HomeController::class, 'index']);
     Route::get('/register', [RegisterController::class, 'create']);
     Route::post('/register', [RegisterController::class, 'store']);
     Route::get('/login', [SessionsController::class, 'create'])->name('login');
@@ -27,11 +27,12 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
     Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
     Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
+    Route::get('/wisata', [WisataController::class, 'index'])->name('wisata.index');
 });
 
 // Route untuk user yang sudah login dan memiliki role admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/', [HomeController::class, 'home']);
+
     Route::get('dashboard', function () {
         return view('dashboard');
     })->name('dashboard');

@@ -420,7 +420,7 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title">{{ $kat->nama }}</h5>
                                 <p class="card-text text-muted">{{ Str::limit($kat->deskripsi, 60) }}</p>
-                                <a href="{{ route('kategori.detail', $kat->slug) }}"
+
                                     class="btn btn-outline-primary">Jelajahi</a>
                             </div>
                         </div>

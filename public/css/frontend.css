@@ -1,0 +1,200 @@
+:root {
+    --primary-color: #0D6EFD;
+    --text-color: #000;
+    --background-light: #F8F9FA;
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+    background-color: white;
+    line-height: 1.6;
+}
+
+/* Hero Section */
+.hero-section {
+    background-size: cover;
+    background-position: center;
+    padding: 120px 0;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6));
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.hero-section .lead {
+    font-size: 1.25rem;
+    max-width: 800px;
+    margin: 0 auto 30px;
+}
+
+.search-box {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* City Cards */
+.city-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease;
+}
+
+.city-card:hover {
+    transform: translateY(-10px);
+}
+
+.city-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.city-card:hover img {
+    transform: scale(1.05);
+}
+
+.city-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+    color: white;
+}
+
+/* Steps Section */
+.steps-section {
+    background-color: var(--background-light);
+    padding: 80px 0;
+}
+
+.step-card {
+    text-align: center;
+    padding: 30px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: var(--card-shadow);
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.step-card:hover {
+    transform: translateY(-10px);
+}
+
+.step-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e6f7ff;
+    border-radius: 50%;
+    color: var(--primary-color);
+    font-size: 2rem;
+}
+
+/* Testimonial Section */
+.testimonial-section {
+    background: white;
+    padding: 80px 0;
+}
+
+.testimonial-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    padding: 30px;
+}
+
+.testimonial-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Featured Destinations */
+.featured-destinations {
+    background-color: var(--background-light);
+    padding: 80px 0;
+}
+
+.card-destination {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+}
+
+.card-destination:hover {
+    transform: translateY(-10px);
+}
+
+.card-destination img {
+    height: 250px;
+    object-fit: cover;
+}
+
+.rating {
+    color: #ffc107;
+}
+
+/* Partner Logos */
+.partner-section {
+    background-color: white;
+    padding: 60px 0;
+}
+
+.partner-logo {
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+.partner-logo:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-section .lead {
+        font-size: 1rem;
+    }
+}
