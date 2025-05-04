@@ -1,207 +1,433 @@
+<!-- Contoh view: resources/views/admin/wisata/edit.blade.php -->
+
 @extends('layouts.user_type.auth')
 
 @section('content')
-<div class="container-fluid py-4">
-    <div class="card">
-        <div class="card-header pb-0">
-            <h6>Edit Wisata</h6>
-        </div>
-        <div class="card-body">
-            <form method="POST" action="{{ route('admin.wisata.update', $wisata->id) }}" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="nama">Nama Wisata <span class="text-danger">*</span></label>
-                        <input type="text" 
-                               class="form-control @error('nama') is-invalid @enderror" 
-                               id="nama" 
-                               name="nama" 
-                               value="{{ old('nama', $wisata->nama) }}" 
-                               required>
-                        @error('nama')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+    <div class="container-fluid py-4">
+        <div class="card">
+            <div class="card-header pb-0">
+                <h6>Edit Wisata</h6>
+            </div>
+            <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('admin.wisata.update', $wisata->id) }}" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="nama">Nama Wisata <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama"
+                                name="nama" value="{{ old('nama', $wisata->nama) }}" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="kategori">Kategori <span class="text-danger">*</span></label>
+                            <select name="kategori[]" id="kategori"
+                                class="form-control select2 @error('kategori') is-invalid @enderror" multiple required>
+                                @foreach ($kategori as $kat)
+                                    <option value="{{ $kat->id }}"
+                                        {{ in_array($kat->id, $selectedKategori) ? 'selected' : '' }}>
+                                        {{ $kat->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label for="kategori">Kategori <span class="text-danger">*</span></label>
-                        <select 
-                            name="kategori[]" 
-                            id="kategori" 
-                            class="form-control @error('kategori') is-invalid @enderror" 
-                            multiple 
-                            required>
-                            @foreach($kategori as $kat)
-                                <option value="{{ $kat->id }}" 
-                                    {{ in_array($kat->id, $selectedKategori) ? 'selected' : '' }}>
-                                    {{ $kat->nama }}
+                    <div class="mb-3">
+                        <label for="alamat">Alamat <span class="text-danger">*</span></label>
+                        <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" rows="3"
+                            required>{{ old('alamat', $wisata->alamat) }}</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="deskripsi">Deskripsi <span class="text-danger">*</span></label>
+                        <textarea class="form-control @error('deskripsi') is-invalid @enderror" id="deskripsi" name="deskripsi" rows="5"
+                            required>{{ old('deskripsi', $wisata->deskripsi) }}<!-- Lanjutan resources/views/admin/wisata/edit.blade.php -->
+
+                              <textarea class="form-control @error('deskripsi') is-invalid @enderror" 
+                                        id="deskripsi" 
+                                        name="deskripsi" 
+                                        rows="5" 
+                                        required>{{ old('deskripsi', $wisata->deskripsi) }}</textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label for="jam_buka">Jam Buka</label>
+                            <input type="time" class="form-control @error('jam_buka') is-invalid @enderror"
+                                id="jam_buka" name="jam_buka"
+                                value="{{ old('jam_buka', $wisata->jam_buka ? $wisata->jam_buka->format('H:i') : '') }}">
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="jam_tutup">Jam Tutup</label>
+                            <input type="time" class="form-control @error('jam_tutup') is-invalid @enderror"
+                                id="jam_tutup" name="jam_tutup"
+                                value="{{ old('jam_tutup', $wisata->jam_tutup ? $wisata->jam_tutup->format('H:i') : '') }}">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Hari Operasional</label>
+                            <div class="d-flex flex-wrap">
+                                @php
+                                    $hariList = ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu'];
+                                    $hariOperasional = old('hari_operasional', $wisata->hari_operasional) ?? [];
+                                @endphp
+
+                                @foreach ($hariList as $hari)
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="checkbox" id="hari_{{ $hari }}"
+                                            name="hari_operasional[]" value="{{ $hari }}"
+                                            {{ in_array($hari, $hariOperasional) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="hari_{{ $hari }}">
+                                            {{ ucfirst($hari) }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="harga_tiket">Harga Tiket (Rp)</label>
+                            <input type="number" class="form-control @error('harga_tiket') is-invalid @enderror"
+                                id="harga_tiket" name="harga_tiket" value="{{ old('harga_tiket', $wisata->harga_tiket) }}"
+                                min="0" step="1000">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="kontak">Kontak</label>
+                            <input type="text" class="form-control @error('kontak') is-invalid @enderror" id="kontak"
+                                name="kontak" value="{{ old('kontak', $wisata->kontak) }}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
+                                name="email" value="{{ old('email', $wisata->email) }}">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="website">Website</label>
+                            <input type="url" class="form-control @error('website') is-invalid @enderror"
+                                id="website" name="website" value="{{ old('website', $wisata->website) }}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="instagram">Instagram</label>
+                            <div class="input-group">
+                                <span class="input-group-text">@</span>
+                                <input type="text" class="form-control @error('instagram') is-invalid @enderror"
+                                    id="instagram" name="instagram" value="{{ old('instagram', $wisata->instagram) }}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="facebook">Facebook</label>
+                            <input type="url" class="form-control @error('facebook') is-invalid @enderror"
+                                id="facebook" name="facebook" value="{{ old('facebook', $wisata->facebook) }}">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="twitter">Twitter</label>
+                            <div class="input-group">
+                                <span class="input-group-text">@</span>
+                                <input type="text" class="form-control @error('twitter') is-invalid @enderror"
+                                    id="twitter" name="twitter" value="{{ old('twitter', $wisata->twitter) }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="fasilitas">Fasilitas</label>
+                        <select name="fasilitas[]" id="fasilitas"
+                            class="form-control select2 @error('fasilitas') is-invalid @enderror" multiple>
+                            @foreach ($fasilitas as $fas)
+                                <option value="{{ $fas->id }}"
+                                    {{ in_array($fas->id, $selectedFasilitas) ? 'selected' : '' }}>
+                                    {{ $fas->nama }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('kategori')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="alamat">Alamat <span class="text-danger">*</span></label>
-                    <textarea 
-                        class="form-control @error('alamat') is-invalid @enderror" 
-                        id="alamat" 
-                        name="alamat" 
-                        rows="3" 
-                        required>{{ old('alamat', $wisata->alamat) }}</textarea>
-                    @error('alamat')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="deskripsi">Deskripsi</label>
-                    <textarea 
-                        class="form-control @error('deskripsi') is-invalid @enderror" 
-                        id="deskripsi" 
-                        name="deskripsi" 
-                        rows="4">{{ old('deskripsi', $wisata->deskripsi) }}</textarea>
-                    @error('deskripsi')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="jam_buka">Jam Buka</label>
-                        <input type="time" 
-                               class="form-control @error('jam_buka') is-invalid @enderror" 
-                               id="jam_buka" 
-                               name="jam_buka" 
-                               value="{{ old('jam_buka', $wisata->jam_buka ? $wisata->jam_buka->format('H:i') : '') }}">
-                        @error('jam_buka')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
                     </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label for="jam_tutup">Jam Tutup</label>
-                        <input type="time" 
-                               class="form-control @error('jam_tutup') is-invalid @enderror" 
-                               id="jam_tutup" 
-                               name="jam_tutup" 
-                               value="{{ old('jam_tutup', $wisata->jam_tutup ? $wisata->jam_tutup->format('H:i') : '') }}">
-                        @error('jam_tutup')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="harga_tiket">Harga Tiket</label>
-                        <input type="number" 
-                               class="form-control @error('harga_tiket') is-invalid @enderror" 
-                               id="harga_tiket" 
-                               name="harga_tiket" 
-                               value="{{ old('harga_tiket', $wisata->harga_tiket) }}" 
-                               min="0">
-                        @error('harga_tiket')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="col-md-6 mb-3">
+                    <div class="mb-3">
                         <label for="status">Status</label>
-                        <select 
-                            name="status" 
-                            id="status" 
-                            class="form-control @error('status') is-invalid @enderror" 
+                        <select name="status" id="status" class="form-control @error('status') is-invalid @enderror"
                             required>
                             <option value="aktif" {{ $wisata->status == 'aktif' ? 'selected' : '' }}>Aktif</option>
-                            <option value="nonaktif" {{ $wisata->status == 'nonaktif' ? 'selected' : '' }}>Nonaktif</option>
-                            <option value="menunggu_persetujuan" {{ $wisata->status == 'menunggu_persetujuan' ? 'selected' : '' }}>Menunggu Persetujuan</option>
+                            <option value="nonaktif" {{ $wisata->status == 'nonaktif' ? 'selected' : '' }}>Nonaktif
+                            </option>
+                            <option value="menunggu_persetujuan"
+                                {{ $wisata->status == 'menunggu_persetujuan' ? 'selected' : '' }}>Menunggu Persetujuan
+                            </option>
                         </select>
-                        @error('status')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <label for="gambar">Gambar Wisata</label>
-                        <input type="file" 
-                               class="form-control @error('gambar') is-invalid @enderror" 
-                               id="gambar" 
-                               name="gambar[]" 
-                               multiple 
-                               accept="image/*">
-                        @error('gambar')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                        
-                        @if($wisata->gambar->count() > 0)
-                            <div class="mt-3">
-                                <strong>Gambar Saat Ini:</strong>
-                                <div class="row">
-                                    @foreach($wisata->gambar as $gambar)
-                                        <div class="col-md-3 mb-2">
-                                            <img src="{{ $gambar->url }}" 
-                                                 alt="Gambar Wisata" 
-                                                 class="img-fluid" 
-                                                 style="max-height: 200px; object-fit: cover;">
-                                        </div>
-                                    @endforeach
+                    <!-- Bagian Galeri Gambar -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h6>Galeri Gambar</h6>
+                        </div>
+                        <div class="card-body">
+                            <!-- Gambar Yang Sudah Ada -->
+                            @if ($gambar->count() > 0)
+                                <div class="mb-4">
+                                    <h6 class="mb-3">Gambar Saat Ini</h6>
+                                    <div class="row sortable-images" id="existingImagesContainer">
+                                        @foreach ($gambar as $img)
+                                            <div class="col-md-3 mb-3" data-id="{{ $img->id }}">
+                                                <div class="card">
+                                                    <img src="{{ $img->url }}" class="card-img-top img-thumbnail"
+                                                        alt="{{ $img->judul ?? $wisata->nama }}">
+                                                    <div class="card-body p-2">
+                                                        <div class="form-check mb-2">
+                                                            <input class="form-check-input main-image-radio"
+                                                                type="radio" name="gambar_utama"
+                                                                value="{{ $img->id }}"
+                                                                {{ $img->is_utama ? 'checked' : '' }}>
+                                                            <label class="form-check-label">
+                                                                Gambar Utama
+                                                            </label>
+                                                        </div>
+                                                        <input type="hidden" name="urutan_gambar[{{ $img->id }}]"
+                                                            value="{{ $img->urutan }}">
+                                                        <div class="d-flex justify-content-between">
+                                                            <button type="button"
+                                                                class="btn btn-sm btn-danger delete-image"
+                                                                data-id="{{ $img->id }}">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-sm btn-info edit-image"
+                                                                data-id="{{ $img->id }}"
+                                                                data-judul="{{ $img->judul }}"
+                                                                data-deskripsi="{{ $img->deskripsi }}">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="form-text mt-2">
+                                        Seret dan lepaskan gambar untuk mengubah urutan. Pilih satu gambar sebagai gambar
+                                        utama.
+                                    </div>
+                                </div>
+                            @endif
+
+                            <!-- Upload Gambar Baru -->
+                            <div class="mb-3">
+                                <h6>Tambah Gambar Baru</h6>
+                                <div class="image-upload-container">
+                                    <div class="mb-3">
+                                        <input type="file"
+                                            class="form-control @error('gambar.*') is-invalid @enderror" name="gambar[]"
+                                            accept="image/*" multiple id="imageUpload">
+                                        @error('gambar.*')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div id="previewContainer" class="row">
+                                        <!-- Preview gambar akan ditampilkan di sini oleh JavaScript -->
+                                    </div>
                                 </div>
                             </div>
-                        @endif
+                        </div>
                     </div>
-                </div>
 
-                <div class="d-flex justify-content-between">
-                    <a href="{{ route('admin.wisata.index') }}" class="btn btn-secondary">
-                        Kembali
-                    </a>
-                    <button type="submit" class="btn btn-primary">
-                        Perbarui Wisata
-                    </button>
-                </div>
-            </form>
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{{ route('admin.wisata.index') }}" class="btn btn-secondary">
+                            Kembali
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            Perbarui Wisata
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+
+    <!-- Modal Edit Gambar -->
+    <div class="modal fade" id="editImageModal" tabindex="-1" aria-labelledby="editImageModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editImageModalLabel">Edit Informasi Gambar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="editImageId">
+                    <div class="mb-3">
+                        <label for="editJudul" class="form-label">Judul Gambar</label>
+                        <input type="text" class="form-control" id="editJudul">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editDeskripsi" class="form-label">Deskripsi</label>
+                        <textarea class="form-control" id="editDeskripsi" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-primary" id="saveImageChanges">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
-<script>
-    // Optional: Tambahkan preview untuk input file gambar
-    document.getElementById('gambar').addEventListener('change', function(event) {
-        const previewContainer = document.getElementById('preview-gambar');
-        if (previewContainer) {
-            previewContainer.innerHTML = ''; // Bersihkan preview sebelumnya
-        }
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+    <script>
+        // Inisialisasi Select2
+        $(document).ready(function() {
+            $('.select2').select2();
 
-        Array.from(event.target.files).forEach(file => {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.maxWidth = '200px';
-                img.style.margin = '10px';
-                
-                if (!previewContainer) {
-                    const container = document.createElement('div');
-                    container.id = 'preview-gambar';
-                    container.style.display = 'flex';
-                    container.style.flexWrap = 'wrap';
-                    event.target.parentNode.appendChild(container);
-                }
-                
-                document.getElementById('preview-gambar').appendChild(img);
+            // Sortable untuk gambar yang sudah ada
+            const sortableContainer = document.getElementById('existingImagesContainer');
+            if (sortableContainer) {
+                new Sortable(sortableContainer, {
+                    animation: 150,
+                    ghostClass: 'bg-light',
+                    onEnd: function(evt) {
+                        // Update urutan setelah drag & drop
+                        updateImageOrder();
+                    }
+                });
             }
-            reader.readAsDataURL(file);
+
+            // Fungsi untuk memperbarui urutan
+            function updateImageOrder() {
+                const items = document.querySelectorAll('#existingImagesContainer > div');
+                items.forEach((item, index) => {
+                    const id = item.dataset.id;
+                    const input = item.querySelector(`input[name="urutan_gambar[${id}]"]`);
+                    input.value = index + 1;
+                });
+            }
+
+            // Hapus gambar
+            $('.delete-image').on('click', function() {
+                const id = $(this).data('id');
+                if (confirm('Yakin ingin menghapus gambar ini?')) {
+                    $.ajax({
+                        url: "{{ url('admin/wisata/hapus-gambar') }}/" + id,
+                        type: 'DELETE',
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                $(`div[data-id="${id}"]`).remove();
+                                // Jika tidak ada gambar utama, set yang pertama sebagai utama
+                                if ($('.main-image-radio:checked').length === 0) {
+                                    $('.main-image-radio').first().prop('checked', true);
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Edit gambar
+            $('.edit-image').on('click', function() {
+                const id = $(this).data('id');
+                const judul = $(this).data('judul') || '';
+                const deskripsi = $(this).data('deskripsi') || '';
+
+                $('#editImageId').val(id);
+                $('#editJudul').val(judul);
+                $('#editDeskripsi').val(deskripsi);
+
+                $('#editImageModal').modal('show');
+            });
+
+            // Simpan perubahan gambar
+            $('#saveImageChanges').on('click', function() {
+                const id = $('#editImageId').val();
+                const judul = $('#editJudul').val();
+                const deskripsi = $('#editDeskripsi').val();
+
+                $.ajax({
+                    url: "{{ url('admin/wisata/update-info-gambar') }}/" + id,
+                    type: 'PUT',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "judul": judul,
+                        "deskripsi": deskripsi
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $(`button[data-id="${id}"].edit-image`)
+                                .data('judul', judul)
+                                .data('deskripsi', deskripsi);
+
+                            $('#editImageModal').modal('hide');
+                        }
+                    }
+                });
+            });
+
+            // Preview gambar yang akan diupload
+            $('#imageUpload').on('change', function(e) {
+                const files = e.target.files;
+                const previewContainer = $('#previewContainer');
+
+                previewContainer.empty();
+
+                if (files.length > 0) {
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        const reader = new FileReader();
+
+                        reader.onload = function(e) {
+                            const preview = `
+                                          <div class="col-md-3 mb-3">
+                                              <div class="card">
+                                                  <img src="${e.target.result}" class="card-img-top img-thumbnail" alt="Preview">
+                                                  <div class="card-body p-2">
+                                                      <div class="mb-2">
+                                                          <input type="text" class="form-control form-control-sm" 
+                                                                 name="judul_gambar[${i}]" placeholder="Judul (opsional)">
+                                                      </div>
+                                                      <div>
+                                                          <textarea class="form-control form-control-sm" 
+                                                                    name="deskripsi_gambar[${i}]" 
+                                                                    placeholder="Deskripsi (opsional)" 
+                                                                    rows="2"></textarea>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      `;
+
+                            previewContainer.append(preview);
+                        };
+
+                        reader.readAsDataURL(file);
+                    }
+                }
+            });
         });
-    });
-</script>
+    </script>
 @endpush
