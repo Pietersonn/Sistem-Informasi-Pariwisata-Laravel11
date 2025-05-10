@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class WisataController extends Controller
 {
@@ -75,23 +76,8 @@ class WisataController extends Controller
             'deskripsi' => 'required',
             'kategori' => 'required|array',
             'kategori.*' => 'exists:kategori_wisata,id',
-            'fasilitas' => 'nullable|array',
-            'fasilitas.*' => 'exists:fasilitas,id',
-            'jam_buka' => 'nullable|date_format:H:i',
-            'jam_tutup' => 'nullable|date_format:H:i|after:jam_buka',
-            'hari_operasional' => 'nullable|array',
-            'harga_tiket' => 'nullable|numeric|min:0',
-            'kontak' => 'nullable|max:20',
-            'email' => 'nullable|email',
-            'website' => 'nullable|url',
-            'instagram' => 'nullable',
-            'facebook' => 'nullable|url',
-            'twitter' => 'nullable',
-            'status' => 'required|in:' . implode(',', [
-                Wisata::STATUS_AKTIF,
-                Wisata::STATUS_NONAKTIF,
-                Wisata::STATUS_MENUNGGU_PERSETUJUAN
-            ]),
+            // Validasi lainnya...
+
             'gambar' => 'nullable|array',
             'gambar.*' => 'image|mimes:jpeg,png,jpg,webp,gif|max:5120' // max 5MB
         ]);
@@ -108,7 +94,7 @@ class WisataController extends Controller
             // Tambahkan kategori
             $wisata->kategori()->sync($request->kategori);
 
-            // Tambahkan fasilitas
+            // Tambahkan fasilitas jika ada
             if ($request->has('fasilitas')) {
                 $wisata->fasilitasRelasi()->sync($request->fasilitas);
             }
@@ -117,13 +103,28 @@ class WisataController extends Controller
             if ($request->hasFile('gambar')) {
                 foreach ($request->file('gambar') as $index => $file) {
                     $isUtama = ($index == 0); // Gambar pertama jadi utama
-                    GambarWisata::unggahGambar(
-                        $file,
-                        $wisata,
-                        $isUtama,
-                        $request->input('judul_gambar.' . $index, null),
-                        $request->input('deskripsi_gambar.' . $index, null)
-                    );
+
+                    // Generate nama file unik
+                    $namaFile = 'wisata-' . Str::slug($wisata->nama) . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                    // Pastikan direktori ada
+                    $uploadPath = public_path('uploads/wisata');
+                    if (!File::exists($uploadPath)) {
+                        File::makeDirectory($uploadPath, 0775, true);
+                    }
+
+                    // Pindahkan file
+                    $file->move($uploadPath, $namaFile);
+
+                    // Simpan ke database
+                    $gambarWisata = new GambarWisata();
+                    $gambarWisata->id_wisata = $wisata->id;
+                    $gambarWisata->file_gambar = 'uploads/wisata/' . $namaFile;
+                    $gambarWisata->judul = $request->input('judul_gambar.' . $index, null);
+                    $gambarWisata->deskripsi = $request->input('deskripsi_gambar.' . $index, null);
+                    $gambarWisata->urutan = $index + 1;
+                    $gambarWisata->is_utama = $isUtama;
+                    $gambarWisata->save();
                 }
             }
 

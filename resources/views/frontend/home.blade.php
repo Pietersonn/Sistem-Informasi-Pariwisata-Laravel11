@@ -4,46 +4,54 @@
 
 @push('styles')
     <style>
-    .hero-section {
-        background-image: url('{{ asset('images/hero-image.png') }}');
-        background-size: cover;
-        background-position: center;
-        height: 780px;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        color: #fff;
-        padding: 0 20px;
-    }
-    
-    /* Updated styling for the Lihat Semua button */
-    .view-all {
-        background-color: #F0D27F; /* Golden/yellow color like in the image */
-        color: #000000; /* Black text color */
-        border: none;
-        border-radius: 25px; /* Fully rounded corners */
-        padding: 10px 25px;
-        font-family: 'Poppins', sans-serif;
-        font-weight: 500;
-        font-size: 15px;
-        cursor: pointer;
-        transition: var(--transition);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-    }
-    
-    .view-all:hover {
-        background-color: #E9C661; /* Slightly darker shade on hover */
-    }
-    
-    /* Icon positioning */
-    .view-all i {
-        margin-left: 8px;
-    }
+        .hero-section {
+            background-image: url('{{ asset('images/hero-image.png') }}');
+            background-size: cover;
+            background-position: center;
+            height: 780px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            padding: 0 20px;
+        }
+
+        /* Updated styling for the Lihat Semua button */
+        .view-all {
+            background-color: #F0D27F;
+            /* Golden/yellow color like in the image */
+            color: #000000;
+            /* Black text color */
+            border: none;
+            border-radius: 25px;
+            /* Fully rounded corners */
+            padding: 10px 25px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            /* Center the button horizontally */
+            margin: 0 auto;
+            /* Automatically center the button */
+        }
+
+
+        .view-all:hover {
+            background-color: #E9C661;
+            /* Slightly darker shade on hover */
+        }
+
+        /* Icon positioning */
+        .view-all i {
+            margin-left: 8px;
+        }
     </style>
 @endpush
 
@@ -53,7 +61,7 @@
         <div class="hero-content">
             <h1 class="hero-title">it always seems imposibble until it's done :)</h1>
             <p class="hero-subtitle">Don't be sad because it's over, be happy because it happened</p>
-            
+
             <div class="search-box">
                 <form action="{{ route('wisata.index') }}" method="GET" class="search-form">
                     <div class="search-input">
@@ -64,7 +72,7 @@
                     </button>
                 </form>
             </div>
-            
+
             <div class="kategori-section">
                 <h2 class="kategori-title">Categories</h2>
                 <div class="kategori-container">
@@ -105,14 +113,14 @@
                     <h2 class="section-title">Wisata Populer</h2>
                     <p class="section-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
-                <a href="{{ route('wisata.index') }}" class="view-all">Liat Semua <i class="fas fa-arrow-right"></i></a>
             </div>
-            
+
             <div class="wisata-grid">
                 @foreach ($wisata_populer as $wisata)
                     <div class="wisata-card">
                         <div class="wisata-image">
-                            <img src="{{ $wisata->gambarUtama ? $wisata->gambarUtama->url : asset('images/placeholder-wisata.jpg') }}" alt="{{ $wisata->nama }}">
+                            <img src="{{ $wisata->gambarUtama ? $wisata->gambarUtama->url : asset('images/placeholder-wisata.jpg') }}"
+                                alt="{{ $wisata->nama }}">
                             @if ($wisata->kategori->first())
                                 <div class="wisata-tags">
                                     <span class="tag">{{ $wisata->kategori->first()->nama }}</span>
@@ -153,6 +161,9 @@
                     </div>
                 @endforeach
             </div>
+            <div class="container">
+                <a href="{{ route('wisata.index') }}" class="view-all">Liat Semua <i class="fas fa-arrow-right"></i></a>
+            </div>
         </div>
     </section>
 
@@ -181,7 +192,8 @@
 
                     if (elementPosition < screenPosition) {
                         element.style.opacity = '1';
-                        element.style.transform = element.classList.contains('kategori-item') ? 'translateY(0)' : 'translateY(0)';
+                        element.style.transform = element.classList.contains('kategori-item') ?
+                            'translateY(0)' : 'translateY(0)';
                     }
                 });
             };
@@ -190,7 +202,8 @@
             const elements = document.querySelectorAll('.kategori-item, .wisata-card');
             elements.forEach(element => {
                 element.style.opacity = '0';
-                element.style.transform = element.classList.contains('kategori-item') ? 'translateY(20px)' : 'translateY(20px)';
+                element.style.transform = element.classList.contains('kategori-item') ? 'translateY(20px)' :
+                    'translateY(20px)';
                 element.style.transition = 'all 0.3s ease';
             });
 

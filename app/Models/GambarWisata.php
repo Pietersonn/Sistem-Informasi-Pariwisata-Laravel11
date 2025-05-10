@@ -41,24 +41,27 @@ class GambarWisata extends Model
     public static function generateNamaFile(Wisata $wisata, $file)
     {
         $ekstensi = $file->getClientOriginalExtension();
-        return 'wisata-' .
-            Str::slug($wisata->nama) .
-            '-' .
-            uniqid() .
-            '.' .
-            $ekstensi;
+        return 'wisata-' . Str::slug($wisata->nama) . '-' . uniqid() . '.' . $ekstensi;
     }
 
-    // Proses dan simpan gambar
+    /**
+     * Proses dan simpan gambar
+     * @param UploadedFile $file File gambar yang diupload
+     * @param Wisata $wisata Objek wisata
+     * @param bool $isUtama Apakah gambar utama
+     * @param string|null $judul Judul gambar
+     * @param string|null $deskripsi Deskripsi gambar
+     * @return GambarWisata
+     */
     public static function unggahGambar($file, Wisata $wisata, $isUtama = false, $judul = null, $deskripsi = null)
     {
         // Validasi gambar
-        if (!self::validasiGambar($file)) {
-            throw new \Exception('Gambar tidak valid');
+        if (!$file->isValid() || !in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'webp', 'gif'])) {
+            throw new \Exception('File tidak valid');
         }
 
         // Generate nama file
-        $namaFile = self::generateNamaFile($wisata, $file);
+        $namaFile = 'wisata-' . Str::slug($wisata->nama) . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
 
         // Pastikan direktori ada
         $uploadPath = public_path('uploads/wisata');
@@ -70,14 +73,13 @@ class GambarWisata extends Model
         $file->move($uploadPath, $namaFile);
 
         // Path lengkap dan relatif
-        $fullPath = $uploadPath . '/' . $namaFile;
         $relativeFilePath = 'uploads/wisata/' . $namaFile;
 
         // Resize gambar jika diperlukan
-        self::resizeImage($fullPath);
+        self::resizeImage($uploadPath . '/' . $namaFile);
 
         // Dapatkan dimensi gambar
-        $dimensions = getimagesize($fullPath);
+        $dimensions = getimagesize($uploadPath . '/' . $namaFile);
         $width = $dimensions[0];
         $height = $dimensions[1];
 

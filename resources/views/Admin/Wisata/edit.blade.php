@@ -187,11 +187,12 @@
                         </div>
                         <div class="card-body">
                             <!-- Gambar Yang Sudah Ada -->
-                            @if ($gambar->count() > 0)
+                            <!-- Gambar Yang Sudah Ada -->
+                            @if ($wisata->gambar->count() > 0)
                                 <div class="mb-4">
                                     <h6 class="mb-3">Gambar Saat Ini</h6>
-                                    <div class="row sortable-images" id="existingImagesContainer">
-                                        @foreach ($gambar as $img)
+                                    <div class="row" id="existingImagesContainer">
+                                        @foreach ($wisata->gambar as $img)
                                             <div class="col-md-3 mb-3" data-id="{{ $img->id }}">
                                                 <div class="card">
                                                     <img src="{{ $img->url }}" class="card-img-top img-thumbnail"
@@ -202,9 +203,7 @@
                                                                 type="radio" name="gambar_utama"
                                                                 value="{{ $img->id }}"
                                                                 {{ $img->is_utama ? 'checked' : '' }}>
-                                                            <label class="form-check-label">
-                                                                Gambar Utama
-                                                            </label>
+                                                            <label class="form-check-label">Gambar Utama</label>
                                                         </div>
                                                         <input type="hidden" name="urutan_gambar[{{ $img->id }}]"
                                                             value="{{ $img->urutan }}">
@@ -226,45 +225,33 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                    <div class="form-text mt-2">
-                                        Seret dan lepaskan gambar untuk mengubah urutan. Pilih satu gambar sebagai gambar
-                                        utama.
-                                    </div>
                                 </div>
                             @endif
 
                             <!-- Upload Gambar Baru -->
                             <div class="mb-3">
                                 <h6>Tambah Gambar Baru</h6>
-                                <div class="image-upload-container">
-                                    <div class="mb-3">
-                                        <input type="file"
-                                            class="form-control @error('gambar.*') is-invalid @enderror" name="gambar[]"
-                                            accept="image/*" multiple id="imageUpload">
-                                        @error('gambar.*')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div id="previewContainer" class="row">
-                                        <!-- Preview gambar akan ditampilkan di sini oleh JavaScript -->
-                                    </div>
+                                <input type="file" class="form-control" name="gambar[]" accept="image/*" multiple
+                                    id="gambar">
+                                <div id="previewContainer" class="row mt-3">
+                                    <!-- Preview gambar baru di sini -->
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="d-flex justify-content-between mt-4">
-                        <a href="{{ route('admin.wisata.index') }}" class="btn btn-secondary">
-                            Kembali
-                        </a>
-                        <button type="submit" class="btn btn-primary">
-                            Perbarui Wisata
-                        </button>
-                    </div>
-                </form>
             </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{{ route('admin.wisata.index') }}" class="btn btn-secondary">
+                    Kembali
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    Perbarui Wisata
+                </button>
+            </div>
+            </form>
         </div>
+    </div>
     </div>
 
     <!-- Modal Edit Gambar -->
