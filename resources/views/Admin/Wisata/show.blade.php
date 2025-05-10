@@ -87,17 +87,12 @@
 
                         <div class="mb-3">
                             <strong>Fasilitas:</strong>
-                            @if ($wisata->fasilitasRelasi && $wisata->fasilitasRelasi->count() > 0)
+                            @if ($wisata->fasilitas && count($wisata->fasilitas) > 0)
                                 <ul class="list-group">
-                                    @foreach ($wisata->fasilitasRelasi as $fasilitas)
+                                    @foreach ($wisata->fasilitas as $fasilitas)
                                         <li class="list-group-item d-flex align-items-center">
-                                            @if ($fasilitas->ikon)
-                                                <img src="{{ asset('storage/' . $fasilitas->ikon) }}" class="me-2"
-                                                    style="width: 20px; height: 20px;" alt="{{ $fasilitas->nama }}">
-                                            @else
-                                                <i class="fas fa-check-circle me-2 text-success"></i>
-                                            @endif
-                                            {{ $fasilitas->nama }}
+                                            <i class="fas fa-check-circle me-2 text-success"></i>
+                                            {{ $fasilitas }}
                                         </li>
                                     @endforeach
                                 </ul>
@@ -121,14 +116,6 @@
                                                     <img src="{{ asset($gambar->file_gambar) }}" class="d-block w-100"
                                                         alt="{{ $wisata->nama }}"
                                                         style="max-height: 300px; object-fit: cover;">
-                                                    <div class="carousel-caption bg-dark bg-opacity-50 rounded">
-                                                        @if ($gambar->judul)
-                                                            <h5>{{ $gambar->judul }}</h5>
-                                                        @endif
-                                                        @if ($gambar->is_utama)
-                                                            <span class="badge bg-primary">Gambar Utama</span>
-                                                        @endif
-                                                    </div>
                                                 </div>
                                             @endforeach
                                         </div>

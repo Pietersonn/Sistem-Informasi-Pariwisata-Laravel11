@@ -48,3 +48,24 @@ tampilan home masi sampah ya allah
             </div>
         </div>
     </section>
+
+
+    create wisata fasilitas jika ingin check box
+    
+    <div class="mb-3">
+    <label>Fasilitas</label>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="fasilitas[]" id="fasilitas_parkir" value="Parkir">
+                <label class="form-check-label" for="fasilitas_parkir">Parkir</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="fasilitas[]" id="fasilitas_toilet" value="Toilet">
+                <label class="form-check-label" for="fasilitas_toilet">Toilet</label>
+            </div>
+            <!-- Checkbox lainnya -->
+        </div>
+        <!-- Kolom lainnya -->
+    </div>
+</div>

@@ -167,16 +167,61 @@
 
                     <div class="mb-3">
                         <label for="fasilitas">Fasilitas</label>
-                        <select name="fasilitas[]" id="fasilitas"
-                            class="form-control select2 @error('fasilitas') is-invalid @enderror" multiple>
-                            @foreach ($fasilitas as $fas)
-                                <option value="{{ $fas->id }}"
-                                    {{ in_array($fas->id, old('fasilitas', [])) ? 'selected' : '' }}>
-                                    {{ $fas->nama }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_parkir" value="Parkir">
+                                    <label class="form-check-label" for="fasilitas_parkir">Parkir</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_toilet" value="Toilet">
+                                    <label class="form-check-label" for="fasilitas_toilet">Toilet</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_mushola" value="Mushola">
+                                    <label class="form-check-label" for="fasilitas_mushola">Mushola</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_warung_makan" value="Warung Makan">
+                                    <label class="form-check-label" for="fasilitas_warung_makan">Warung Makan</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_penginapan" value="Penginapan">
+                                    <label class="form-check-label" for="fasilitas_penginapan">Penginapan</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_toko_souvenir" value="Toko Souvenir">
+                                    <label class="form-check-label" for="fasilitas_toko_souvenir">Toko Souvenir</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_wifi" value="WiFi">
+                                    <label class="form-check-label" for="fasilitas_wifi">WiFi</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_permainan_anak" value="Permainan Anak">
+                                    <label class="form-check-label" for="fasilitas_permainan_anak">Permainan Anak</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_spot_foto" value="Spot Foto">
+                                    <label class="form-check-label" for="fasilitas_spot_foto">Spot Foto</label>
+                                </div>
+                            </div>
+                        </div>
+                        @error('fasilitas')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <small class="form-text text-muted">Pilih satu atau lebih fasilitas yang tersedia</small>
                     </div>
+
 
                     <!-- Bagian Upload Gambar -->
                     <div class="card mt-4 mb-4">

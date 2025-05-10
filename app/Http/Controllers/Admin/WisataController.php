@@ -62,7 +62,6 @@ class WisataController extends Controller
     {
         // Ambil kategori dan fasilitas untuk dropdown
         $kategori = KategoriWisata::orderBy('nama')->get();
-        $fasilitas = Fasilitas::orderBy('nama')->get();
 
         return view('admin.wisata.create', compact('kategori', 'fasilitas'));
     }
@@ -71,33 +70,47 @@ class WisataController extends Controller
     {
         // Validasi input
         $validasi = $request->validate([
-            'nama' => 'required|unique:wisata,nama',
+            'nama' => 'required|max:255|unique:wisata,nama,',
             'alamat' => 'required',
             'deskripsi' => 'required',
             'kategori' => 'required|array',
             'kategori.*' => 'exists:kategori_wisata,id',
-            // Validasi lainnya...
-
+            'fasilitas' => 'nullable|array',
+            'fasilitas.*' => 'in:Parkir,Toilet,Mushola,Warung Makan,Penginapan,Toko Souvenir,WiFi,Permainan Anak,Spot Foto', // Validasi setiap fasilitas yang dipilih
+            'jam_buka' => 'nullable|date_format:H:i',
+            'jam_tutup' => 'nullable|date_format:H:i|after:jam_buka',
+            'hari_operasional' => 'nullable|array',
+            'harga_tiket' => 'nullable|numeric|min:0',
+            'kontak' => 'nullable|max:20',
+            'email' => 'nullable|email',
+            'website' => 'nullable|url',
+            'instagram' => 'nullable',
+            'facebook' => 'nullable|url',
+            'twitter' => 'nullable',
+            'status' => 'required|in:' . implode(',', [
+                Wisata::STATUS_AKTIF,
+                Wisata::STATUS_NONAKTIF,
+                Wisata::STATUS_MENUNGGU_PERSETUJUAN
+            ]),
             'gambar' => 'nullable|array',
             'gambar.*' => 'image|mimes:jpeg,png,jpg,webp,gif|max:5120' // max 5MB
         ]);
 
         DB::beginTransaction();
         try {
-            // Buat wisata baru
+            // Membuat wisata baru
             $wisata = new Wisata();
             $wisata->fill($request->except(['kategori', 'fasilitas', 'gambar']));
+
+            // Menangani fasilitas sebagai array
+            $wisata->fasilitas = $request->fasilitas ?? [];
+
             $wisata->id_pemilik = Auth::id();
             $wisata->hari_operasional = $request->hari_operasional ?? [];
             $wisata->save();
 
-            // Tambahkan kategori
+            // Menambahkan kategori
             $wisata->kategori()->sync($request->kategori);
-
-            // Tambahkan fasilitas jika ada
-            if ($request->has('fasilitas')) {
-                $wisata->fasilitasRelasi()->sync($request->fasilitas);
-            }
 
             // Upload Gambar
             if ($request->hasFile('gambar')) {
@@ -146,7 +159,6 @@ class WisataController extends Controller
             'gambar' => function ($q) {
                 $q->orderBy('is_utama', 'desc')->orderBy('urutan', 'asc');
             },
-            'fasilitasRelasi',
             'ulasan' => function ($q) {
                 $q->with('pengguna')->orderBy('created_at', 'desc')->limit(10);
             },
@@ -161,11 +173,9 @@ class WisataController extends Controller
     public function edit(Wisata $wisata)
     {
         $kategori = KategoriWisata::orderBy('nama')->get();
-        $fasilitas = Fasilitas::orderBy('nama')->get();
 
         // Ambil ID kategori dan fasilitas yang sudah dipilih
         $selectedKategori = $wisata->kategori->pluck('id')->toArray();
-        $selectedFasilitas = $wisata->fasilitasRelasi->pluck('id')->toArray();
 
         // Muat gambar dengan urutan yang benar
         $gambar = $wisata->gambar()->orderBy('is_utama', 'desc')
@@ -175,9 +185,8 @@ class WisataController extends Controller
         return view('admin.wisata.edit', [
             'wisata' => $wisata,
             'kategori' => $kategori,
-            'fasilitas' => $fasilitas,
+
             'selectedKategori' => $selectedKategori,
-            'selectedFasilitas' => $selectedFasilitas,
             'gambar' => $gambar
         ]);
     }
@@ -192,7 +201,7 @@ class WisataController extends Controller
             'kategori' => 'required|array',
             'kategori.*' => 'exists:kategori_wisata,id',
             'fasilitas' => 'nullable|array',
-            'fasilitas.*' => 'exists:fasilitas,id',
+            'fasilitas.*' => 'in:Parkir,Toilet,Mushola,Warung Makan,Penginapan,Toko Souvenir,WiFi,Permainan Anak,Spot Foto', // Validasi setiap fasilitas yang dipilih
             'jam_buka' => 'nullable|date_format:H:i',
             'jam_tutup' => 'nullable|date_format:H:i|after:jam_buka',
             'hari_operasional' => 'nullable|array',
@@ -212,18 +221,20 @@ class WisataController extends Controller
             'gambar.*' => 'image|mimes:jpeg,png,jpg,webp,gif|max:5120' // max 5MB
         ]);
 
+
         DB::beginTransaction();
         try {
-            // Update wisata
+            // Memperbarui wisata
             $wisata->fill($request->except(['kategori', 'fasilitas', 'gambar']));
+
+            // Menangani fasilitas sebagai array
+            $wisata->fasilitas = $request->fasilitas ?? [];
+
             $wisata->hari_operasional = $request->hari_operasional ?? [];
             $wisata->save();
 
-            // Update kategori
+            // Memperbarui kategori
             $wisata->kategori()->sync($request->kategori);
-
-            // Update fasilitas
-            $wisata->fasilitasRelasi()->sync($request->fasilitas ?? []);
 
             // Upload Gambar Baru
             if ($request->hasFile('gambar')) {

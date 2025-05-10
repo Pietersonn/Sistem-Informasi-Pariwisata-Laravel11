@@ -65,17 +65,6 @@ class Wisata extends Model
         );
     }
 
-    // Relasi dengan Fasilitas (Many to Many)
-    public function fasilitas()
-    {
-        return $this->belongsToMany(
-            Fasilitas::class, 
-            'wisata_fasilitas', 
-            'id_wisata', 
-            'id_fasilitas'
-        );
-    }
-
     // Relasi dengan Gambar
     public function gambar()
     {

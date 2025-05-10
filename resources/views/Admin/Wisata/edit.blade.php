@@ -51,16 +51,13 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="deskripsi">Deskripsi <span class="text-danger">*</span></label>
-                        <textarea class="form-control @error('deskripsi') is-invalid @enderror" id="deskripsi" name="deskripsi" rows="5"
-                            required>{{ old('deskripsi', $wisata->deskripsi) }}<!-- Lanjutan resources/views/admin/wisata/edit.blade.php -->
-
-                              <textarea class="form-control @error('deskripsi') is-invalid @enderror" 
-                                        id="deskripsi" 
-                                        name="deskripsi" 
-                                        rows="5" 
-                                        required>{{ old('deskripsi', $wisata->deskripsi) }}</textarea>
+                        <label for="deskripsi" class="form-label">Deskripsi</label>
+                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" required>{{ old('deskripsi', $wisata->deskripsi) }}</textarea>
+                        @error('deskripsi')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
+
 
                     <div class="row">
                         <div class="col-md-3 mb-3">
@@ -123,8 +120,8 @@
 
                         <div class="col-md-6 mb-3">
                             <label for="website">Website</label>
-                            <input type="url" class="form-control @error('website') is-invalid @enderror"
-                                id="website" name="website" value="{{ old('website', $wisata->website) }}">
+                            <input type="url" class="form-control @error('website') is-invalid @enderror" id="website"
+                                name="website" value="{{ old('website', $wisata->website) }}">
                         </div>
                     </div>
 
@@ -156,16 +153,73 @@
 
                     <div class="mb-3">
                         <label for="fasilitas">Fasilitas</label>
-                        <select name="fasilitas[]" id="fasilitas"
-                            class="form-control select2 @error('fasilitas') is-invalid @enderror" multiple>
-                            @foreach ($fasilitas as $fas)
-                                <option value="{{ $fas->id }}"
-                                    {{ in_array($fas->id, $selectedFasilitas) ? 'selected' : '' }}>
-                                    {{ $fas->nama }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <div class="row">
+                            @php
+                                $selectedFasilitas = old('fasilitas', $wisata->fasilitas) ?? [];
+                            @endphp
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_parkir" value="Parkir"
+                                        {{ in_array('Parkir', $selectedFasilitas) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="fasilitas_parkir">Parkir</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_toilet" value="Toilet"
+                                        {{ in_array('Toilet', $selectedFasilitas) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="fasilitas_toilet">Toilet</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_mushola" value="Mushola"
+                                        {{ in_array('Mushola', $selectedFasilitas) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="fasilitas_mushola">Mushola</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_warung_makan" value="Warung Makan"
+                                        {{ in_array('Warung Makan', $selectedFasilitas) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="fasilitas_warung_makan">Warung Makan</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_penginapan" value="Penginapan"
+                                        {{ in_array('Penginapan', $selectedFasilitas) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="fasilitas_penginapan">Penginapan</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_toko_souvenir" value="Toko Souvenir"
+                                        {{ in_array('Toko Souvenir', $selectedFasilitas) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="fasilitas_toko_souvenir">Toko Souvenir</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_wifi" value="WiFi"
+                                        {{ in_array('WiFi', $selectedFasilitas) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="fasilitas_wifi">WiFi</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_permainan_anak" value="Permainan Anak"
+                                        {{ in_array('Permainan Anak', $selectedFasilitas) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="fasilitas_permainan_anak">Permainan Anak</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="fasilitas[]"
+                                        id="fasilitas_spot_foto" value="Spot Foto"
+                                        {{ in_array('Spot Foto', $selectedFasilitas) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="fasilitas_spot_foto">Spot Foto</label>
+                                </div>
+                            </div>
+                        </div>
+                        @error('fasilitas')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <small class="form-text text-muted">Pilih satu atau lebih fasilitas yang tersedia</small>
                     </div>
+
 
                     <div class="mb-3">
                         <label for="status">Status</label>
