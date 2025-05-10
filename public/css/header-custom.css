@@ -1,110 +1,151 @@
-/* Header & Navigation Styles */
-.site-header {
-    width: 66%;
-    z-index: 100;
-    padding: 1px 0;
+/* public/css/header-custom.css */
+
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(240, 210, 127, 0.95); /* Warna yang sama dengan scrolled */
+    z-index: 1000; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    height: 60px;
+    padding: 2px 0; /* Padding konsisten */
+    transform: translateY(0); /* Posisi default */
 }
 
-.container {
-    max-width: 1500px;
+.header-spacer {
+    height: 60px; /* Sesuaikan dengan tinggi header */
+}
+
+.site-header .container {
+    padding: 0;
+    width: 95%;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px;
+    height: 100%;
 }
 
 .header-wrapper {
-    
-    background-color: transparent ;
-    border-radius: 50px;
-    padding: 5px 40px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    max-width: 165%; 
-    width: 165%;
-    margin: 0 auto; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
 }
 
-
 .navbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    height: 100%;
+}
+
+.logo {
+    grid-column: 1;
+    justify-self: start;
+    margin-right: 0;
+    padding-left: 0;
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
 .logo a {
     display: flex;
     align-items: center;
-    text-decoration: none;
-    font-size: 19px;
+    font-size: 1.5rem;
     font-weight: 700;
-    color: #000;
+    color: #1F4B43; /* Changed from #000 to match home.css */
+    text-decoration: none;
 }
 
 .logo i {
-    font-size: 25px;
-    margin-right: 8px;
+    font-size: 1.8rem;
+    margin-right: 10px;
 }
 
 .nav-links {
+    grid-column: 2;
+    justify-self: center;
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
-    justify-content: center;
-    flex: 1;
+    align-items: center;
+    height: 100%;
+    position: relative;
+    left: auto;
+    transform: none;
 }
 
 .nav-links li {
-    margin: 0 20px;
-}
-
-.nav-links li a {
-    color: #333;
-    text-decoration: none;
-    font-weight: 500;
-    padding: 8px 0;
-    position: relative;
-    transition: color 0.3s ease;
-}
-
-.nav-links li a:hover, 
-.nav-links li a.active {
-    color: #1B4B66;
-}
-
-.nav-links li a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: #1B4B66;
-    transition: width 0.3s ease;
-}
-
-.nav-links li a:hover::after,
-.nav-links li a.active::after {
-    width: 100%;
-}
-
-.auth-buttons {
+    margin: 0 15px;
+    height: 100%;
     display: flex;
     align-items: center;
 }
 
-.login-btn {
-    background-color: transparent;
-    border: 1px solid #1B4B66;
-    color: #1B4B66;
-    padding: 10px 30px;
-    border-radius: 50px;
+.nav-links a {
+    color: #1B4B66; /* Changed from #000 to match home.css */
     text-decoration: none;
     font-weight: 500;
-    transition: all 0.3s ease;
+    font-size: 1rem;
+    position: relative;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #1F4B43; /* Changed from #000 to match home.css */
+    font-weight: 700;
+}
+
+.nav-links a:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: #1B4B66; /* Changed from #000 to match home.css */
+    bottom: 15px;
+    left: 0;
+    transition: width 0.3s;
+}
+
+.nav-links a:hover:after,
+.nav-links a.active:after {
+    width: 100%;
+}
+
+.auth-buttons {
+    grid-column: 3;
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+    padding-right: 0;
+}
+
+.login-btn {
+    background-color: transparent;
+    color: #1B4B66; /* Changed from #000 to match home.css */
+    border: 1px solid #1B4B66; /* Changed from #000 to match home.css */
+    border-radius: 25px;
+    padding: 6px 18px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    white-space: nowrap;
 }
 
 .login-btn:hover {
-    background-color: #1B4B66;
-    color: #fff;
+    background-color: rgba(27, 75, 102, 0.1); /* Changed from rgba(0, 0, 0, 0.1) to match home.css */
+    transform: translateY(-2px);
 }
 
 .user-dropdown {
@@ -113,24 +154,24 @@
 }
 
 .user-avatar {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     object-fit: cover;
+    border: 2px solid #fff;
 }
 
 .dropdown-content {
     position: absolute;
-    top: 100%;
+    top: 45px;
     right: 0;
     background-color: #fff;
     min-width: 200px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     padding: 10px 0;
     display: none;
-    z-index: 1000;
-    margin-top: 10px;
+    z-index: 1001;
 }
 
 .user-dropdown:hover .dropdown-content {
@@ -138,24 +179,24 @@
 }
 
 .dropdown-content a {
-    display: flex;
-    align-items: center;
+    display: block;
     padding: 10px 15px;
-    color: #333;
+    color: #333; /* Already matches home.css */
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    transition: all 0.2s;
 }
 
 .dropdown-content a:hover {
-    background-color: #f5f5f5;
+    background-color: #f8f9fa;
 }
 
 .dropdown-content i {
     margin-right: 10px;
-    color: #1B4B66;
+    width: 20px;
+    text-align: center;
 }
 
-.divider {
+.dropdown-content .divider {
     height: 1px;
     background-color: #eee;
     margin: 5px 0;
@@ -163,57 +204,97 @@
 
 .mobile-toggle {
     display: none;
-    font-size: 24px;
-    color: #333;
+    font-size: 1.5rem;
     cursor: pointer;
+    color: #1F4B43; /* Added color to match home.css */
 }
 
-/* Mobile Responsive */
-@media (max-width: 992px) {
-    .header-wrapper {
-        border-radius: 25px;
-        padding: 10px 15px;
+/* Perubahan saat di-scroll - hanya shadow yang berbeda */
+.scrolled {
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Class untuk header yang tersembunyi */
+.header-hidden {
+    transform: translateY(-100%);
+    box-shadow: none;
+}
+
+/* Area khusus di atas untuk menampilkan header saat hover */
+.header-trigger-area {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px; /* Area kecil di atas layar */
+    z-index: 999;
+}
+
+/* Media queries untuk desain responsif */
+@media screen and (max-width: 992px) {
+    .navbar {
+        grid-template-columns: auto 1fr auto;
     }
     
     .nav-links {
         position: fixed;
-        top: 80px;
+        top: 60px;
         left: -100%;
-        background-color: #fff;
         width: 100%;
-        height: calc(100vh - 80px);
+        height: calc(100vh - 60px);
+        background-color: rgba(240, 210, 127, 0.95);
         flex-direction: column;
         align-items: center;
-        padding-top: 40px;
-        transition: all 0.3s ease;
+        justify-content: flex-start;
+        padding-top: 30px;
+        transition: all 0.5s;
         z-index: 999;
-        border-radius: 0;
+        transform: none;
     }
-    
+
     .nav-links.active {
         left: 0;
     }
-    
+
     .nav-links li {
         margin: 15px 0;
     }
-    
+
     .mobile-toggle {
         display: block;
+        grid-column: 3;
+        justify-self: end;
+    }
+    
+    .auth-buttons {
+        grid-column: 2;
+        justify-self: end;
+    }
+    
+    .header-spacer {
+        height: 60px;
     }
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 576px) {
+    .login-btn {
+        padding: 5px 15px;
+        font-size: 0.8rem;
+    }
+    
     .logo a {
-        font-size: 20px;
+        font-size: 1.2rem;
     }
     
     .logo i {
-        font-size: 20px;
+        font-size: 1.4rem;
     }
     
-    .auth-buttons .login-btn {
-        padding: 8px 20px;
-        font-size: 14px;
+    .fixed-header {
+        height: 50px;
+    }
+    
+    .header-spacer {
+        height: 50px;
     }
 }

@@ -1,6 +1,6 @@
-{{-- partials/header.blade.php --}}
+{{-- resources/views/frontend/partials/header.blade.php --}}
 
-<header class="site-header">
+<header class="site-header fixed-header">
     <div class="container">
         <div class="header-wrapper">
             <nav class="navbar">
@@ -20,7 +20,7 @@
                 
                 <div class="auth-buttons">
                     @guest
-                        <a href="{{ route('login') }}" class="login-btn">Login</a>
+                        <a href="{{ route('login') }}" class="login-btn">LOGIN</a>
                     @else
                         <div class="user-dropdown">
                             <img src="{{ Auth::user()->foto_profil_url }}" alt="{{ Auth::user()->name }}" class="user-avatar">
@@ -47,3 +47,6 @@
         </div>
     </div>
 </header>
+
+<!-- Spacer untuk menggantikan ruang yang diambil oleh fixed header -->
+<div class="header-spacer"></div>
