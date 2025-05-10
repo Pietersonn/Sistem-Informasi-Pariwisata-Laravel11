@@ -43,15 +43,6 @@
         }
 
 
-        .view-all:hover {
-            background-color: #E9C661;
-            /* Slightly darker shade on hover */
-        }
-
-        /* Icon positioning */
-        .view-all i {
-            margin-left: 8px;
-        }
     </style>
 @endpush
 

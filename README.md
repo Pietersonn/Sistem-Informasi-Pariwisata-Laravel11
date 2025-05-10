@@ -50,22 +50,58 @@ tampilan home masi sampah ya allah
     </section>
 
 
-    create wisata fasilitas jika ingin check box
-    
-    <div class="mb-3">
-    <label>Fasilitas</label>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="fasilitas[]" id="fasilitas_parkir" value="Parkir">
-                <label class="form-check-label" for="fasilitas_parkir">Parkir</label>
+detail.blade.php
+ <!-- Upcoming Events -->
+            @if($eventMendatang && $eventMendatang->count() > 0)
+            <div class="wisata-info-box">
+                <h4><i class="fas fa-calendar-alt me-2"></i>Event Mendatang</h4>
+                @foreach($eventMendatang as $event)
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $event->nama }}</h5>
+                        <div class="text-muted mb-2">
+                            <i class="far fa-calendar me-1"></i>
+                            {{ $event->tanggal_mulai->format('d M Y') }} - {{ $event->tanggal_selesai->format('d M Y') }}
+                        </div>
+                        <p class="card-text">{{ Str::limit($event->deskripsi, 100) }}</p>
+                        <a href="#" class="btn btn-sm btn-outline-primary">Detail Event</a>
+                    </div>
+                </div>
+                @endforeach
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="fasilitas[]" id="fasilitas_toilet" value="Toilet">
-                <label class="form-check-label" for="fasilitas_toilet">Toilet</label>
+            @endif
+            
+            <!-- Nearby Places -->
+            @if($wisataTerdekat && $wisataTerdekat->count() > 0)
+            <div class="wisata-info-box">
+                <h4><i class="fas fa-map-signs me-2"></i>Wisata Terdekat</h4>
+                @foreach($wisataTerdekat as $nearby)
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-4">
+                            <img src="{{ $nearby->gambarUtama ? asset($nearby->gambarUtama->file_gambar) : asset('images/placeholder-wisata.jpg') }}" 
+                                 class="img-fluid rounded-start" alt="{{ $nearby->nama }}"
+                                 style="height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="col-8">
+                            <div class="card-body p-2">
+                                <h6 class="card-title mb-1">{{ $nearby->nama }}</h6>
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <div class="rating-stars" style="font-size: 0.8rem;">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <i class="fas fa-star{{ $i <= $nearby->rata_rata_rating ? '' : '-o' }}"></i>
+                                        @endfor
+                                    </div>
+                                    <small class="text-muted">{{ $nearby->jarak }} km</small>
+                                </div>
+                                <a href="{{ route('wisata.detail', $nearby->slug) }}" class="btn btn-sm btn-outline-primary mt-1">Detail</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
             </div>
-            <!-- Checkbox lainnya -->
+            @endif
         </div>
-        <!-- Kolom lainnya -->
     </div>
 </div>

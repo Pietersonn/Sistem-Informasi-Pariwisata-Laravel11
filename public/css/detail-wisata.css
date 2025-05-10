@@ -1,0 +1,106 @@
+    /* Gallery styling */
+    .wisata-gallery {
+        position: relative;
+        overflow: hidden;
+        border-radius: 15px;
+        margin-bottom: 30px;
+    }
+    
+    .carousel-item img {
+        height: 500px;
+        object-fit: cover;
+        width: 100%;
+    }
+    
+    /* Info box styling */
+    .wisata-info-box {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        padding: 25px;
+        margin-bottom: 25px;
+    }
+    
+    .wisata-info-box h4 {
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        font-weight: 600;
+        color: #333;
+    }
+    
+    /* Rating styling */
+    .rating-stars {
+        color: #ffc107;
+    }
+    
+    .rating-count {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+    
+    /* Map styling */
+    #map {
+        height: 400px;
+        width: 100%;
+        border-radius: 10px;
+    }
+    
+    /* Facilities styling */
+    .facility-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .facility-item i {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #e9f7fe;
+        color: #4A98CF;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    
+    /* Action buttons */
+    .action-btn {
+        width: 100%;
+        padding: 12px;
+        border-radius: 30px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    
+    /* Testimonials */
+    .review-item {
+        border-bottom: 1px solid #f0f0f0;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .review-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    
+    .reviewer-info {
+        display: flex;
+        align-items: center;
+    }
+    
+    .reviewer-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+    
+    .review-date {
+        color: #6c757d;
+        font-size: 0.8rem;
+    }

@@ -1,36 +1,11 @@
-// Add this to your JS file
-document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle
-    const mobileToggle = document.getElementById('mobileToggle');
-    const navLinks = document.getElementById('navLinks');
-    
-    if (mobileToggle && navLinks) {
-        mobileToggle.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
-            
-            // Change icon based on menu state
-            const icon = mobileToggle.querySelector('i');
-            if (navLinks.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
+// JavaScript untuk menangani event scroll
+window.addEventListener('scroll', function() {
+    const header = document.getElementById('siteHeader');
+
+    // Cek jika halaman sudah di-scroll lebih dari 50px
+    if (window.scrollY > 50) {
+        header.classList.add('scrolled');  // Tambahkan kelas scrolled
+    } else {
+        header.classList.remove('scrolled');  // Hapus kelas scrolled
     }
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-        if (navLinks && navLinks.classList.contains('active')) {
-            if (!navLinks.contains(event.target) && !mobileToggle.contains(event.target)) {
-                navLinks.classList.remove('active');
-                
-                // Reset icon
-                const icon = mobileToggle.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        }
-    });
 });

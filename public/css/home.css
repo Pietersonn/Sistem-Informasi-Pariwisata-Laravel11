@@ -1,5 +1,3 @@
-
-
 .hero-content {
     max-width: 800px;
     width: 100%;
@@ -137,16 +135,13 @@
     background-color: #f8f9fa;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
 
 .section-header {
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .section-title {
@@ -164,21 +159,31 @@
 .section-subtitle {
     color: #666;
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     font-size: 16px;
 }
 
 .view-all {
     color: #1B4B66;
     text-decoration: none;
+    margin-bottom: 40px;
     font-weight: 500;
     display: flex;
     align-items: center;
     gap: 5px;
 }
 
+.view-all i {
+    margin-left: 8px;
+}
+
+.container {
+    padding-top: 30px;
+    /* Adjust to create more space between the button and the content above */
+}
+
 .view-all:hover {
-    color: #639599;
+    color: #1B4B66;
 }
 
 /* Wisata Popular */
@@ -351,15 +356,15 @@
     .hero-title {
         font-size: 36px;
     }
-    
+
     .kategori-container {
         flex-wrap: wrap;
     }
-    
+
     .wisata-grid {
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
-    
+
     .cta-container {
         flex-direction: column;
         text-align: center;
@@ -371,31 +376,31 @@
     .hero-title {
         font-size: 30px;
     }
-    
+
     .hero-subtitle {
         font-size: 16px;
     }
-    
+
     .search-form {
         flex-direction: column;
     }
-    
+
     .search-input {
         width: 100%;
     }
-    
+
     .search-button {
         position: relative;
         right: 0;
         transform: none;
         margin-top: 15px;
     }
-    
+
     .kategori-container {
         flex-direction: column;
         gap: 10px;
     }
-    
+
     .wisata-grid {
         grid-template-columns: 1fr;
     }

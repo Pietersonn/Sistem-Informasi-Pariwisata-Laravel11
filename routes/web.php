@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\WisataController as FrontendWisataController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -27,8 +28,8 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
     Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
     Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
-    Route::get('/wisata', [WisataController::class, 'index'])->name('wisata.index');
-    Route::get('/wisata/detail/{slug}', [WisataController::class, 'show'])->name('wisata.detail');
+    Route::get('/wisata', [FrontendWisataController::class, 'index'])->name('wisata.index');
+    Route::get('/wisata/detail/{slug}', [FrontendWisataController::class, 'show'])->name('wisata.detail');
 });
 
 // Route untuk user yang sudah login dan memiliki role admin

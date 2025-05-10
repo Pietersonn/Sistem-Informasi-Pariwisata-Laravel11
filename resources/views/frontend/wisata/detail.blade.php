@@ -1,132 +1,9 @@
 @extends('layouts.frontend')
 
 @section('title', $wisata->nama . ' - Detail Wisata')
-
-@push('styles')
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-<style>
-    /* Gallery styling */
-    .wisata-gallery {
-        position: relative;
-        overflow: hidden;
-        border-radius: 15px;
-        margin-bottom: 30px;
-    }
-    
-    .carousel-item img {
-        height: 500px;
-        object-fit: cover;
-        width: 100%;
-    }
-    
-    /* Info box styling */
-    .wisata-info-box {
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        padding: 25px;
-        margin-bottom: 25px;
-    }
-    
-    .wisata-info-box h4 {
-        border-bottom: 2px solid #f0f0f0;
-        padding-bottom: 15px;
-        margin-bottom: 20px;
-        font-weight: 600;
-        color: #333;
-    }
-    
-    /* Rating styling */
-    .rating-stars {
-        color: #ffc107;
-    }
-    
-    .rating-count {
-        color: #6c757d;
-        font-size: 0.9rem;
-    }
-    
-    /* Map styling */
-    #map {
-        height: 400px;
-        width: 100%;
-        border-radius: 10px;
-    }
-    
-    /* Facilities styling */
-    .facility-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-    
-    .facility-item i {
-        width: 30px;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #e9f7fe;
-        color: #4A98CF;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
-    
-    /* Action buttons */
-    .action-btn {
-        width: 100%;
-        padding: 12px;
-        border-radius: 30px;
-        font-weight: 600;
-        margin-bottom: 10px;
-    }
-    
-    /* Testimonials */
-    .review-item {
-        border-bottom: 1px solid #f0f0f0;
-        padding-bottom: 15px;
-        margin-bottom: 15px;
-    }
-    
-    .review-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-    }
-    
-    .reviewer-info {
-        display: flex;
-        align-items: center;
-    }
-    
-    .reviewer-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-right: 10px;
-    }
-    
-    .review-date {
-        color: #6c757d;
-        font-size: 0.8rem;
-    }
-</style>
-@endpush
-
 @section('content')
 <div class="container my-5">
-    <div class="row">
-        <!-- Breadcrumb -->
-        <div class="col-12 mb-4">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ url('/') }}">Beranda</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('wisata.index') }}">Destinasi</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ $wisata->nama }}</li>
-                </ol>
-            </nav>
-        </div>
+
         
         <!-- Main Content Column -->
         <div class="col-lg-8">
@@ -259,12 +136,6 @@
                 @else
                     <p class="text-muted">Tidak ada informasi fasilitas tersedia</p>
                 @endif
-            </div>
-            
-            <!-- Map -->
-            <div class="wisata-info-box">
-                <h4><i class="fas fa-map me-2"></i>Lokasi pada Peta</h4>
-                <div id="map"></div>
             </div>
             
             <!-- Reviews -->
@@ -407,60 +278,7 @@
                 @endif
             </div>
             
-            <!-- Upcoming Events -->
-            @if($eventMendatang && $eventMendatang->count() > 0)
-            <div class="wisata-info-box">
-                <h4><i class="fas fa-calendar-alt me-2"></i>Event Mendatang</h4>
-                @foreach($eventMendatang as $event)
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $event->nama }}</h5>
-                        <div class="text-muted mb-2">
-                            <i class="far fa-calendar me-1"></i>
-                            {{ $event->tanggal_mulai->format('d M Y') }} - {{ $event->tanggal_selesai->format('d M Y') }}
-                        </div>
-                        <p class="card-text">{{ Str::limit($event->deskripsi, 100) }}</p>
-                        <a href="#" class="btn btn-sm btn-outline-primary">Detail Event</a>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-            @endif
-            
-            <!-- Nearby Places -->
-            @if($wisataTerdekat && $wisataTerdekat->count() > 0)
-            <div class="wisata-info-box">
-                <h4><i class="fas fa-map-signs me-2"></i>Wisata Terdekat</h4>
-                @foreach($wisataTerdekat as $nearby)
-                <div class="card mb-3">
-                    <div class="row g-0">
-                        <div class="col-4">
-                            <img src="{{ $nearby->gambarUtama ? asset($nearby->gambarUtama->file_gambar) : asset('images/placeholder-wisata.jpg') }}" 
-                                 class="img-fluid rounded-start" alt="{{ $nearby->nama }}"
-                                 style="height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="col-8">
-                            <div class="card-body p-2">
-                                <h6 class="card-title mb-1">{{ $nearby->nama }}</h6>
-                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <div class="rating-stars" style="font-size: 0.8rem;">
-                                        @for($i = 1; $i <= 5; $i++)
-                                            <i class="fas fa-star{{ $i <= $nearby->rata_rata_rating ? '' : '-o' }}"></i>
-                                        @endfor
-                                    </div>
-                                    <small class="text-muted">{{ $nearby->jarak }} km</small>
-                                </div>
-                                <a href="{{ route('wisata.detail', $nearby->slug) }}" class="btn btn-sm btn-outline-primary mt-1">Detail</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-            @endif
-        </div>
-    </div>
-</div>
+           
 
 <!-- Review Modal -->
 @auth
@@ -512,38 +330,7 @@
 @endsection
 
 @push('scripts')
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize the map
-        @if(isset($wisata->latitude) && isset($wisata->longitude))
-        const map = L.map('map').setView([{{ $wisata->latitude }}, {{ $wisata->longitude }}], 15);
-        
-        // Add OpenStreetMap tiles
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        
-        // Add a marker
-        L.marker([{{ $wisata->latitude }}, {{ $wisata->longitude }}])
-            .addTo(map)
-            .bindPopup("{{ $wisata->nama }}")
-            .openPopup();
-        @else
-        // If coordinates are not available, try to geocode the address
-        const map = L.map('map').setView([-3.318061, 114.590143], 10); // Default to Banjarmasin
-        
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        
-        // Add a note about approximate location
-        L.marker([-3.318061, 114.590143])
-            .addTo(map)
-            .bindPopup("Lokasi perkiraan: {{ $wisata->alamat }}")
-            .openPopup();
-        @endif
-    });
     
     // Review rating stars
     const starInputs = document.querySelectorAll('input[name="rating"]');
