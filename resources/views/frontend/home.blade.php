@@ -155,7 +155,9 @@
                                 @else
                                     <p class="wisata-price free">Gratis</p>
                                 @endif
-                                <a href="{{ route('wisata.detail', $wisata->slug) }}" class="view-details">Lihat Detail</a>
+                                <a href="{{ route('wisata.detail', $wisata->slug) }}" class="btn btn-primary view-details">
+                                    <i class="fas fa-eye me-1"></i> Lihat Detail
+                                </a>
                             </div>
                         </div>
                     </div>

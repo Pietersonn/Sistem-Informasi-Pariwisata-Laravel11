@@ -18,6 +18,9 @@ class HomeController extends Controller
             ->orderBy('rata_rata_rating', 'desc')
             ->take(6)
             ->get();
+            
+            
+        
 
         // Ambil semua kategori
         $kategori = KategoriWisata::orderBy('urutan')
