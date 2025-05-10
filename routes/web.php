@@ -30,6 +30,15 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
     Route::get('/wisata', [FrontendWisataController::class, 'index'])->name('wisata.index');
     Route::get('/wisata/detail/{slug}', [FrontendWisataController::class, 'show'])->name('wisata.detail');
+    // Route untuk detail wisata (modal/popup dan halaman normal)
+    Route::get('/wisata/detail/{slug}', [FrontendWisataController::class, 'show'])->name('wisata.detail');
+
+    // Route untuk wisata favorit
+    Route::post('/wisata/favorit/{slug}', [FrontendWisataController::class, 'addToFavorite'])->name('wisata.favorit');
+    Route::delete('/wisata/favorit/{slug}', [FrontendWisataController::class, 'removeFromFavorite'])->name('wisata.favorit.hapus');
+
+    // Route untuk ulasan wisata
+    Route::post('/wisata/ulasan/{slug}', [FrontendWisataController::class, 'addReview'])->name('wisata.ulasan');
 });
 
 // Route untuk user yang sudah login dan memiliki role admin

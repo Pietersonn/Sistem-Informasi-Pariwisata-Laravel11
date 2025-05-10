@@ -8,10 +8,11 @@ use App\Models\Wisata;
 use App\Models\Ulasan;
 use App\Models\Favorit;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class WisataController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // Kode untuk halaman daftar wisata
         $wisata = Wisata::where('status', 'aktif')
@@ -48,11 +49,114 @@ class WisataController extends Controller
             ->take(5)
             ->get();
         
-        // Tampilkan view FRONTEND (bukan admin)
+        // Deteksi jika request AJAX/XHR, kirimkan modal saja
+        if (request()->ajax() || request()->wantsJson() || request()->header('X-Requested-With') == 'XMLHttpRequest') {
+            return view('frontend.wisata.detail-modal', compact(
+                'wisata',
+                'ulasan',
+                'sudahDifavorit'
+            ));
+        }
+        
+        // Jika bukan AJAX, tampilkan halaman normal dengan layout
         return view('frontend.wisata.detail', compact(
             'wisata',
             'ulasan',
             'sudahDifavorit'
         ));
+    }
+    
+    // Menambahkan ke favorit
+    public function addToFavorite($slug)
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        
+        $wisata = Wisata::where('slug', $slug)->firstOrFail();
+        
+        // Cek jika sudah difavoritkan
+        $favorit = Favorit::where('id_wisata', $wisata->id)
+            ->where('id_pengguna', Auth::id())
+            ->first();
+            
+        if (!$favorit) {
+            Favorit::create([
+                'id_wisata' => $wisata->id,
+                'id_pengguna' => Auth::id(),
+                'catatan' => null
+            ]);
+            
+            return back()->with('success', 'Wisata berhasil ditambahkan ke favorit');
+        }
+        
+        return back()->with('info', 'Wisata sudah ada di daftar favorit');
+    }
+    
+    // Menghapus dari favorit
+    public function removeFromFavorite($slug)
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        
+        $wisata = Wisata::where('slug', $slug)->firstOrFail();
+        
+        Favorit::where('id_wisata', $wisata->id)
+            ->where('id_pengguna', Auth::id())
+            ->delete();
+            
+        return back()->with('success', 'Wisata berhasil dihapus dari favorit');
+    }
+    
+    // Menambahkan ulasan
+    public function addReview(Request $request, $slug)
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'tanggal_kunjungan' => 'required|date',
+            'komentar' => 'required|min:10|max:500'
+        ]);
+        
+        $wisata = Wisata::where('slug', $slug)->firstOrFail();
+        
+        // Cek jika sudah pernah memberi ulasan
+        $existingReview = Ulasan::where('id_wisata', $wisata->id)
+            ->where('id_pengguna', Auth::id())
+            ->first();
+            
+        if ($existingReview) {
+            // Update ulasan yang sudah ada
+            $existingReview->update([
+                'rating' => $request->rating,
+                'tanggal_kunjungan' => $request->tanggal_kunjungan,
+                'komentar' => $request->komentar,
+                'status' => 'menunggu_moderasi' // Reset status moderasi
+            ]);
+            
+            // Update rata-rata rating
+            $wisata->hitungRataRating();
+            
+            return back()->with('success', 'Ulasan berhasil diperbarui');
+        }
+        
+        // Buat ulasan baru
+        Ulasan::create([
+            'id_wisata' => $wisata->id,
+            'id_pengguna' => Auth::id(),
+            'rating' => $request->rating,
+            'tanggal_kunjungan' => $request->tanggal_kunjungan,
+            'komentar' => $request->komentar,
+            'status' => 'menunggu_moderasi'
+        ]);
+        
+        // Update rata-rata rating
+        $wisata->hitungRataRating();
+        
+        return back()->with('success', 'Ulasan berhasil dikirim');
     }
 }
