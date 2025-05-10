@@ -7,7 +7,7 @@
                 <div class="logo">
                     <a href="{{ url('/') }}">
                         <i class="fas fa-building"></i>
-                        <span>JustWisata</span>
+                        <span>Miamories</span>
                     </a>
                 </div>
                 

@@ -5,18 +5,45 @@
 @push('styles')
     <style>
     .hero-section {
-    background-image: url('{{ asset('images/hero-image.png') }}');
-    background-size: cover;
-    background-position: center;
-    height: 780px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #fff;
-    padding: 0 20px;
-}
+        background-image: url('{{ asset('images/hero-image.png') }}');
+        background-size: cover;
+        background-position: center;
+        height: 780px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #fff;
+        padding: 0 20px;
+    }
+    
+    /* Updated styling for the Lihat Semua button */
+    .view-all {
+        background-color: #F0D27F; /* Golden/yellow color like in the image */
+        color: #000000; /* Black text color */
+        border: none;
+        border-radius: 25px; /* Fully rounded corners */
+        padding: 10px 25px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        font-size: 15px;
+        cursor: pointer;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+    
+    .view-all:hover {
+        background-color: #E9C661; /* Slightly darker shade on hover */
+    }
+    
+    /* Icon positioning */
+    .view-all i {
+        margin-left: 8px;
+    }
     </style>
 @endpush
 
@@ -24,13 +51,13 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="hero-content">
-            <h1 class="hero-title">Jelajahi Keindahan Kabupaten Hulu Sungai Tengah</h1>
-            <p class="hero-subtitle">Temukan destinasi wisata menakjubkan dan pengalaman tak terlupakan</p>
+            <h1 class="hero-title">it always seems imposibble until it's done :)</h1>
+            <p class="hero-subtitle">Don't be sad because it's over, be happy because it happened</p>
             
             <div class="search-box">
                 <form action="{{ route('wisata.index') }}" method="GET" class="search-form">
                     <div class="search-input">
-                        <input type="text" name="q" placeholder="Cari Destinasi Wisata...">
+                        <input type="text" name="q" placeholder="searching for memories...">
                     </div>
                     <button type="submit" class="search-button">
                         <i class="fas fa-search"></i>
@@ -39,31 +66,31 @@
             </div>
             
             <div class="kategori-section">
-                <h2 class="kategori-title">Kategori</h2>
+                <h2 class="kategori-title">Categories</h2>
                 <div class="kategori-container">
                     <a href="{{ url('/kategori/alam') }}" class="kategori-item">
                         <div class="kategori-icon">
                             <i class="fas fa-tree"></i>
                         </div>
-                        <span class="kategori-name">Alam</span>
+                        <span class="kategori-name">Funny</span>
                     </a>
                     <a href="{{ url('/kategori/budaya') }}" class="kategori-item">
                         <div class="kategori-icon">
                             <i class="fas fa-landmark"></i>
                         </div>
-                        <span class="kategori-name">Budaya</span>
+                        <span class="kategori-name">Happy</span>
                     </a>
                     <a href="{{ url('/kategori/religi') }}" class="kategori-item">
                         <div class="kategori-icon">
                             <i class="fas fa-place-of-worship"></i>
                         </div>
-                        <span class="kategori-name">Religi</span>
+                        <span class="kategori-name">Romantic</span>
                     </a>
                     <a href="{{ url('/kategori/kuliner') }}" class="kategori-item">
                         <div class="kategori-icon">
                             <i class="fas fa-utensils"></i>
                         </div>
-                        <span class="kategori-name">Kuliner</span>
+                        <span class="kategori-name">Sad</span>
                     </a>
                 </div>
             </div>
@@ -78,7 +105,7 @@
                     <h2 class="section-title">Wisata Populer</h2>
                     <p class="section-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
-                <a href="{{ route('wisata.index') }}" class="view-all">Lihat Semua <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ route('wisata.index') }}" class="view-all">Liat Semua <i class="fas fa-arrow-right"></i></a>
             </div>
             
             <div class="wisata-grid">

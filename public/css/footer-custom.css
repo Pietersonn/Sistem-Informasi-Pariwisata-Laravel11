@@ -1,0 +1,240 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Variabel warna */
+  :root {
+    --warna-primer: #0f4435;
+    --warna-aksen: #ffffff;
+    --warna-aksen-dua: #1e8766;
+    --warna-teks: #ffffff;
+    --warna-teks-sekunder: #aaaaaa;
+  }
+  
+  /* Footer */
+  .footer {
+    background-color: var(--warna-primer);
+    color: var(--warna-teks);
+    padding: 50px 0 20px;
+  }
+  
+  .container {
+    width: 85%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+  }
+  
+  /* Bagian Logo dan Deskripsi */
+  .footer-logo {
+    flex-basis: 25%;
+    min-width: 250px;
+  }
+  
+  .footer-logo h2 {
+    font-size: 24px;
+    margin-bottom: 0;
+  }
+  
+  .footer-logo p.tagline {
+    font-size: 12px;
+    color: var(--warna-teks-sekunder);
+    margin-bottom: 15px;
+  }
+  
+  .footer-logo p.deskripsi {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  
+  .sosial-media {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .sosial-media a {
+    color: var(--warna-teks);
+    font-size: 18px;
+    text-decoration: none;
+  }
+  
+  /* Bagian Menu */
+  .footer-menu {
+    flex-basis: 18%;
+    min-width: 150px;
+  }
+  
+  .footer-menu h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  
+  .footer-menu ul {
+    list-style: none;
+  }
+  
+  .footer-menu li {
+    margin-bottom: 10px;
+  }
+  
+  .footer-menu a {
+    color: var(--warna-teks-sekunder);
+    text-decoration: none;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s;
+  }
+  
+  .footer-menu a:hover {
+    color: var(--warna-aksen);
+  }
+  
+  .footer-menu a::before {
+    content: "›";
+    margin-right: 8px;
+    font-size: 12px;
+  }
+  
+  /* Bagian Kontak */
+  .footer-kontak {
+    flex-basis: 25%;
+    min-width: 250px;
+  }
+  
+  .footer-kontak h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  
+  .kontak-item {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: flex-start;
+  }
+  
+  .kontak-icon {
+    color: var(--warna-aksen-dua);
+    margin-right: 12px;
+    margin-top: 4px;
+  }
+  
+  .kontak-text {
+    font-size: 14px;
+    color: var(--warna-teks-sekunder);
+    line-height: 1.4;
+  }
+  
+  /* Garis Pembatas */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 30px 0;
+  }
+  
+  /* Copyright */
+  .copyright {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 15px 0;
+  }
+  
+  .copyright-text {
+    font-size: 13px;
+    color: var(--warna-teks-sekunder);
+  }
+  
+  .copyright-text a {
+    color: var(--warna-aksen);
+    text-decoration: none;
+  }
+  
+
+  
+  /* Responsif */
+  @media (max-width: 768px) {
+    .footer-container {
+      flex-direction: column;
+      gap: 40px;
+    }
+    
+    .footer-logo, .footer-menu, .footer-kontak, .subscribe-box {
+      flex-basis: 100%;
+    }
+    
+    .copyright {
+      flex-direction: column;
+      text-align: center;
+      gap: 15px;
+    }
+  }
+  
+  /* Bagian App Links */
+  .app-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .app-button {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    padding: 8px 15px;
+    text-decoration: none;
+    color: var(--warna-teks);
+  }
+  
+  .app-icon {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+  
+  .app-text {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .app-small {
+    font-size: 10px;
+    color: var(--warna-teks-sekunder);
+  }
+  
+  .app-name {
+    font-size: 14px;
+  }
+  
+  /* Bagian discover */
+  .discover-menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .discover-item {
+    font-size: 14px;
+    color: var(--warna-teks-sekunder);
+    text-decoration: none;
+    padding: 3px 0;
+  }
+  
+  .discover-item:hover {
+    color: var(--warna-aksen);
+  }

@@ -28,6 +28,8 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
     Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
     Route::get('/wisata', [WisataController::class, 'index'])->name('wisata.index');
+    Route::get('/wisata/detail/{slug}', [WisataController::class, 'show'])->name('wisata.detail');
+
 });
 
 // Route untuk user yang sudah login dan memiliki role admin

@@ -13,7 +13,7 @@ class Pengguna extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'pengguna';
+    protected $table = 'users';
 
     protected $fillable = [
         'nama', 
