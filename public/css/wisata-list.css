@@ -1,0 +1,397 @@
+/* ========== Wisata Listing CSS ========== */
+:root {
+    --listing-primary: #F0D27F; /* Golden/yellow color similar to home page */
+    --listing-secondary: #333333;
+    --listing-accent: #FF6B6B;
+    --listing-light: #FFFFFF;
+    --listing-gray: #F8F9FA;
+    --listing-dark-gray: #6c757d;
+    --listing-radius: 15px;
+    --listing-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    --listing-transition: all 0.3s ease;
+}
+
+/* ========== Header Section ========== */
+.listing-header {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), 
+                      url('../images/wisata-header.jpg');
+    background-size: cover;
+    background-position: center;
+    color: var(--listing-light);
+    padding: 100px 0 70px;
+    text-align: center;
+    position: relative;
+}
+
+.listing-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.listing-subtitle {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.9;
+}
+
+/* ========== Content Section ========== */
+.listing-content {
+    padding: 50px 0;
+    background-color: var(--listing-gray);
+}
+
+/* ========== Filter Section ========== */
+.listing-filter {
+    background-color: var(--listing-light);
+    border-radius: var(--listing-radius);
+    padding: 25px;
+    box-shadow: var(--listing-shadow);
+    margin-bottom: 30px;
+    position: sticky;
+    top: 100px;
+}
+
+.filter-heading {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    color: var(--listing-secondary);
+    font-weight: 600;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.filter-item {
+    margin-bottom: 20px;
+}
+
+.filter-item-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--listing-secondary);
+    font-size: 0.95rem;
+}
+
+.filter-dropdown,
+.filter-text-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    transition: var(--listing-transition);
+}
+
+.filter-dropdown:focus,
+.filter-text-input:focus {
+    border-color: var(--listing-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(240, 210, 127, 0.25);
+}
+
+.filter-search {
+    position: relative;
+}
+
+.filter-search-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--listing-dark-gray);
+    cursor: pointer;
+}
+
+.filter-apply-btn {
+    width: 100%;
+    background-color: var(--listing-primary);
+    color: var(--listing-secondary);
+    border: none;
+    padding: 12px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--listing-transition);
+    margin-top: 10px;
+}
+
+.filter-apply-btn:hover {
+    background-color: #e6c36a;
+    transform: translateY(-2px);
+}
+
+.filter-active {
+    border-color: var(--listing-primary);
+    box-shadow: 0 0 0 2px rgba(240, 210, 127, 0.25);
+}
+
+/* ========== Results Info ========== */
+.listing-result-info {
+    background-color: var(--listing-light);
+    padding: 15px 20px;
+    border-radius: var(--listing-radius);
+    box-shadow: var(--listing-shadow);
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--listing-dark-gray);
+    font-size: 0.95rem;
+}
+
+/* ========== Wisata Grid ========== */
+.listing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.listing-item {
+    background-color: var(--listing-light);
+    border-radius: var(--listing-radius);
+    overflow: hidden;
+    box-shadow: var(--listing-shadow);
+    transition: var(--listing-transition);
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.listing-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.fadeInUp {
+    animation: itemAppear 0.5s forwards;
+}
+
+@keyframes itemAppear {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.listing-item-img {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+}
+
+.listing-item-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.listing-item:hover .listing-item-img img {
+    transform: scale(1.05);
+}
+
+.listing-item-tag {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: var(--listing-primary);
+    color: var(--listing-secondary);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.listing-item-views {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.listing-item-content {
+    padding: 20px;
+}
+
+.listing-item-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--listing-secondary);
+}
+
+.listing-item-desc {
+    color: var(--listing-dark-gray);
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.listing-item-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+}
+
+.listing-item-location {
+    color: var(--listing-dark-gray);
+}
+
+.listing-item-location i {
+    color: var(--listing-accent);
+    margin-right: 5px;
+}
+
+.listing-item-rating {
+    color: #FFD700;
+}
+
+.listing-item-rating span {
+    color: var(--listing-dark-gray);
+    margin-left: 5px;
+}
+
+.listing-item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.listing-item-price {
+    font-weight: 600;
+    color: var(--listing-secondary);
+}
+
+.listing-item-price.free {
+    color: #28a745;
+}
+
+.listing-item-btn {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: var(--listing-primary);
+    color: var(--listing-secondary);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--listing-transition);
+}
+
+.listing-item-btn:hover {
+    background-color: #e6c36a;
+    transform: translateX(3px);
+}
+
+.listing-item-btn i {
+    margin-left: 5px;
+    transition: var(--listing-transition);
+}
+
+.listing-item-btn:hover i {
+    transform: translateX(3px);
+}
+
+/* ========== No Results ========== */
+.listing-empty {
+    grid-column: 1 / -1;
+    background-color: var(--listing-light);
+    padding: 50px 20px;
+    border-radius: var(--listing-radius);
+    text-align: center;
+    box-shadow: var(--listing-shadow);
+}
+
+.listing-empty i {
+    font-size: 3rem;
+    color: var(--listing-dark-gray);
+    margin-bottom: 15px;
+}
+
+.listing-empty p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--listing-secondary);
+}
+
+.listing-empty span {
+    color: var(--listing-dark-gray);
+}
+
+/* ========== Pagination ========== */
+.listing-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.listing-pagination ul.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    background-color: var(--listing-light);
+    border-radius: 30px;
+    box-shadow: var(--listing-shadow);
+    overflow: hidden;
+}
+
+.listing-pagination .page-item {
+    margin: 0;
+}
+
+.listing-pagination .page-item .page-link {
+    padding: 12px 20px;
+    color: var(--listing-secondary);
+    text-decoration: none;
+    transition: var(--listing-transition);
+    border: none;
+    background: transparent;
+    display: block;
+}
+
+.listing-pagination .page-item.active .page-link {
+    background-color: var(--listing-primary);
+    color: var(--listing-secondary);
+}
+
+.listing-pagination .page-item .page-link:hover {
+    background-color: rgba(240, 210, 127, 0.2);
+}
+
+/* ========== Responsive Adjustments ========== */
+@media (max-width: 991px) {
+    .listing-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 767px) {
+    .listing-title {
+        font-size: 2.2rem;
+    }
+    
+    .listing-subtitle {
+        font-size: 1rem;
+    }
+    
+    .listing-filter {
+        position: static;
+        margin-bottom: 30px;
+    }
+    
+    .listing-grid {
+        grid-template-columns: 1fr;
+    }
+}

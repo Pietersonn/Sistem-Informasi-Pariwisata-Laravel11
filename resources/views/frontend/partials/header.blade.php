@@ -13,7 +13,7 @@
                 
                 <ul class="nav-links" id="navLinks">
                     <li><a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a></li>
-                    <li><a href="{{ url('/destinasi') }}" class="{{ request()->is('destinasi*') ? 'active' : '' }}">Destinasi</a></li>
+                    <li><a href="{{ route('wisata.index') }}"  class="{{ request()->is('destinasi*') ? 'active' : '' }}">Destinasi</a></li>
                     <li><a href="{{ url('/kategori') }}" class="{{ request()->is('kategori*') ? 'active' : '' }}">Kategori</a></li>
                     <li><a href="{{ url('/event') }}" class="{{ request()->is('event*') ? 'active' : '' }}">Event</a></li>
                 </ul>

@@ -155,7 +155,7 @@
                 @endforeach
             </div>
             <div class="container">
-                <a href="{{ route('wisata.index') }}" class="view-all">Liat Semua <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ route('wisata.index') }}" class="view-all">Lihat Semua <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </section>
