@@ -105,3 +105,5 @@ detail.blade.php
         </div>
     </div>
 </div>
+
+tambahkan field latitude longitude di create.blade

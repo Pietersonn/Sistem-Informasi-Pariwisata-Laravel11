@@ -234,6 +234,24 @@
                         </select>
                     </div>
 
+                    <!-- Bagian peta -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="latitude">Latitude</label>
+                            <input type="number" step="any"
+                                class="form-control @error('latitude') is-invalid @enderror" id="latitude"
+                                name="latitude" value="{{ old('latitude', $wisata->latitude) }}">
+                            <small class="form-text text-muted">Contoh: -2.6151</small>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="longitude">Longitude</label>
+                            <input type="number" step="any"
+                                class="form-control @error('longitude') is-invalid @enderror" id="longitude"
+                                name="longitude" value="{{ old('longitude', $wisata->longitude) }}">
+                            <small class="form-text text-muted">Contoh: 115.4161</small>
+                        </div>
+                    </div>
+
                     <!-- Bagian Galeri Gambar -->
                     <div class="card mt-4">
                         <div class="card-header">

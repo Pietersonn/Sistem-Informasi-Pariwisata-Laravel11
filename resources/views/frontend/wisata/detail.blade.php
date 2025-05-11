@@ -269,15 +269,12 @@
                         <h4><i class="fas fa-map-marked-alt"></i> Lokasi</h4>
                         <p>{{ $wisata->alamat }}</p>
 
+                        <!-- Leaflet Map -->
+                        <div id="map" style="width: 100%; height: 300px; border-radius: 10px;"></div>
+
                         @if ($wisata->link_gmaps)
-                            <div class="map-container">
-                                <iframe width="100%" height="100%" frameborder="0" style="border:0"
-                                    src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q={{ urlencode($wisata->alamat) }}"
-                                    allowfullscreen>
-                                </iframe>
-                            </div>
                             <!-- Tambahkan tombol petunjuk arah di bawah peta -->
-                            <a href="{{ $wisata->link_gmaps }}" target="_blank" class="action-btn btn-direction">
+                            <a href="{{ $wisata->link_gmaps }}" target="_blank" class="action-btn btn-direction mt-2">
                                 <i class="fas fa-directions"></i> Petunjuk Arah
                             </a>
                         @endif
@@ -351,7 +348,7 @@
     <!-- Modal Ulasan -->
     @auth
         <div class="modal fade" id="ulasanModal" tabindex="-1" aria-labelledby="ulasanModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="ulasanModalLabel">Tulis Ulasan untuk {{ $wisata->nama }}</h5>
@@ -365,7 +362,7 @@
                                 <div class="rating-select">
                                     @for ($i = 5; $i >= 1; $i--)
                                         <input type="radio" id="star{{ $i }}" name="rating"
-                                            value="{{ $i }}" />
+                                            value="{{ $i }}" required />
                                         <label for="star{{ $i }}" title="{{ $i }} stars">
                                             <i class="fas fa-star"></i>
                                         </label>
@@ -373,15 +370,12 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="tanggal_kunjungan" class="form-label">Tanggal Kunjungan</label>
-                                <input type="date" class="form-control" id="tanggal_kunjungan" name="tanggal_kunjungan"
-                                    max="{{ date('Y-m-d') }}" required>
-                            </div>
+                            <!-- Menghilangkan input tanggal kunjungan, diganti dengan tanggal hari ini secara otomatis -->
+                            <input type="hidden" name="tanggal_kunjungan" value="{{ date('Y-m-d') }}">
 
                             <div class="mb-3">
                                 <label for="komentar" class="form-label">Komentar Anda</label>
-                                <textarea class="form-control" id="komentar" name="komentar" rows="5"
+                                <textarea class="form-control" id="komentar" name="komentar" rows="4"
                                     placeholder="Bagikan pengalaman Anda mengunjungi wisata ini..." required></textarea>
                             </div>
                         </div>
@@ -396,76 +390,100 @@
     @endauth
 
 
-
-@push('scripts')
-    <script>
-        // Fungsi untuk mengubah gambar utama
-        function changeMainImage(src) {
-            document.getElementById('mainImage').src = src;
-        }
-
-        // Fungsi share
-        function shareWisata() {
-            if (navigator.share) {
-                navigator.share({
-                        title: '{{ $wisata->nama }} - Wisata HST',
-                        text: 'Kunjungi wisata {{ $wisata->nama }} di Kabupaten Hulu Sungai Tengah',
-                        url: window.location.href
-                    })
-                    .catch(error => console.log('Error sharing:', error));
-            } else {
-                // Fallback untuk browser yang tidak mendukung Web Share API
-                const tempInput = document.createElement('input');
-                document.body.appendChild(tempInput);
-                tempInput.value = window.location.href;
-                tempInput.select();
-                document.execCommand('copy');
-                document.body.removeChild(tempInput);
-
-                alert('Link telah disalin ke clipboard! Bagikan ke teman-teman Anda.');
+    @push('scripts')
+        <script>
+            // Fungsi untuk mengubah gambar utama
+            function changeMainImage(src) {
+                document.getElementById('mainImage').src = src;
             }
-        }
 
-        // Inisialisasi star rating
-        const starInputs = document.querySelectorAll('input[name="rating"]');
-        const starLabels = document.querySelectorAll('.rating-select label');
+            // Fungsi share
+            function shareWisata() {
+                if (navigator.share) {
+                    navigator.share({
+                            title: '{{ $wisata->nama }} - Wisata HST',
+                            text: 'Kunjungi wisata {{ $wisata->nama }} di Kabupaten Hulu Sungai Tengah',
+                            url: window.location.href
+                        })
+                        .catch(error => console.log('Error sharing:', error));
+                } else {
+                    // Fallback untuk browser yang tidak mendukung Web Share API
+                    const tempInput = document.createElement('input');
+                    document.body.appendChild(tempInput);
+                    tempInput.value = window.location.href;
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
 
-        starInputs.forEach(input => {
-            input.addEventListener('change', function() {
-                const rating = this.value;
+                    alert('Link telah disalin ke clipboard! Bagikan ke teman-teman Anda.');
+                }
+            }
 
-                starLabels.forEach(label => {
-                    const labelFor = label.getAttribute('for');
-                    const labelRating = labelFor.replace('star', '');
+            // Inisialisasi star rating
+            const starInputs = document.querySelectorAll('input[name="rating"]');
+            const starLabels = document.querySelectorAll('.rating-select label');
 
-                    if (labelRating <= rating) {
-                        label.classList.add('selected');
-                    } else {
-                        label.classList.remove('selected');
-                    }
-                });
-            });
-        });
+            starInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    const rating = this.value;
 
-        // Carousel untuk gambar
-        document.addEventListener('DOMContentLoaded', function() {
-            const headerImage = document.getElementById('mainImage');
-            const thumbnails = document.querySelectorAll('.thumbnail');
+                    starLabels.forEach(label => {
+                        const labelFor = label.getAttribute('for');
+                        const labelRating = labelFor.replace('star', '');
 
-            thumbnails.forEach(thumb => {
-                thumb.addEventListener('click', function() {
-                    headerImage.src = this.src;
+                        if (labelRating <= rating) {
+                            label.classList.add('selected');
+                        } else {
+                            label.classList.remove('selected');
+                        }
+                    });
                 });
             });
 
-            // Inisialisasi modal jika ada
-            if (document.getElementById('ulasanModal')) {
-                const ulasanModal = new bootstrap.Modal(document.getElementById('ulasanModal'));
-            }
+            // Carousel untuk gambar
+            document.addEventListener('DOMContentLoaded', function() {
+                const headerImage = document.getElementById('mainImage');
+                const thumbnails = document.querySelectorAll('.thumbnail');
 
-            if (document.getElementById('allReviewsModal')) {
-                const allReviewsModal = new bootstrap.Modal(document.getElementById('allReviewsModal'));
-            }
-        });
-    </script>
-@endpush
+                thumbnails.forEach(thumb => {
+                    thumb.addEventListener('click', function() {
+                        headerImage.src = this.src;
+                    });
+                });
+
+                // Inisialisasi modal jika ada
+                if (document.getElementById('ulasanModal')) {
+                    const ulasanModal = new bootstrap.Modal(document.getElementById('ulasanModal'));
+                }
+
+                if (document.getElementById('allReviewsModal')) {
+                    const allReviewsModal = new bootstrap.Modal(document.getElementById('allReviewsModal'));
+                }
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Koordinat default (jika belum ada di database)
+                    // Ini koordinat Kabupaten Hulu Sungai Tengah, Kalimantan Selatan
+                    const defaultLat = -2.6151;
+                    const defaultLng = 115.4161;
+
+                    // Gunakan koordinat dari database jika ada
+                    const lat = {{ $wisata->latitude ?? 'defaultLat' }};
+                    const lng = {{ $wisata->longitude ?? 'defaultLng' }};
+
+                    // Inisialisasi peta
+                    const map = L.map('map').setView([lat, lng], 15);
+
+                    // Tambahkan tile layer (OpenStreetMap)
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(map);
+
+                    // Tambahkan marker
+                    const marker = L.marker([lat, lng]).addTo(map);
+
+                    // Tambahkan popup ke marker
+                    marker.bindPopup(`<b>{{ $wisata->nama }}</b><br>{{ $wisata->alamat }}`).openPopup();
+                });
+            });
+        </script>
+    @endpush

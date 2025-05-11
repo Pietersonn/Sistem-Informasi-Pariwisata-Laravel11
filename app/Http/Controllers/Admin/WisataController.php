@@ -212,6 +212,8 @@ class WisataController extends Controller
             'instagram' => 'nullable',
             'facebook' => 'nullable|url',
             'twitter' => 'nullable',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
             'status' => 'required|in:' . implode(',', [
                 Wisata::STATUS_AKTIF,
                 Wisata::STATUS_NONAKTIF,
