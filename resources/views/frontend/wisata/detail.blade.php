@@ -1,7 +1,25 @@
 @extends('layouts.frontend')
 
 @section('title', $wisata->nama . ' - Detail Wisata')
+@push('styles')
+    <style>
+        #map {
+            width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            z-index: 1;
+            /* Pastikan z-index tidak terlalu rendah */
+            position: relative;
+            overflow: hidden;
+        }
 
+        /* Pastikan tidak ada CSS lain yang mungkin mengintervensi */
+        .detail-card {
+            position: relative;
+            overflow: visible;
+        }
+    </style>
+@endpush
 
 
 @section('content')
@@ -268,12 +286,8 @@
                     <div class="detail-card">
                         <h4><i class="fas fa-map-marked-alt"></i> Lokasi</h4>
                         <p>{{ $wisata->alamat }}</p>
-
-                        <!-- Leaflet Map -->
                         <div id="map" style="width: 100%; height: 300px; border-radius: 10px;"></div>
-
                         @if ($wisata->link_gmaps)
-                            <!-- Tambahkan tombol petunjuk arah di bawah peta -->
                             <a href="{{ $wisata->link_gmaps }}" target="_blank" class="action-btn btn-direction mt-2">
                                 <i class="fas fa-directions"></i> Petunjuk Arah
                             </a>
@@ -388,8 +402,6 @@
             </div>
         </div>
     @endauth
-
-
     @push('scripts')
         <script>
             // Fungsi untuk mengubah gambar utama
@@ -440,50 +452,42 @@
                 });
             });
 
-            // Carousel untuk gambar
+            // Carousel untuk gambar dan inisialisasi peta
             document.addEventListener('DOMContentLoaded', function() {
-                const headerImage = document.getElementById('mainImage');
-                const thumbnails = document.querySelectorAll('.thumbnail');
+                console.log('DOM Content Loaded');
+                console.log('Map element exists:', document.getElementById('map') !== null);
+                console.log('Leaflet available:', typeof L !== 'undefined');
 
-                thumbnails.forEach(thumb => {
-                    thumb.addEventListener('click', function() {
-                        headerImage.src = this.src;
-                    });
-                });
+                // Koordinat default
+                const defaultLat = -2.6151;
+                const defaultLng = 115.4161;
 
-                // Inisialisasi modal jika ada
-                if (document.getElementById('ulasanModal')) {
-                    const ulasanModal = new bootstrap.Modal(document.getElementById('ulasanModal'));
-                }
-
-                if (document.getElementById('allReviewsModal')) {
-                    const allReviewsModal = new bootstrap.Modal(document.getElementById('allReviewsModal'));
-                }
-
-                document.addEventListener('DOMContentLoaded', function() {
-                    // Koordinat default (jika belum ada di database)
-                    // Ini koordinat Kabupaten Hulu Sungai Tengah, Kalimantan Selatan
-                    const defaultLat = -2.6151;
-                    const defaultLng = 115.4161;
-
+                try {
                     // Gunakan koordinat dari database jika ada
                     const lat = {{ $wisata->latitude ?? 'defaultLat' }};
                     const lng = {{ $wisata->longitude ?? 'defaultLng' }};
 
+                    console.log('Coordinates:', lat, lng);
+
                     // Inisialisasi peta
                     const map = L.map('map').setView([lat, lng], 15);
+                    console.log('Map initialized');
 
-                    // Tambahkan tile layer (OpenStreetMap)
+                    // Tambahkan tile layer
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     }).addTo(map);
+                    console.log('Tile layer added');
 
                     // Tambahkan marker
                     const marker = L.marker([lat, lng]).addTo(map);
+                    console.log('Marker added');
 
-                    // Tambahkan popup ke marker
-                    marker.bindPopup(`<b>{{ $wisata->nama }}</b><br>{{ $wisata->alamat }}`).openPopup();
-                });
+                    // Tambahkan popup
+                    L.marker([lat, lng]).addTo(map);
+                } catch (error) {
+                    console.error('Error initializing map:', error);
+                }
             });
         </script>
     @endpush

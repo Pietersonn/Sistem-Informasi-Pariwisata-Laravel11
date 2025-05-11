@@ -32,11 +32,16 @@
                                 <a href="{{ url('/profil') }}">
                                     <i class="fas fa-user"></i> Profil Saya
                                 </a>
+                                @if (Auth::user()->role == 'admin')
+                                    <a href="{{ url('/dashboard') }}">
+                                        <i class="fas fa-tachometer-alt"></i> Dashboard Admin
+                                    </a>
+                                @endif
                                 <a href="{{ url('/favorit') }}">
                                     <i class="fas fa-heart"></i> Wishlist
                                 </a>
                                 <div class="divider"></div>
-                                <a href="{{ url('/logout') }}">
+                                <a href="{{ url('/signout') }}">
                                     <i class="fas fa-sign-out-alt"></i> Logout
                                 </a>
                             </div>

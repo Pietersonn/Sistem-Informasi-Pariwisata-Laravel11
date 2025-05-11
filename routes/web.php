@@ -59,7 +59,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('profil');
 
     // Logout
-    Route::get('/logout', [SessionsController::class, 'destroy']);
+    Route::get('/signout', [SessionsController::class, 'destroy']);
 });
 
 // ==============================

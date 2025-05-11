@@ -14,23 +14,25 @@ class Wisata extends Model
     protected $table = 'wisata';
 
     protected $fillable = [
-        'nama', 
-        'slug', 
-        'id_pemilik', 
-        'alamat', 
-        'link_gmaps', 
-        'deskripsi', 
-        'jam_buka', 
-        'jam_tutup', 
-        'hari_operasional', 
-        'harga_tiket', 
-        'kontak', 
-        'email', 
-        'website', 
-        'instagram', 
-        'facebook', 
-        'twitter', 
-        'fasilitas', 
+        'nama',
+        'slug',
+        'id_pemilik',
+        'alamat',
+        'link_gmaps',
+        'deskripsi',
+        'jam_buka',
+        'jam_tutup',
+        'hari_operasional',
+        'harga_tiket',
+        'kontak',
+        'email',
+        'website',
+        'instagram',
+        'facebook',
+        'twitter',
+        'fasilitas',
+        'latitude' => 'float',
+        'longitude' => 'float',
         'status'
     ];
 
@@ -45,6 +47,8 @@ class Wisata extends Model
         'harga_tiket' => 'float',
         'rata_rata_rating' => 'float',
         'jam_buka' => 'datetime:H:i',
+        'latitude' => 'float',
+        'longitude' => 'float',
         'jam_tutup' => 'datetime:H:i'
     ];
 
@@ -58,9 +62,9 @@ class Wisata extends Model
     public function kategori()
     {
         return $this->belongsToMany(
-            KategoriWisata::class, 
-            'wisata_kategori', 
-            'id_wisata', 
+            KategoriWisata::class,
+            'wisata_kategori',
+            'id_wisata',
             'id_kategori'
         );
     }
@@ -112,7 +116,7 @@ class Wisata extends Model
     // Scope untuk wisata berdasarkan kategori
     public function scopeKategori($query, $kategoriId)
     {
-        return $query->whereHas('kategori', function($q) use ($kategoriId) {
+        return $query->whereHas('kategori', function ($q) use ($kategoriId) {
             $q->where('kategori_wisata.id', $kategoriId);
         });
     }
@@ -121,10 +125,10 @@ class Wisata extends Model
     public function hitungRataRating()
     {
         $rataRating = $this->ulasan()->avg('rating') ?? 0;
-        
+
         // Update rata-rata rating di database
         $this->update(['rata_rata_rating' => round($rataRating, 2)]);
-        
+
         return $rataRating;
     }
 
@@ -154,12 +158,12 @@ class Wisata extends Model
     public function getMediaSosial()
     {
         return [
-            'instagram' => $this->instagram 
-                ? "https://instagram.com/{$this->instagram}" 
+            'instagram' => $this->instagram
+                ? "https://instagram.com/{$this->instagram}"
                 : null,
             'facebook' => $this->facebook ?? null,
-            'twitter' => $this->twitter 
-                ? "https://twitter.com/{$this->twitter}" 
+            'twitter' => $this->twitter
+                ? "https://twitter.com/{$this->twitter}"
                 : null,
             'website' => $this->website
         ];
@@ -168,17 +172,17 @@ class Wisata extends Model
     // Accessor untuk URL Google Maps
     public function getLinkGmapsAttribute($value)
     {
-        return $value ? 
-            (strpos($value, 'http') === 0 ? $value : "https://www.google.com/maps/search/?api=1&query=" . urlencode($this->alamat)) 
+        return $value ?
+            (strpos($value, 'http') === 0 ? $value : "https://www.google.com/maps/search/?api=1&query=" . urlencode($this->alamat))
             : null;
     }
 
     // Validasi data wisata
     public function validasi()
     {
-        return !empty($this->nama) && 
-               !empty($this->alamat) && 
-               !empty($this->deskripsi);
+        return !empty($this->nama) &&
+            !empty($this->alamat) &&
+            !empty($this->deskripsi);
     }
 
     // Tambah view
