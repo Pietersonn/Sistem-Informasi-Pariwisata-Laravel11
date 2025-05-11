@@ -111,48 +111,41 @@
                                 <div class="text-muted mt-1">{{ $wisata->ulasan->count() }} reviews</div>
                             </div>
                         </div>
-
-                        @forelse($ulasan as $review)
-                            <div class="review-item">
-                                <div class="d-flex justify-content-between align-items-start">
-                                    <div class="reviewer-info">
-                                        <img src="{{ $review->pengguna->foto_profil_url ?? asset('images/default-avatar.png') }}"
-                                            alt="{{ $review->pengguna->name }}" class="reviewer-avatar">
-                                        <div>
-                                            <h6 class="mb-0">{{ $review->pengguna->name }}</h6>
-                                            <div class="rating-stars">
-                                                @for ($i = 1; $i <= 5; $i++)
-                                                    <i
-                                                        class="fas fa-star{{ $i <= $review->rating ? ' text-warning' : ' text-secondary' }}"></i>
-                                                @endfor
+                        @if ($wisata->ulasan->count() > 0)
+                            @foreach ($wisata->ulasan as $review)
+                                <div class="review-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="reviewer-info">
+                                            <img src="{{ $review->pengguna->foto_profil_url ?? asset('images/default-avatar.png') }}"
+                                                alt="{{ $review->pengguna->name }}" class="reviewer-avatar">
+                                            <div>
+                                                <h6 class="mb-0">{{ $review->pengguna->name }}</h6>
+                                                <div class="rating-stars">
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        <i
+                                                            class="fas fa-star{{ $i <= $review->rating ? ' text-warning' : ' text-secondary' }}"></i>
+                                                    @endfor
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="text-muted small">
+                                            {{ $review->created_at->format('d M Y') }}
+                                        </div>
                                     </div>
-                                    <div class="text-muted small">
-                                        {{ $review->created_at->format('d M Y') }}
+                                    <div class="mt-2">
+                                        <p>{{ $review->komentar }}</p>
                                     </div>
                                 </div>
-                                <div class="mt-2">
-                                    <p>{{ $review->komentar }}</p>
-                                </div>
-                            </div>
-                        @empty
+                            @endforeach
+                        @else
                             <div class="text-center py-4">
                                 <i class="fas fa-comment-slash fa-3x text-muted mb-3"></i>
                                 <p>Belum ada ulasan untuk wisata ini</p>
                             </div>
                         @endforelse
-
-                        @if ($ulasan->count() > 3)
-                            <div class="text-center mt-3">
-                                <button class="btn btn-outline-primary" data-bs-toggle="modal"
-                                    data-bs-target="#allReviewsModal">
-                                    Lihat Semua Ulasan
-                                </button>
-                            </div>
-                        @endif
                     </div>
                 </div>
+
 
                 <!-- Right Column -->
                 <div class="right-column">
@@ -402,60 +395,7 @@
         </div>
     @endauth
 
-    <!-- Modal Semua Ulasan -->
-    <div class="modal fade" id="allReviewsModal" tabindex="-1" aria-labelledby="allReviewsModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="allReviewsModalLabel">Semua Ulasan {{ $wisata->nama }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="rating-summary mb-4">
-                        <div>
-                            <span class="rating-large">{{ number_format($wisata->rata_rata_rating, 1) }}</span>
-                            <span class="ms-2">/5</span>
-                        </div>
-                        <div>
-                            <span class="rating-status {{ $ratingClass }}">{{ $ratingText }}</span>
-                            <div class="text-muted mt-1">{{ $wisata->ulasan->count() }} reviews</div>
-                        </div>
-                    </div>
 
-                    @foreach ($wisata->ulasan as $review)
-                        <div class="review-item">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div class="reviewer-info">
-                                    <img src="{{ $review->pengguna->foto_profil_url ?? asset('images/default-avatar.png') }}"
-                                        alt="{{ $review->pengguna->name }}" class="reviewer-avatar">
-                                    <div>
-                                        <h6 class="mb-0">{{ $review->pengguna->name }}</h6>
-                                        <div class="rating-stars">
-                                            @for ($i = 1; $i <= 5; $i++)
-                                                <i
-                                                    class="fas fa-star{{ $i <= $review->rating ? ' text-warning' : ' text-secondary' }}"></i>
-                                            @endfor
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-muted small">
-                                    {{ $review->created_at->format('d M Y') }}
-                                </div>
-                            </div>
-                            <div class="mt-2">
-                                <p>{{ $review->komentar }}</p>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
 
 @push('scripts')
     <script>

@@ -10,33 +10,25 @@
                         <span>Miamories</span>
                     </a>
                 </div>
-                
+
                 <ul class="nav-links" id="navLinks">
                     <li><a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a></li>
-                    <li><a href="{{ route('wisata.index') }}"  class="{{ request()->is('destinasi*') ? 'active' : '' }}">Destinasi</a></li>
-                    <li><a href="{{ url('/kategori') }}" class="{{ request()->is('kategori*') ? 'active' : '' }}">Kategori</a></li>
-                    <li><a href="{{ url('/event') }}" class="{{ request()->is('event*') ? 'active' : '' }}">Event</a></li>
+                    <li><a href="{{ route('wisata.index') }}"
+                            class="{{ request()->is('destinasi*') ? 'active' : '' }}">Destinasi</a></li>
+                    <li><a href="{{ url('/kategori') }}"
+                            class="{{ request()->is('kategori*') ? 'active' : '' }}">Kategori</a></li>
+                    <li><a href="{{ url('/event') }}" class="{{ request()->is('event*') ? 'active' : '' }}">Event</a>
+                    </li>
                 </ul>
-                
+
                 <div class="auth-buttons">
                     @guest
                         <a href="{{ route('login') }}" class="login-btn">LOGIN</a>
                     @else
                         <div class="user-dropdown">
-                            <img src="{{ Auth::user()->foto_profil_url }}" alt="{{ Auth::user()->name }}" class="user-avatar">
+                            <img src="{{ Auth::user()->foto_profil_url }}" alt="{{ Auth::user()->name }}"
+                                class="user-avatar">
                             <div class="dropdown-content">
-                                @if(Auth::user()->role == 'admin')
-                                <a href="{{ url('/admin/dashboard') }}">
-                                    <i class="fas fa-tachometer-alt"></i> Dashboard Admin
-                                </a>
-                                <div class="divider"></div>
-                                @endif
-                                @if(Auth::user()->role == 'pemilik_wisata')
-                                <a href="{{ url('/pemilik/dashboard') }}">
-                                    <i class="fas fa-tachometer-alt"></i> Dashboard Pemilik
-                                </a>
-                                <div class="divider"></div>
-                                @endif
                                 <a href="{{ url('/profil') }}">
                                     <i class="fas fa-user"></i> Profil Saya
                                 </a>
@@ -51,7 +43,7 @@
                         </div>
                     @endguest
                 </div>
-                
+
                 <div class="mobile-toggle" id="mobileToggle">
                     <i class="fas fa-bars"></i>
                 </div>

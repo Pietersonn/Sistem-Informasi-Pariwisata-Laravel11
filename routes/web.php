@@ -1,5 +1,4 @@
 <?php
-// routes/web.php
 
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\InfoUserController;
@@ -59,10 +58,6 @@ Route::middleware(['auth'])->group(function () {
         return view('frontend.profil.dashboard');
     })->name('profil');
 
-    Route::get('/favorit', function () {
-        return view('frontend.profil.favorit');
-    })->name('favorit');
-
     // Logout
     Route::get('/logout', [SessionsController::class, 'destroy']);
 });
@@ -70,48 +65,75 @@ Route::middleware(['auth'])->group(function () {
 // ==============================
 // ADMIN ROUTES
 // ==============================
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    // Dashboard
-    Route::get('/dashboard', function () {
+// Route untuk user yang sudah login dan memiliki role admin
+Route::middleware(['auth', 'role:admin'])->group(function () {
+
+    Route::get('dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-
-    // User Profile
+    Route::get('profile', function () {
+        return view('profile');
+    })->name('profile');
+    Route::get('tables', function () {
+        return view('tables');
+    })->name('tables');
+    Route::get('/logout', [SessionsController::class, 'destroy']);
     Route::get('/user-profile', [InfoUserController::class, 'create']);
     Route::post('/user-profile', [InfoUserController::class, 'store']);
 
-    // Wisata Management
-    Route::resource('/wisata', WisataController::class);
+    Route::middleware(['auth', 'role:admin'])->group(function () {
+        Route::prefix('admin')->name('admin.')->group(function () {
+            // Route Wisata
+            Route::get('/wisata', [WisataController::class, 'index'])->name('wisata.index');
+            Route::get('/wisata/create', [WisataController::class, 'create'])->name('wisata.create');
+            Route::post('/wisata', [WisataController::class, 'store'])->name('wisata.store');
+            Route::get('/wisata/{wisata}', [WisataController::class, 'show'])->name('wisata.show');
+            Route::get('/wisata/{wisata}/edit', [WisataController::class, 'edit'])->name('wisata.edit');
+            Route::put('/wisata/{wisata}', [WisataController::class, 'update'])->name('wisata.update');
+            Route::delete('/wisata/{wisata}', [WisataController::class, 'destroy'])->name('wisata.destroy');
 
-    // Kategori Management
-    Route::resource('/kategori', KategoriWisataController::class)->except(['show']);
+            // Route Kategori
+            Route::get('/kategori', [KategoriWisataController::class, 'index'])->name('kategori.index');
+            Route::get('/kategori/create', [KategoriWisataController::class, 'create'])->name('kategori.create');
+            Route::post('/kategori', [KategoriWisataController::class, 'store'])->name('kategori.store');
+            Route::get('/kategori/{kategori}/edit', [KategoriWisataController::class, 'edit'])->name('kategori.edit');
+            Route::put('/kategori/{kategori}', [KategoriWisataController::class, 'update'])->name('kategori.update');
+            Route::delete('/kategori/{kategori}', [KategoriWisataController::class, 'destroy'])->name('kategori.destroy');
 
-    // Ulasan Management
-    Route::get('/ulasan', [UlasanController::class, 'index'])->name('ulasan.index');
-    Route::get('/ulasan/{ulasan}', [UlasanController::class, 'show'])->name('ulasan.show');
-    Route::put('/ulasan/{ulasan}/status', [UlasanController::class, 'updateStatus'])->name('ulasan.update-status');
-    Route::delete('/ulasan/{ulasan}', [UlasanController::class, 'destroy'])->name('ulasan.destroy');
+            // Route Ulasan
+            Route::get('/ulasan', [UlasanController::class, 'index'])->name('ulasan.index');
+            Route::get('/ulasan/{ulasan}', [UlasanController::class, 'show'])->name('ulasan.show');
+            Route::put('/ulasan/{ulasan}/status', [UlasanController::class, 'updateStatus'])->name('ulasan.update-status');
+            Route::delete('/ulasan/{ulasan}', [UlasanController::class, 'destroy'])->name('ulasan.destroy');
 
-    // Pengguna Management
-    Route::resource('/pengguna', PenggunaController::class);
+            // Route pengguna
+            Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
+            Route::get('/pengguna/create', [PenggunaController::class, 'create'])->name('pengguna.create');
+            Route::post('/pengguna', [PenggunaController::class, 'store'])->name('pengguna.store');
+            Route::get('/pengguna/{pengguna}', [PenggunaController::class, 'show'])->name('pengguna.show');
+            Route::get('/pengguna/{pengguna}/edit', [PenggunaController::class, 'edit'])->name('pengguna.edit');
+            Route::put('/pengguna/{pengguna}', [PenggunaController::class, 'update'])->name('pengguna.update');
+            Route::delete('/pengguna/{pengguna}', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');
 
-    // Laporan
-    Route::prefix('laporan')->name('laporan.')->group(function () {
-        Route::get('/wisata', [LaporanController::class, 'wisata'])->name('wisata');
-        Route::get('/ulasan', [LaporanController::class, 'ulasan'])->name('ulasan');
-        Route::get('/kunjungan', [LaporanController::class, 'kunjungan'])->name('kunjungan');
-        Route::get('/event', [LaporanController::class, 'event'])->name('event');
-        Route::get('/ekspor/{jenis}', [LaporanController::class, 'eksporPdf'])->name('ekspor');
+            // Route Laporan
+            Route::prefix('laporan')->name('laporan.')->group(function () {
+                Route::get('/wisata', [LaporanController::class, 'wisata'])->name('wisata');
+                Route::get('/ulasan', [LaporanController::class, 'ulasan'])->name('ulasan');
+                Route::get('/kunjungan', [LaporanController::class, 'kunjungan'])->name('kunjungan');
+                Route::get('/event', [LaporanController::class, 'event'])->name('event');
+                Route::get('/ekspor/{jenis}', [LaporanController::class, 'eksporPdf'])->name('ekspor');
+            });
+        });
     });
-});
 
-// ==============================
-// PEMILIK WISATA ROUTES
-// ==============================
-Route::middleware(['auth', 'role:pemilik_wisata'])->prefix('pemilik')->name('pemilik.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('pemilik.dashboard');
-    })->name('dashboard');
+    // ==============================
+    // PEMILIK WISATA ROUTES
+    // ==============================
+    Route::middleware(['auth', 'role:pemilik_wisata'])->prefix('pemilik')->name('pemilik.')->group(function () {
+        Route::get('/dashboard', function () {
+            return view('pemilik.dashboard');
+        })->name('dashboard');
 
-    // Tambahkan routes lain untuk pemilik wisata jika diperlukan
+        // Tambahkan routes lain untuk pemilik wisata jika diperlukan
+    });
 });

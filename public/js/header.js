@@ -1,10 +1,12 @@
-// public/js/header-custom.js
-
 document.addEventListener('DOMContentLoaded', function() {
     // Element selectors
     const header = document.querySelector('.fixed-header');
     const mobileToggle = document.getElementById('mobileToggle');
     const navLinks = document.getElementById('navLinks');
+    
+    // Dropdown Profile
+    const userDropdown = document.querySelector('.user-dropdown');
+    const userAvatarBtn = document.querySelector('.user-avatar-btn');
     
     // Tambahkan area trigger untuk hover
     const triggerArea = document.createElement('div');
@@ -131,5 +133,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 icon.classList.add('fa-bars');
             }
         });
+    });
+    
+    // Event listener untuk kontrol klik dropdown profile
+    userAvatarBtn.addEventListener('click', function() {
+        userDropdown.classList.toggle('active');  // Toggling dropdown visibility
+    });
+
+    // Tutup dropdown jika klik di luar
+    document.addEventListener('click', function(event) {
+        if (!userDropdown.contains(event.target) && !userAvatarBtn.contains(event.target)) {
+            userDropdown.classList.remove('active'); // Menyembunyikan dropdown jika klik di luar
+        }
     });
 });
