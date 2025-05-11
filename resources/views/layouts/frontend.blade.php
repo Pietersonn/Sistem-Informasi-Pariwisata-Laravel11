@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     <link rel="stylesheet" href="{{ asset('css/detail-wisata.css') }}">
     <link rel="stylesheet" href="{{ asset('css/wisata-list.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
     @stack('styles')
 </head>
 

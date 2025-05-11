@@ -25,6 +25,18 @@
                         <div class="user-dropdown">
                             <img src="{{ Auth::user()->foto_profil_url }}" alt="{{ Auth::user()->name }}" class="user-avatar">
                             <div class="dropdown-content">
+                                @if(Auth::user()->role == 'admin')
+                                <a href="{{ url('/admin/dashboard') }}">
+                                    <i class="fas fa-tachometer-alt"></i> Dashboard Admin
+                                </a>
+                                <div class="divider"></div>
+                                @endif
+                                @if(Auth::user()->role == 'pemilik_wisata')
+                                <a href="{{ url('/pemilik/dashboard') }}">
+                                    <i class="fas fa-tachometer-alt"></i> Dashboard Pemilik
+                                </a>
+                                <div class="divider"></div>
+                                @endif
                                 <a href="{{ url('/profil') }}">
                                     <i class="fas fa-user"></i> Profil Saya
                                 </a>

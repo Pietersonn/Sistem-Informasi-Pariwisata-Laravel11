@@ -14,6 +14,7 @@ class RegisterController extends Controller
         return view('session.register');
     }
 
+    // Di app/Http/Controllers/RegisterController.php
     public function store()
     {
         $attributes = request()->validate([
@@ -22,13 +23,16 @@ class RegisterController extends Controller
             'password' => ['required', 'min:5', 'max:20'],
             'agreement' => ['accepted']
         ]);
-        $attributes['password'] = bcrypt($attributes['password'] );
 
-        
+        // Tambahkan role default
+        $attributes['password'] = bcrypt($attributes['password']);
+        $attributes['role'] = 'user'; // Default role
 
-        session()->flash('success', 'Your account has been created.');
+        session()->flash('success', 'Akun berhasil dibuat.');
         $user = User::create($attributes);
-        Auth::login($user); 
-        return redirect('/dashboard');
+        Auth::login($user);
+
+        // Redirect ke halaman utama frontend
+        return redirect('/');
     }
 }
