@@ -33,6 +33,7 @@ class Wisata extends Model
         'fasilitas',
         'latitude' => 'float',
         'longitude' => 'float',
+        'rata_rata_rating',
         'status'
     ];
 
@@ -124,7 +125,9 @@ class Wisata extends Model
     // Hitung rata-rata rating
     public function hitungRataRating()
     {
-        $rataRating = $this->ulasan()->avg('rating') ?? 0;
+        $rataRating = $this->ulasan()
+            ->where('status', 'ditampilkan')
+            ->avg('rating') ?? 0;
 
         // Update rata-rata rating di database
         $this->update(['rata_rata_rating' => round($rataRating, 2)]);

@@ -15,12 +15,12 @@ class HomeController extends Controller
         // Ambil wisata rekomendasi (berdasarkan rating tertinggi)
         $wisata_rekomendasi = Wisata::where('status', 'aktif')
             ->with(['kategori', 'gambarUtama'])
+            ->select('id', 'nama', 'slug', 'alamat', 'deskripsi', 'harga_tiket', 'rata_rata_rating') // Pastikan kolom ini diambil
             ->orderBy('rata_rata_rating', 'desc')
             ->take(6)
             ->get();
-            
-            
-        
+
+
 
         // Ambil semua kategori
         $kategori = KategoriWisata::orderBy('urutan')
