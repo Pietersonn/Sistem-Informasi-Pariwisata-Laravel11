@@ -134,7 +134,7 @@
                                 <div class="review-item">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div class="reviewer-info">
-                                            <img src="{{ $review->pengguna->foto_profil_url ?? asset('images/default-avatar.png') }}"
+                                            <img src="{{ $review->pengguna->foto_profil_url ?? asset('images/default.png') }}"
                                                 alt="{{ $review->pengguna->name }}" class="reviewer-avatar">
                                             <div>
                                                 <h6 class="mb-0">{{ $review->pengguna->name }}</h6>

@@ -136,7 +136,7 @@ class WisataController extends Controller
                 'rating' => $request->rating,
                 'tanggal_kunjungan' => Carbon::now()->format('Y-m-d'), // Menggunakan tanggal hari ini
                 'komentar' => $request->komentar,
-                'status' => 'menunggu_moderasi' // Reset status moderasi
+                'status' => 'ditampilkan' // Reset status moderasi
             ]);
 
             // Update rata-rata rating
@@ -152,7 +152,7 @@ class WisataController extends Controller
             'rating' => $request->rating,
             'tanggal_kunjungan' => Carbon::now()->format('Y-m-d'), // Menggunakan tanggal hari ini
             'komentar' => $request->komentar,
-            'status' => 'menunggu_moderasi'
+            'status' => 'ditampilkan'
         ]);
 
         // Update rata-rata rating
