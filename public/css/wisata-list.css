@@ -1,7 +1,6 @@
 /* ========== Wisata Listing CSS ========== */
 :root {
     --listing-primary: #F0D27F;
-    /* Golden/yellow color similar to home page */
     --listing-secondary: #333333;
     --listing-accent: #FF6B6B;
     --listing-light: #FFFFFF;
@@ -12,125 +11,185 @@
     --listing-transition: all 0.3s ease;
 }
 
+body {
+    background-color: #F4F6F9;
+}
 
+/* ========== Header Section ========== */
+.listing-header {
+    background-image: 
+        url('../images/listing.png');
+    padding: 120px 0 40px;
+    position: relative;
+}
+
+.listing-header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
 
 .listing-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 15px;
+    color: var(--listing-light);
 }
 
 .listing-subtitle {
-    font-size: 1.2rem;
-    max-width: 700px;
-    margin: 0 auto;
-    opacity: 0.9;
+    color: #FFf;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 30px 0;
+    opacity: 0.8;
 }
 
-/* ========== Content Section ========== */
-.listing-content {
-    padding: 50px 0;
-    background-color: var(--listing-gray);
-}
-
-/* ========== Filter Section ========== */
-.listing-filter {
+/* ========== Search Filter Section ========== */
+.listing-search-filter {
     background-color: var(--listing-light);
     border-radius: var(--listing-radius);
-    padding: 25px;
+    padding: 20px;
     box-shadow: var(--listing-shadow);
-    margin-bottom: 30px;
-    position: sticky;
-    top: 100px;
 }
 
-.filter-heading {
-    font-size: 1.4rem;
-    margin-bottom: 20px;
-    color: var(--listing-secondary);
-    font-weight: 600;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
+.search-filter-row {
+    display: flex;
+    gap: 15px;
+    align-items: center;
 }
 
-.filter-item {
-    margin-bottom: 20px;
+.search-filter-input,
+.search-filter-dropdown {
+    flex: 1;
 }
 
-.filter-item-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: var(--listing-secondary);
-    font-size: 0.95rem;
-}
-
-.filter-dropdown,
-.filter-text-input {
+.filter-text-input,
+.filter-dropdown {
     width: 100%;
     padding: 12px 15px;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    font-size: 0.9rem;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    font-size: 0.95rem;
     transition: var(--listing-transition);
 }
 
-.filter-dropdown:focus,
-.filter-text-input:focus {
+.filter-text-input,
+.filter-dropdown {
     border-color: var(--listing-primary);
     outline: none;
     box-shadow: 0 0 0 3px rgba(240, 210, 127, 0.25);
 }
 
-.filter-search {
-    position: relative;
+.search-filter-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .filter-search-btn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: var(--listing-dark-gray);
-    cursor: pointer;
-}
-
-.filter-apply-btn {
-    width: 100%;
     background-color: var(--listing-primary);
     color: var(--listing-secondary);
     border: none;
-    padding: 12px;
-    border-radius: 25px;
+    padding: 12px 20px;
+    border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
     transition: var(--listing-transition);
-    margin-top: 10px;
 }
 
-.filter-apply-btn:hover {
-    background-color: #e6c36a;
-    transform: translateY(-2px);
+.filter-search-btn {
+    background-color: #E6C36A;
 }
 
-.filter-active {
-    border-color: var(--listing-primary);
-    box-shadow: 0 0 0 2px rgba(240, 210, 127, 0.25);
+.filter-reset-btn {
+    background-color: #E9ECEF;
+    color: var(--listing-secondary);
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: var(--listing-transition);
+}
+
+.filter-reset-btn {
+    background-color: #DEE2E6;
+}
+
+/* ========== Active Filters ========== */
+.active-filters {
+    margin-top: 20px;
+}
+
+.active-filters-label{
+    color: #FFA500 ;
+}
+
+.active-filters-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.active-filter-tag {
+    display: inline-flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--listing-light);
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: var(--listing-transition);
+}
+
+.active-filter-tag span {
+    margin-right: 8px;
+}
+
+.filter-remove {
+    color: var(--listing-light);
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    opacity: 0.7;
+    transition: var(--listing-transition);
+}
+
+.filter-remove {
+    opacity: 1;
+}
+
+.clear-all-filters {
+    color: var(--listing-light);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    transition: var(--listing-transition);
+    margin-left: auto;
+}
+
+.clear-all-filters:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    text-decoration: none;
 }
 
 /* ========== Results Info ========== */
+/* ========== Listing Content ========== */
+.listing-content {
+    padding: 40px 0;
+    background-color: var(--listing-gray);
+}
+
 .listing-result-info {
     background-color: var(--listing-light);
     padding: 15px 20px;
     border-radius: var(--listing-radius);
     box-shadow: var(--listing-shadow);
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--listing-dark-gray);
+    margin-bottom: 20px;
+    color: var(--listing-secondary);
     font-size: 0.95rem;
 }
 
@@ -138,8 +197,7 @@
 .listing-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
-    margin-bottom: 40px;
+    gap: 20px;
 }
 
 .listing-item {
@@ -235,6 +293,8 @@
 
 .listing-item-location {
     color: var(--listing-dark-gray);
+    display: flex;
+    align-items: center;
 }
 
 .listing-item-location i {
@@ -244,6 +304,12 @@
 
 .listing-item-rating {
     color: #FFD700;
+    display: flex;
+    align-items: center;
+}
+
+.listing-item-rating i {
+    margin-right: 2px;
 }
 
 .listing-item-rating span {
@@ -265,11 +331,12 @@
 }
 
 .listing-item-price.free {
-    color: #28a745;
+    color: #2ECC71;
 }
 
 .listing-item-btn {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     padding: 8px 15px;
     background-color: var(--listing-primary);
     color: var(--listing-secondary);
@@ -281,17 +348,13 @@
 }
 
 .listing-item-btn:hover {
-    background-color: #e6c36a;
+    background-color: #E6C36A;
     transform: translateX(3px);
 }
 
 .listing-item-btn i {
     margin-left: 5px;
     transition: var(--listing-transition);
-}
-
-.listing-item-btn:hover i {
-    transform: translateX(3px);
 }
 
 /* ========== No Results ========== */
@@ -361,85 +424,25 @@
     background-color: rgba(240, 210, 127, 0.2);
 }
 
-.active-filters {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: 20px;
-    padding: 12px 18px;
-    background-color: rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
-    backdrop-filter: blur(5px);
-}
-
-.active-filters-label {
-    font-weight: 500;
-    margin-right: 10px;
-    color: #fff;
-}
-
-.active-filter-tag {
-    display: inline-flex;
-    align-items: center;
-    background-color: #fff;
-    color: #333;
-    padding: 5px 12px;
-    border-radius: 20px;
-    margin: 5px;
-    font-size: 0.85rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
-}
-
-.active-filter-tag:hover {
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-}
-.filter-remove {
-    margin-left: 8px;
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: #666;
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.filter-remove:hover {
-    color: #f44336;
-}
-
-.clear-all-filters {
-    margin-left: auto;
-    color: #fff;
-    text-decoration: underline;
-    padding: 5px 10px;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
-}
-
-.clear-all-filters:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    text-decoration: none;
-}
-
 /* ========== Responsive Adjustments ========== */
 @media (max-width: 991px) {
     .listing-grid {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     }
+
+    .search-filter-row {
+        flex-direction: column;
+        gap: 15px;
+    }
 }
 
 @media (max-width: 767px) {
     .listing-title {
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
 
     .listing-subtitle {
         font-size: 1rem;
-    }
-
-    .listing-filter {
-        position: static;
-        margin-bottom: 30px;
     }
 
     .listing-grid {

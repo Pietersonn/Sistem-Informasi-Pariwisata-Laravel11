@@ -8,6 +8,38 @@
             <h1 class="listing-title">Jelajahi Semua Destinasi</h1>
             <p class="listing-subtitle">Temukan kenangan dan pengalaman baru di berbagai tempat menarik</p>
 
+            <!-- Filter Section Moved Inside listing-header -->
+            <div class="listing-search-filter">
+                <form action="{{ route('wisata.index') }}" method="GET" id="filterForm">
+                    <div class="search-filter-row">
+                        <div class="search-filter-input">
+                            <input type="text" name="q" placeholder="Nama Wisata" value="{{ request('q') }}" class="filter-text-input">
+                        </div>
+                        <div class="search-filter-dropdown">
+                            <select name="kategori" class="filter-dropdown" id="kategoriFilter">
+                                <option value="">All Category</option>
+                                @foreach ($kategori as $kat)
+                                    <option value="{{ $kat->id }}"
+                                        {{ request('kategori') == $kat->id ? 'selected' : '' }}>
+                                        {{ $kat->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="search-filter-dropdown">
+                            <select name="sort" class="filter-dropdown" id="sortFilter">
+                                <option value="terbaru" {{ request('sort') == 'terbaru' ? 'selected' : '' }}>Terbaru</option>
+                                <option value="terpopuler" {{ request('sort') == 'terpopuler' ? 'selected' : '' }}>Terpopuler</option>
+                                <option value="rating" {{ request('sort') == 'rating' ? 'selected' : '' }}>Rating Tertinggi</option>
+                            </select>
+                        </div>
+                        <div class="search-filter-button">
+                            <button type="submit" class="filter-search-btn">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
             @if (request()->filled('q') || request()->filled('kategori') || request()->filled('sort'))
                 <div class="active-filters">
                     <span class="active-filters-label">Filter aktif:</span>
@@ -25,74 +57,18 @@
                         </span>
                     @endif
 
-                    @if (request()->filled('sort'))
-                        <span class="active-filter-tag">
-                            Urutan:
-                            {{ request('sort') == 'terbaru' ? 'Terbaru' : (request('sort') == 'terpopuler' ? 'Terpopuler' : 'Rating Tertinggi') }}
-                            <a href="{{ route('wisata.index', request()->except('sort')) }}" class="filter-remove">×</a>
-                        </span>
-                    @endif
-
-                    <a href="{{ route('wisata.index') }}" class="clear-all-filters">Hapus Semua Filter</a>
+                   
                 </div>
             @endif
         </div>
     </div>
 
+    <!-- Rest of the content remains the same -->
     <div class="listing-content">
         <div class="container">
             <div class="row">
-                <!-- Filter Sidebar -->
-                <div class="col-md-3">
-                    <div class="listing-filter">
-                        <h5 class="filter-heading">Filter Pencarian</h5>
-                        <form action="{{ route('wisata.index') }}" method="GET" id="filterForm">
-                            <!-- Kategori Filter -->
-                            <div class="filter-item">
-                                <label class="filter-item-label">Kategori</label>
-                                <select name="kategori" class="filter-dropdown" id="kategoriFilter">
-                                    <option value="">Semua Kategori</option>
-                                    @foreach ($kategori as $kat)
-                                        <option value="{{ $kat->id }}"
-                                            {{ request('kategori') == $kat->id ? 'selected' : '' }}>
-                                            {{ $kat->nama }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Sorting -->
-                            <div class="filter-item">
-                                <label class="filter-item-label">Urutkan Berdasarkan</label>
-                                <select name="sort" class="filter-dropdown" id="sortFilter">
-                                    <option value="terbaru" {{ request('sort') == 'terbaru' ? 'selected' : '' }}>Terbaru
-                                    </option>
-                                    <option value="terpopuler" {{ request('sort') == 'terpopuler' ? 'selected' : '' }}>
-                                        Terpopuler</option>
-                                    <option value="rating" {{ request('sort') == 'rating' ? 'selected' : '' }}>Rating
-                                        Tertinggi</option>
-                                </select>
-                            </div>
-
-                            <!-- Pencarian -->
-                            <div class="filter-item">
-                                <label class="filter-item-label">Cari Wisata</label>
-                                <div class="filter-search">
-                                    <input type="text" name="q" class="filter-text-input"
-                                        placeholder="Nama wisata atau lokasi" value="{{ request('q') }}">
-                                    <button type="submit" class="filter-search-btn">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <button type="submit" class="filter-apply-btn">Terapkan Filter</button>
-                        </form>
-                    </div>
-                </div>
-
                 <!-- Daftar Wisata -->
-                <div class="col-md-9">
+                <div class="col-12">
                     <!-- Informasi Hasil -->
                     <div class="listing-result-info">
                         <span>Menampilkan {{ $wisata->count() }} dari total {{ $wisata->total() }} destinasi</span>
@@ -169,95 +145,7 @@
 @endsection
 
 @push('styles')
-    <style>
-        /* Styles untuk filter aktif */
-        .listing-header {
-            background-image: url('{{ asset('images/hero-image.png') }}');
-            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)),
-                url('{{ asset('images/hero-image.png') }}');
-            background-size: cover;
-            background-position: center;
-            color: var(--listing-light);
-            padding: 100px 0 70px;
-            text-align: center;
-            position: relative;
-        }
-
-        .active-filters {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            margin-top: 15px;
-            padding: 10px 15px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-        }
-
-        .active-filters-label {
-            font-weight: 500;
-            margin-right: 10px;
-            color: #fff;
-        }
-
-        .active-filter-tag {
-            display: inline-flex;
-            align-items: center;
-            background-color: #fff;
-            color: #333;
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin: 5px;
-            font-size: 0.85rem;
-        }
-
-        .filter-remove {
-            margin-left: 6px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: #666;
-            text-decoration: none;
-        }
-
-        .filter-remove:hover {
-            color: #f44336;
-        }
-
-        .clear-all-filters {
-            margin-left: auto;
-            color: #fff;
-            text-decoration: underline;
-            padding: 5px 10px;
-        }
-
-        /* Animasi untuk item list */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fadeInUp {
-            animation: fadeInUp 0.5s ease forwards;
-        }
-
-        /* Meningkatkan responsivitas pada mobile */
-        @media (max-width: 768px) {
-            .listing-filter {
-                position: relative;
-                margin-bottom: 20px;
-            }
-
-            .col-md-3 {
-                margin-bottom: 30px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/wisata-search.css') }}">
 @endpush
 
 @push('scripts')
