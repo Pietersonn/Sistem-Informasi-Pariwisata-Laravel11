@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Wisata;
 use App\Models\Ulasan;
 use App\Models\Favorit;
+use App\Models\KategoriWisata;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -16,12 +17,52 @@ class WisataController extends Controller
 {
     public function index(Request $request)
     {
-        // Kode untuk halaman daftar wisata
-        $wisata = Wisata::where('status', 'aktif')
-            ->with(['kategori', 'gambarUtama'])
-            ->paginate(9);
+        // Inisialisasi query dasar
+        $query = Wisata::where('status', 'aktif')
+            ->with(['kategori', 'gambarUtama']);
 
-        $kategori = \App\Models\KategoriWisata::all();
+        // Filter berdasarkan kategori
+        if ($request->filled('kategori')) {
+            $query->whereHas('kategori', function ($q) use ($request) {
+                $q->where('kategori_wisata.id', $request->kategori);
+            });
+        }
+
+        // Filter berdasarkan pencarian
+        if ($request->filled('q')) {
+            $searchTerm = '%' . $request->q . '%';
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('nama', 'like', $searchTerm)
+                    ->orWhere('alamat', 'like', $searchTerm)
+                    ->orWhere('deskripsi', 'like', $searchTerm);
+            });
+        }
+
+        // Sorting
+        if ($request->filled('sort')) {
+            switch ($request->sort) {
+                case 'terbaru':
+                    $query->latest();
+                    break;
+                case 'terpopuler':
+                    $query->orderBy('jumlah_dilihat', 'desc');
+                    break;
+                case 'rating':
+                    $query->orderBy('rata_rata_rating', 'desc');
+                    break;
+                default:
+                    $query->latest();
+            }
+        } else {
+            // Default sorting jika tidak ada sort parameter
+            $query->latest();
+        }
+
+        // Pagination dengan mempertahankan query parameters
+        $wisata = $query->paginate(9)->withQueryString();
+
+        // Ambil semua kategori untuk filter
+        $kategori = KategoriWisata::all();
 
         return view('frontend.wisata.index', compact('wisata', 'kategori'));
     }
@@ -41,7 +82,6 @@ class WisataController extends Controller
                 ->where('id_pengguna', Auth::id())
                 ->exists();
         }
-
 
         // Ambil ulasan
         $ulasan = Ulasan::where('id_wisata', $wisata->id)

@@ -1,6 +1,7 @@
 /* ========== Wisata Listing CSS ========== */
 :root {
-    --listing-primary: #F0D27F; /* Golden/yellow color similar to home page */
+    --listing-primary: #F0D27F;
+    /* Golden/yellow color similar to home page */
     --listing-secondary: #333333;
     --listing-accent: #FF6B6B;
     --listing-light: #FFFFFF;
@@ -11,17 +12,7 @@
     --listing-transition: all 0.3s ease;
 }
 
-/* ========== Header Section ========== */
-.listing-header {
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), 
-                      url('../images/wisata-header.jpg');
-    background-size: cover;
-    background-position: center;
-    color: var(--listing-light);
-    padding: 100px 0 70px;
-    text-align: center;
-    position: relative;
-}
+
 
 .listing-title {
     font-size: 3rem;
@@ -370,6 +361,66 @@
     background-color: rgba(240, 210, 127, 0.2);
 }
 
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 20px;
+    padding: 12px 18px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+}
+
+.active-filters-label {
+    font-weight: 500;
+    margin-right: 10px;
+    color: #fff;
+}
+
+.active-filter-tag {
+    display: inline-flex;
+    align-items: center;
+    background-color: #fff;
+    color: #333;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin: 5px;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.active-filter-tag:hover {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+.filter-remove {
+    margin-left: 8px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.filter-remove:hover {
+    color: #f44336;
+}
+
+.clear-all-filters {
+    margin-left: auto;
+    color: #fff;
+    text-decoration: underline;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.clear-all-filters:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    text-decoration: none;
+}
+
 /* ========== Responsive Adjustments ========== */
 @media (max-width: 991px) {
     .listing-grid {
@@ -381,16 +432,16 @@
     .listing-title {
         font-size: 2.2rem;
     }
-    
+
     .listing-subtitle {
         font-size: 1rem;
     }
-    
+
     .listing-filter {
         position: static;
         margin-bottom: 30px;
     }
-    
+
     .listing-grid {
         grid-template-columns: 1fr;
     }
