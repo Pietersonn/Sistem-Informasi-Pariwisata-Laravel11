@@ -26,8 +26,11 @@
                         <a href="{{ route('login') }}" class="login-btn">LOGIN</a>
                     @else
                         <div class="user-dropdown">
-                            <img src="{{ Auth::user()->foto_profil_url }}" alt="{{ Auth::user()->name }}"
-                                class="user-avatar">
+                            <!-- Tambahkan wrapper button jika diperlukan -->
+                            <button type="button" class="user-avatar-btn" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                <img src="{{ Auth::user()->foto_profil_url }}" alt="{{ Auth::user()->name }}"
+                                    class="user-avatar">
+                            </button>
                             <div class="dropdown-content">
                                 <a href="{{ url('/profil') }}">
                                     <i class="fas fa-user"></i> Profil Saya

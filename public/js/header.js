@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileToggle = document.getElementById('mobileToggle');
     const navLinks = document.getElementById('navLinks');
     
-    // Dropdown Profile
+    // Dropdown Profile - UPDATED SELECTORS
     const userDropdown = document.querySelector('.user-dropdown');
-    const userAvatarBtn = document.querySelector('.user-avatar-btn');
+    const userAvatar = document.querySelector('.user-avatar'); // Changed from .user-avatar-btn
     
     // Tambahkan area trigger untuk hover
     const triggerArea = document.createElement('div');
@@ -106,44 +106,58 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Mobile menu toggle
-    mobileToggle.addEventListener('click', function() {
-        navLinks.classList.toggle('active');
-        
-        // Toggle ikon menu/close
-        const icon = this.querySelector('i');
-        if (icon.classList.contains('fa-bars')) {
-            icon.classList.remove('fa-bars');
-            icon.classList.add('fa-times');
-        } else {
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-bars');
-        }
-    });
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            
+            // Toggle ikon menu/close
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
     
     // Tutup menu mobile ketika link diklik
     const navItems = document.querySelectorAll('.nav-links a');
     navItems.forEach(item => {
         item.addEventListener('click', function() {
-            if (navLinks.classList.contains('active')) {
+            if (navLinks && navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
                 
                 // Reset ikon ke bars
-                const icon = mobileToggle.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+                if (mobileToggle) {
+                    const icon = mobileToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
             }
         });
     });
     
-    // Event listener untuk kontrol klik dropdown profile
-    userAvatarBtn.addEventListener('click', function() {
-        userDropdown.classList.toggle('active');  // Toggling dropdown visibility
-    });
+    // DROPDOWN PROFILE HANDLING - UPDATED FOR CLICK ONLY
+    if (userDropdown && userAvatar) {
+        // Event listener untuk kontrol klik dropdown profile
+        userAvatar.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            userDropdown.classList.toggle('active');
+        });
 
-    // Tutup dropdown jika klik di luar
-    document.addEventListener('click', function(event) {
-        if (!userDropdown.contains(event.target) && !userAvatarBtn.contains(event.target)) {
-            userDropdown.classList.remove('active'); // Menyembunyikan dropdown jika klik di luar
-        }
-    });
+        // Tutup dropdown jika klik di luar
+        document.addEventListener('click', function(event) {
+            if (!userDropdown.contains(event.target)) {
+                userDropdown.classList.remove('active');
+            }
+        });
+
+        // Prevent dropdown from closing when clicking inside it
+        userDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
 });
