@@ -246,11 +246,7 @@
                                 <!-- JavaScript akan menampilkan preview gambar di sini -->
                             </div>
 
-                            <div class="alert alert-info">
-                                <i class="fas fa-info-circle me-2"></i>
-                                Gambar pertama yang diupload akan dijadikan sebagai gambar utama.
-                                Anda dapat mengubahnya nanti di halaman edit.
-                            </div>
+                          
                         </div>
                     </div>
 

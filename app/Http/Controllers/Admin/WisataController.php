@@ -1,5 +1,5 @@
 <?php
-
+// File: App\Http\Controllers\Admin\WisataController.php
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -63,7 +63,7 @@ class WisataController extends Controller
         // Ambil kategori dan fasilitas untuk dropdown
         $kategori = KategoriWisata::orderBy('nama')->get();
 
-        return view('admin.wisata.create', compact('kategori', 'fasilitas'));
+        return view('admin.wisata.create', compact('kategori'));
     }
 
     public function store(Request $request)

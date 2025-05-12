@@ -65,31 +65,31 @@
             </div>
 
             <div class="kategori-section">
-                <h2 class="kategori-title">Categories</h2>
+                <h2 class="kategori-title">Kategori</h2>
                 <div class="kategori-container">
                     <a href="{{ url('/kategori/alam') }}" class="kategori-item">
                         <div class="kategori-icon">
                             <i class="fas fa-tree"></i>
                         </div>
-                        <span class="kategori-name">Funny</span>
+                        <span class="kategori-name">Alam</span>
                     </a>
                     <a href="{{ url('/kategori/budaya') }}" class="kategori-item">
                         <div class="kategori-icon">
                             <i class="fas fa-landmark"></i>
                         </div>
-                        <span class="kategori-name">Happy</span>
+                        <span class="kategori-name">Budaya</span>
                     </a>
                     <a href="{{ url('/kategori/religi') }}" class="kategori-item">
                         <div class="kategori-icon">
                             <i class="fas fa-place-of-worship"></i>
                         </div>
-                        <span class="kategori-name">Romantic</span>
+                        <span class="kategori-name">Religi</span>
                     </a>
                     <a href="{{ url('/kategori/kuliner') }}" class="kategori-item">
                         <div class="kategori-icon">
                             <i class="fas fa-utensils"></i>
                         </div>
-                        <span class="kategori-name">Sad</span>
+                        <span class="kategori-name">Kuliner</span>
                     </a>
                 </div>
             </div>
