@@ -1,25 +1,6 @@
 @extends('layouts.frontend')
 
 @section('title', $wisata->nama . ' - Detail Wisata')
-@push('styles')
-    <style>
-        #map {
-            width: 100%;
-            height: 300px;
-            border-radius: 10px;
-            z-index: 1;
-            /* Pastikan z-index tidak terlalu rendah */
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Pastikan tidak ada CSS lain yang mungkin mengintervensi */
-        .detail-card {
-            position: relative;
-            overflow: visible;
-        }
-    </style>
-@endpush
 
 
 @section('content')
@@ -139,10 +120,15 @@
                                             <div>
                                                 <h6 class="mb-0">{{ $review->pengguna->name }}</h6>
                                                 <div class="rating-stars">
+                                                    <?php $rating = (int) $review->rating; ?>
                                                     @for ($i = 1; $i <= 5; $i++)
-                                                        <i
-                                                            class="fas fa-star{{ $i <= $review->rating ? ' text-warning' : ' text-secondary' }}"></i>
+                                                        @if ($i <= $rating)
+                                                            <i class="fas fa-star active-star" style="color: #ffc107;"></i>
+                                                        @else
+                                                            <i class="fas fa-star inactive-star" style="color: #ccc;"></i>
+                                                        @endif
                                                     @endfor
+
                                                 </div>
                                             </div>
                                         </div>
@@ -187,8 +173,7 @@
                                         </button>
                                     </form>
                                 @endif
-
-                                <button type="button" class="action-btn btn-success" data-bs-toggle="modal"
+                                <button type="button" class="action-btn btn-success" id="btnTulisUlasan" data-bs-toggle="modal"
                                     data-bs-target="#ulasanModal">
                                     <i class="far fa-comment"></i> Tulis Ulasan
                                 </button>
@@ -361,8 +346,9 @@
 
     <!-- Modal Ulasan -->
     @auth
-        <div class="modal fade" id="ulasanModal" tabindex="-1" aria-labelledby="ulasanModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+        <div class="modal fade" id="ulasanModal" tabindex="-1" aria-labelledby="ulasanModalLabel" aria-hidden="false"
+            data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="ulasanModalLabel">Tulis Ulasan untuk {{ $wisata->nama }}</h5>
@@ -394,7 +380,6 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                             <button type="submit" class="btn btn-primary">Kirim Ulasan</button>
                         </div>
                     </form>
@@ -403,6 +388,7 @@
         </div>
     @endauth
     @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script>
             // Fungsi untuk mengubah gambar utama
             function changeMainImage(src) {
@@ -452,6 +438,7 @@
                 });
             });
 
+
             // Carousel untuk gambar dan inisialisasi peta
             document.addEventListener('DOMContentLoaded', function() {
                 console.log('DOM Content Loaded');
@@ -489,5 +476,20 @@
                     console.error('Error initializing map:', error);
                 }
             });
+            window.addEventListener('load', function() {
+                const tulisUlasanBtn = document.getElementById('btnTulisUlasan');
+                if (tulisUlasanBtn) {
+                    tulisUlasanBtn.addEventListener('click', function(e) {
+                        e.preventDefault(); // Mencegah default action
+                        try {
+                            const ulasanModal = new bootstrap.Modal(document.getElementById('ulasanModal'));
+                            ulasanModal.show();
+                        } catch (e) {
+                            console.error('Error membuka modal:', e);
+                        }
+                    });
+                }
+            });
+
         </script>
     @endpush

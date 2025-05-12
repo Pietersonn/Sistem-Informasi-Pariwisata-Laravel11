@@ -10,7 +10,7 @@ use App\Models\Favorit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Log;
 
 class WisataController extends Controller
 {
@@ -35,13 +35,13 @@ class WisataController extends Controller
         // Tambahkan jumlah view
         $wisata->increment('jumlah_dilihat');
 
-        // Cek apakah sudah di-favorit (jika user login)
         $sudahDifavorit = false;
         if (Auth::check()) {
             $sudahDifavorit = Favorit::where('id_wisata', $wisata->id)
                 ->where('id_pengguna', Auth::id())
                 ->exists();
         }
+
 
         // Ambil ulasan
         $ulasan = Ulasan::where('id_wisata', $wisata->id)

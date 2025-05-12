@@ -27,7 +27,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
     padding: 30px;
     color: #fff;
 }
@@ -35,11 +35,11 @@
 .header-overlay h1 {
     font-size: 2.5rem;
     margin-bottom: 10px;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 .badge-category {
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgba(255, 255, 255, 0.2);
     border-radius: 30px;
     padding: 5px 15px;
     margin-right: 10px;
@@ -79,7 +79,7 @@
 .detail-card {
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     padding: 20px;
     margin-bottom: 20px;
 }
@@ -95,7 +95,8 @@
 
 .detail-card h4 i {
     margin-right: 10px;
-    color: #F0D27F; /* Warna kuning/emas seperti di home */
+    color: #F0D27F;
+    /* Warna kuning/emas seperti di home */
 }
 
 /* Feature list */
@@ -111,7 +112,8 @@
 }
 
 .feature-item i {
-    color: #F0D27F; /* Warna kuning/emas seperti di home */
+    color: #F0D27F;
+    /* Warna kuning/emas seperti di home */
     margin-right: 10px;
 }
 
@@ -119,7 +121,8 @@
 .rating-large {
     font-size: 3rem;
     font-weight: bold;
-    color: #F0D27F; /* Warna kuning/emas seperti di home */
+    color: #F0D27F;
+    /* Warna kuning/emas seperti di home */
 }
 
 .rating-summary {
@@ -137,7 +140,8 @@
 }
 
 .status-excellent {
-    background-color: #F0D27F; /* Warna kuning/emas seperti di home */
+    background-color: #F0D27F;
+    /* Warna kuning/emas seperti di home */
 }
 
 /* Reviews */
@@ -173,7 +177,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 25px; /* Fully rounded corners seperti di home */
+    border-radius: 25px;
+    /* Fully rounded corners seperti di home */
     font-weight: 500;
     transition: all 0.3s;
 }
@@ -184,18 +189,22 @@
 
 .action-btn.btn-favorite {
     background-color: #fff;
-    color: #F0D27F; /* Warna kuning/emas seperti di home */
+    color: #F0D27F;
+    /* Warna kuning/emas seperti di home */
     border: 1px solid #F0D27F;
 }
 
 .action-btn.btn-favorite:hover {
     background-color: #F0D27F;
-    color: #000; /* Text hitam seperti di home */
+    color: #000;
+    /* Text hitam seperti di home */
 }
 
 .action-btn.btn-primary {
-    background-color: #F0D27F; /* Warna kuning/emas seperti di home */
-    color: #000; /* Text hitam seperti di home */
+    background-color: #F0D27F;
+    /* Warna kuning/emas seperti di home */
+    color: #000;
+    /* Text hitam seperti di home */
     border: none;
 }
 
@@ -204,8 +213,10 @@
 }
 
 .action-btn.btn-success {
-    background-color: #F0D27F; /* Warna kuning/emas seperti di home */
-    color: #000; /* Text hitam seperti di home */
+    background-color: #F0D27F;
+    /* Warna kuning/emas seperti di home */
+    color: #000;
+    /* Text hitam seperti di home */
 }
 
 .action-btn.btn-success:hover {
@@ -213,8 +224,10 @@
 }
 
 .action-btn.btn-direction {
-    background-color: #F0D27F; /* Warna kuning/emas seperti di home */
-    color: #000; /* Text hitam seperti di home */
+    background-color: #F0D27F;
+    /* Warna kuning/emas seperti di home */
+    color: #000;
+    /* Text hitam seperti di home */
     margin-top: 15px;
     display: inline-flex;
     width: auto;
@@ -252,7 +265,8 @@
 
 .day-current {
     font-weight: bold;
-    background-color: rgba(240, 210, 127, 0.1); /* Warna kuning/emas dengan opacity rendah */
+    background-color: rgba(240, 210, 127, 0.1);
+    /* Warna kuning/emas dengan opacity rendah */
     border-radius: 4px;
     padding: 5px;
 }
@@ -277,9 +291,52 @@
 }
 
 .rating-select label:hover,
-.rating-select label:hover ~ label,
-.rating-select input:checked ~ label {
-    color: #F0D27F; /* Warna kuning/emas seperti di home */
+.rating-select label:hover~label,
+.rating-select input:checked~label {
+    color: #F0D27F;
+    /* Warna kuning/emas seperti di home */
+}
+
+#map {
+    width: 100%;
+    height: 300px;
+    border-radius: 10px;
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.detail-card {
+    position: relative;
+    overflow: visible;
+}
+
+/* Fix untuk modal ulasan */
+#ulasanModal .modal-dialog.modal-md {
+    max-width: 1160px;
+    /* Mengubah lebar maksimal modal */
+    margin: 1.75rem auto;
+}
+
+/* Fix untuk form ulasan di bagian bawah */
+.ulasan-form-container {
+    max-width: 1200px;
+    /* Atur lebar maksimal */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Fix untuk masalah scrolling modal */
+body.modal-open {
+    overflow: auto !important;
+    padding-right: 0 !important;
+}
+
+.modal {
+    overflow-y: auto !important;
 }
 
 /* Media queries for responsive design */
@@ -287,7 +344,7 @@
     .detail-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .detail-header {
         height: 350px;
     }
@@ -297,11 +354,11 @@
     .header-overlay h1 {
         font-size: 1.8rem;
     }
-    
+
     .feature-list {
         grid-template-columns: 1fr;
     }
-    
+
     .gallery-thumbnails {
         display: none;
     }

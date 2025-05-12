@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class Pengguna extends Authenticatable
 {
@@ -92,11 +93,42 @@ class Pengguna extends Authenticatable
     }
 
     // Accessor untuk URL foto profil
+    
+    // Accessor untuk URL foto profil yang lebih robust
     public function getFotoProfilUrlAttribute()
     {
-        return $this->foto_profil 
-            ? asset('storage/' . $this->foto_profil) 
-            : asset('images/default-avatar.png');
+        // Jika foto profil tidak ada atau default
+        if (empty($this->foto_profil) || $this->foto_profil == 'default.jpg') {
+            return asset('assets/img/profil.jpg');
+        }
+
+        // Coba beberapa kemungkinan path
+        $potentialPaths = [
+            // 1. Path dengan public/ prefix (untuk file di public/uploads)
+            $this->foto_profil,
+
+            // 2. Path dengan storage/ prefix (untuk file yang melalui symbolic link)
+            'storage/' . $this->foto_profil,
+
+            // 3. Path langsung ke direktori profil
+            'storage/profil/' . basename($this->foto_profil),
+
+            // 4. Path ke uploads/profil (jika disimpan langsung ke public)
+            'uploads/profil/' . basename($this->foto_profil)
+        ];
+
+        // Periksa jika file secara fisik ada di server
+        foreach ($potentialPaths as $path) {
+            if (file_exists(public_path($path))) {
+                return asset($path);
+            }
+        }
+
+        // Log jika tidak menemukan file
+        Log::warning("Foto profil tidak ditemukan untuk user {$this->id}: {$this->foto_profil}");
+
+        // Default fallback
+        return asset('assets/img/profil.jpg');
     }
 
     // Cek role
