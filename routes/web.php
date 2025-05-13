@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\WisataController as FrontendWisataController;
+use App\Http\Controllers\Frontend\ProfilController;
 
 // ==============================
 // PUBLIC ROUTES (SEMUA AKSES)
@@ -57,7 +58,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profil', function () {
         return view('frontend.profil.dashboard');
     })->name('profil');
-
+    Route::put('/profile/update', [ProfilController::class, 'update'])->name('profile.update');
     // Logout
     Route::get('/signout', [SessionsController::class, 'destroy']);
 });

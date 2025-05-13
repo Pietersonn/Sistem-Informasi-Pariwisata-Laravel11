@@ -2,6 +2,7 @@
 - gagal menampilkan ulasan di view admin wisata
 - logic event dan halaman frontend nya belum di buat
 - logic dashboard
+- semua laporan blm ada pdf
 - belum move on
 - gagal jadi pacar 
 - gagal jadi anak
