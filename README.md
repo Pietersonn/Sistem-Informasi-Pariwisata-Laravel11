@@ -1,8 +1,6 @@
 - belum bisa menambah gambar lebih dari satu
-- form register tambahin field gambar
 - gagal menampilkan ulasan di view admin wisata
 - logic event dan halaman frontend nya belum di buat
-- user ganti profile
 - logic dashboard
 - belum move on
 - gagal jadi pacar 
