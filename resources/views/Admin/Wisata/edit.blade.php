@@ -259,7 +259,6 @@
                         </div>
                         <div class="card-body">
                             <!-- Gambar Yang Sudah Ada -->
-                            <!-- Gambar Yang Sudah Ada -->
                             @if ($wisata->gambar->count() > 0)
                                 <div class="mb-4">
                                     <h6 class="mb-3">Gambar Saat Ini</h6>

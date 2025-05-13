@@ -50,8 +50,8 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="hero-content">
-            <h1 class="hero-title">it always seems imposibble until it's done :)</h1>
-            <p class="hero-subtitle">Don't be sad because it's over, be happy because it happened</p>
+            <h1 class="hero-title">Jelajahi Keindahan Kabupaten Hulu Sungai Tengah</h1>
+            <p class="hero-subtitle">Temukan destinasi wisata menakjubkan dan pengalaman tak terlupakan</p>
 
             <div class="search-box">
                 <form action="{{ route('wisata.index') }}" method="GET" class="search-form">

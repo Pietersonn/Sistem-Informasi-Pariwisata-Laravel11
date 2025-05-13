@@ -87,13 +87,15 @@ class WisataController extends Controller
             'instagram' => 'nullable',
             'facebook' => 'nullable|url',
             'twitter' => 'nullable',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
             'status' => 'required|in:' . implode(',', [
                 Wisata::STATUS_AKTIF,
                 Wisata::STATUS_NONAKTIF,
                 Wisata::STATUS_MENUNGGU_PERSETUJUAN
             ]),
             'gambar' => 'nullable|array',
-            'gambar.*' => 'image|mimes:jpeg,png,jpg,webp,gif|max:5120' // max 5MB
+            'gambar.*' => 'image|mimes:jpeg,png,jpg,webp,gif|max:5120'
         ]);
 
         DB::beginTransaction();
@@ -107,6 +109,11 @@ class WisataController extends Controller
 
             $wisata->id_pemilik = Auth::id();
             $wisata->hari_operasional = $request->hari_operasional ?? [];
+
+            // Ensure latitude and longitude are saved
+            $wisata->latitude = $request->latitude;
+            $wisata->longitude = $request->longitude;
+
             $wisata->save();
 
             // Menambahkan kategori
@@ -226,16 +233,12 @@ class WisataController extends Controller
 
         DB::beginTransaction();
         try {
-            // Memperbarui wisata
+            $wisata->latitude = $request->filled('latitude') ? $request->latitude : null;
+            $wisata->longitude = $request->filled('longitude') ? $request->longitude : null;
             $wisata->fill($request->except(['kategori', 'fasilitas', 'gambar']));
-
-            // Menangani fasilitas sebagai array
             $wisata->fasilitas = $request->fasilitas ?? [];
-
             $wisata->hari_operasional = $request->hari_operasional ?? [];
             $wisata->save();
-
-            // Memperbarui kategori
             $wisata->kategori()->sync($request->kategori);
 
             // Upload Gambar Baru

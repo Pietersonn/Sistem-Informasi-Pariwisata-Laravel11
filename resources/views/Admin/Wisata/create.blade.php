@@ -222,7 +222,29 @@
                         <small class="form-text text-muted">Pilih satu atau lebih fasilitas yang tersedia</small>
                     </div>
 
-
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="latitude">Latitude</label>
+                            <input type="number" step="any"
+                                class="form-control @error('latitude') is-invalid @enderror" id="latitude"
+                                name="latitude" value="{{ old('latitude') }}" placeholder="Contoh: -2.6151">
+                            <small class="form-text text-muted">Koordinat latitude lokasi (contoh: -2.6151)</small>
+                            @error('latitude')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="longitude">Longitude</label>
+                            <input type="number" step="any"
+                                class="form-control @error('longitude') is-invalid @enderror" id="longitude"
+                                name="longitude" value="{{ old('longitude') }}" placeholder="Contoh: 115.4161">
+                            <small class="form-text text-muted">Koordinat longitude lokasi (contoh: 115.4161)</small>
+                            @error('longitude')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    
                     <!-- Bagian Upload Gambar -->
                     <div class="card mt-4 mb-4">
                         <div class="card-header">
@@ -246,7 +268,7 @@
                                 <!-- JavaScript akan menampilkan preview gambar di sini -->
                             </div>
 
-                          
+
                         </div>
                     </div>
 
