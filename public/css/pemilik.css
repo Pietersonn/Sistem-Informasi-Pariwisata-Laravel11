@@ -1,0 +1,572 @@
+/* Pemilik Wisata CSS */
+
+/* Dashboard Styles */
+.pemilik-dashboard-container {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.dashboard-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 8px;
+}
+
+.dashboard-subtitle {
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+/* Stat Cards */
+.stat-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.stat-card-content {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-card-info {
+    flex: 1;
+}
+
+.stat-card-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.stat-card-value {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #2d3748;
+    display: block;
+}
+
+.stat-card-icon {
+    width: 60px;
+    height: 60px;
+    background-color: #4299e1;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-card-icon i {
+    font-size: 1.8rem;
+    color: white;
+}
+
+.rating-icon {
+    background-color: #f59e0b;
+}
+
+.stat-card-footer {
+    padding: 0.8rem 1.5rem;
+    border-top: 1px solid #f1f1f1;
+}
+
+.stat-card-link {
+    color: #3182ce;
+    font-weight: 500;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+}
+
+.stat-card-link:hover {
+    color: #2c5282;
+}
+
+/* Action Card */
+.action-card {
+    background: linear-gradient(135deg, #4f46e5, #3b82f6);
+}
+
+.action-card .stat-card-title, 
+.action-card .action-card-desc {
+    color: rgba(255,255,255,0.9);
+}
+
+.action-card-desc {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+.action-icon {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.btn-create {
+    color: white;
+    background-color: rgba(255,255,255,0.2);
+    padding: 8px 12px;
+    border-radius: 6px;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-create:hover {
+    background-color: rgba(255,255,255,0.3);
+    color: white;
+}
+
+/* Dashboard Cards */
+.dashboard-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    overflow: hidden;
+    height: 100%;
+}
+
+.dashboard-card-header {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.dashboard-card-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2d3748;
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.dashboard-card-header h3 i {
+    margin-right: 10px;
+    color: #4299e1;
+}
+
+.dashboard-card-body {
+    padding: 1.5rem;
+}
+
+/* Top Wisata List */
+.top-wisata-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.top-wisata-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    transition: all 0.2s ease;
+}
+
+.top-wisata-item:hover {
+    background-color: #edf2f7;
+}
+
+.top-wisata-rank {
+    width: 30px;
+    height: 30px;
+    background-color: #4299e1;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-right: 12px;
+}
+
+.top-wisata-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-right: 15px;
+}
+
+.top-wisata-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.top-wisata-info {
+    flex: 1;
+}
+
+.top-wisata-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 4px;
+}
+
+.top-wisata-views {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-bottom: 4px;
+}
+
+.top-wisata-rating {
+    font-size: 0.85rem;
+}
+
+.top-wisata-rating i {
+    color: #f59e0b;
+}
+
+.top-wisata-action {
+    margin-left: 10px;
+}
+
+.btn-detail {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #4299e1;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.btn-detail:hover {
+    background-color: #3182ce;
+    color: white;
+}
+
+/* Recent Reviews */
+.recent-review-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.recent-review-item {
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    transition: all 0.2s ease;
+}
+
+.recent-review-item:hover {
+    background-color: #edf2f7;
+}
+
+.recent-review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.reviewer-info {
+    display: flex;
+    align-items: center;
+}
+
+.reviewer-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+}
+
+.reviewer-info h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 3px;
+}
+
+.review-meta {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.review-separator {
+    margin: 0 5px;
+}
+
+.review-rating i {
+    color: #f59e0b;
+    font-size: 0.9rem;
+}
+
+.review-content {
+    font-size: 0.95rem;
+    color: #4a5568;
+    margin-bottom: 12px;
+}
+
+.review-actions {
+    text-align: right;
+}
+
+.btn-reply {
+    font-size: 0.9rem;
+    color: #4299e1;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-reply:hover {
+    color: #3182ce;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1.5rem;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    color: #cbd5e0;
+    margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    font-size: 0.95rem;
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+}
+
+/* Wisata List Styles */
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 8px;
+}
+
+.page-subtitle {
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+.btn-add-wisata {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wisata-filter {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.wisata-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.wisata-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.wisata-card-header {
+    position: relative;
+}
+
+.wisata-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.wisata-status {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.status-active {
+    background-color: rgba(72, 187, 120, 0.9);
+    color: white;
+}
+
+.status-pending {
+    background-color: rgba(237, 137, 54, 0.9);
+    color: white;
+}
+
+.status-rejected {
+    background-color: rgba(229, 62, 62, 0.9);
+    color: white;
+}
+
+.wisata-card-body {
+    padding: 1.2rem;
+}
+
+.wisata-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 10px;
+}
+
+.wisata-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.meta-item {
+    font-size: 0.85rem;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+}
+
+.meta-item i {
+    width: 20px;
+    margin-right: 5px;
+}
+
+.wisata-rating i {
+    color: #f59e0b;
+}
+
+.rating-value {
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.review-count {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-left: 5px;
+}
+
+.wisata-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.category-badge {
+    font-size: 0.75rem;
+    background-color: #edf2f7;
+    color: #4a5568;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.wisata-card-footer {
+    padding: 1rem 1.2rem;
+    border-top: 1px solid #f1f1f1;
+    display: flex;
+    gap: 8px;
+}
+
+.btn-view, .btn-edit, .btn-preview {
+    flex: 1;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: all 0.2s ease;
+}
+
+.btn-view {
+    background-color: #4299e1;
+    color: white;
+}
+
+.btn-view:hover {
+    background-color: #3182ce;
+    color: white;
+}
+
+.btn-edit {
+    background-color: #ed8936;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #dd6b20;
+    color: white;
+}
+
+.btn-preview {
+    background-color: #a0aec0;
+    color: white;
+}
+
+.btn-preview:hover {
+    background-color: #718096;
+    color: white;
+}
+
+.empty-state-icon {
+    width: 100px;
+    height: 100px;
+    background-color: #edf2f7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.empty-state-icon i {
+    font-size: 3rem;
+    color: #a0aec0;
+}
+
+.pagination-container {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}

@@ -27,7 +27,8 @@
                     @else
                         <div class="user-dropdown">
                             <!-- Tambahkan wrapper button jika diperlukan -->
-                            <button type="button" class="user-avatar-btn" style="background: none; border: none; padding: 0; cursor: pointer;">
+                            <button type="button" class="user-avatar-btn"
+                                style="background: none; border: none; padding: 0; cursor: pointer;">
                                 <img src="{{ Auth::user()->foto_profil_url }}" alt="{{ Auth::user()->name }}"
                                     class="user-avatar">
                             </button>
@@ -38,6 +39,20 @@
                                 @if (Auth::user()->role == 'admin')
                                     <a href="{{ url('/dashboard') }}">
                                         <i class="fas fa-tachometer-alt"></i> Dashboard Admin
+                                    </a>
+                                @endif
+                                @if (Auth::user()->role == 'pemilik_wisata')
+                                    <a href="{{ route('pemilik.dashboard') }}">
+                                        <i class="fas fa-tachometer-alt"></i> Dashboard Pemilik
+                                    </a>
+                                    <a href="{{ route('pemilik.wisata.index') }}">
+                                        <i class="fas fa-map-marked-alt"></i> Wisata Saya
+                                    </a>
+                                    <a href="{{ route('pemilik.event.index') }}">
+                                        <i class="fas fa-calendar-alt"></i> Event Saya
+                                    </a>
+                                    <a href="{{ route('pemilik.ulasan.index') }}">
+                                        <i class="fas fa-comments"></i> Ulasan Wisata
                                     </a>
                                 @endif
                                 <a href="{{ url('/favorit') }}">
