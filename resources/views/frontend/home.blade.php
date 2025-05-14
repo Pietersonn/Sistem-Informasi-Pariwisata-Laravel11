@@ -18,31 +18,6 @@
             padding: 0 20px;
         }
 
-        /* Updated styling for the Lihat Semua button */
-        .view-all {
-            background-color: #F0D27F;
-            /* Golden/yellow color like in the image */
-            color: #000000;
-            /* Black text color */
-            border: none;
-            border-radius: 25px;
-            /* Fully rounded corners */
-            padding: 10px 25px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            font-size: 15px;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            /* Center the button horizontally */
-            margin: 0 auto;
-            /* Automatically center the button */
-        }
-
-
     </style>
 @endpush
 
@@ -101,7 +76,7 @@
         <div class="container">
             <div class="section-header">
                 <div>
-                    <h2 class="section-title">Wisata Populer</h2>
+                    <h2 class="section-title1">Wisata Populer</h2>
                     <p class="section-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
             </div>
@@ -153,9 +128,6 @@
                         </div>
                     </div>
                 @endforeach
-            </div>
-            <div class="container">
-                <a href="{{ route('wisata.index') }}" class="view-all">Lihat Semua <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </section>

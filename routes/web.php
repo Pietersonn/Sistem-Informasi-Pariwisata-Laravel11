@@ -18,7 +18,7 @@ use App\Http\Controllers\Frontend\ProfilController;
 // ==============================
 // PUBLIC ROUTES (SEMUA AKSES)
 // ==============================
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/wisata', [FrontendWisataController::class, 'index'])->name('wisata.index');
 Route::get('/wisata/detail/{slug}', [FrontendWisataController::class, 'show'])->name('wisata.detail');
 

@@ -26,7 +26,7 @@ class BalasanUlasan extends Model
     // Relasi dengan Pengguna
     public function pengguna()
     {
-        return $this->belongsTo(Pengguna::class, 'id_pengguna');
+        return $this->belongsTo(user::class, 'id_pengguna');
     }
 
     // Mutator untuk membersihkan balasan

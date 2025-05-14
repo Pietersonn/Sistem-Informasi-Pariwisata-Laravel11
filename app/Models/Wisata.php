@@ -56,7 +56,7 @@ class Wisata extends Model
     // Relasi dengan Pemilik (Pengguna)
     public function pemilik()
     {
-        return $this->belongsTo(pengguna::class, 'id_pemilik');
+        return $this->belongsTo(user::class, 'id_pemilik');
     }
 
     // Relasi dengan Kategori (Many to Many)
