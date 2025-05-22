@@ -8,6 +8,7 @@ use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\Admin\WisataController;
 use App\Http\Controllers\Admin\KategoriWisataController;
 use App\Http\Controllers\Admin\UlasanController;
+use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -120,6 +121,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/wisata/{wisata}/edit', [WisataController::class, 'edit'])->name('wisata.edit');
         Route::put('/wisata/{wisata}', [WisataController::class, 'update'])->name('wisata.update');
         Route::delete('/wisata/{wisata}', [WisataController::class, 'destroy'])->name('wisata.destroy');
+
+        // Route Event
+        Route::get('/event', [EventController::class, 'index'])->name('event.index');
+        Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
+        Route::post('/event', [EventController::class, 'store'])->name('event.store');
+        Route::get('/event/{event}/edit', [EventController::class, 'edit'])->name('event.edit');
+        Route::put('/event/{event}', [EventController::class, 'update'])->name('event.update');
+        Route::delete('/event/{event}', [EventController::class, 'destroy'])->name('wisata.destroy');
 
         // Route Kategori
         Route::get('/kategori', [KategoriWisataController::class, 'index'])->name('kategori.index');

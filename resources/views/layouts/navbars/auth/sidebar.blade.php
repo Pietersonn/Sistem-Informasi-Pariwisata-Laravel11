@@ -99,6 +99,12 @@
                                 <span class="nav-link-text ms-1">Wisata</span>
                             </a>
                         </li>
+                         <li class="nav-item">
+                            <a class="nav-link {{ Request::is('admin/event*') ? 'active' : '' }}"
+                                href="{{ route('admin.event.index') }}">
+                                <span class="nav-link-text ms-1">Event</span>
+                            </a>
+                        </li>
                         <!-- Submenu Kategori -->
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('admin/kategori*') ? 'active' : '' }}"
