@@ -14,42 +14,8 @@
                 <h1 class="page-title">Kelola Wisata Saya</h1>
                 <p class="page-subtitle">Tambah dan kelola destinasi wisata yang Anda miliki</p>
             </div>
-            <div class="col-lg-6 text-end">
-                <a href="{{ route('pemilik.wisata.create') }}" class="btn btn-primary btn-add-wisata">
-                    <i class="fas fa-plus-circle"></i> Tambah Wisata Baru
-                </a>
-            </div>
         </div>
 
-        <!-- Filter & Search -->
-        <div class="wisata-filter mb-4">
-            <form action="{{ route('pemilik.wisata.index') }}" method="GET" class="row g-3">
-                <div class="col-md-4">
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                        <input type="text" class="form-control" name="search" placeholder="Cari nama wisata..." value="{{ request('search') }}">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <select name="status" class="form-select">
-                        <option value="">Semua Status</option>
-                        <option value="aktif" {{ request('status') == 'aktif' ? 'selected' : '' }}>Aktif</option>
-                        <option value="nonaktif" {{ request('status') == 'nonaktif' ? 'selected' : '' }}>Ditolak</option>
-                        <option value="menunggu_persetujuan" {{ request('status') == 'menunggu_persetujuan' ? 'selected' : '' }}>Menunggu Persetujuan</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <select name="sort" class="form-select">
-                        <option value="terbaru" {{ request('sort') == 'terbaru' ? 'selected' : '' }}>Terbaru</option>
-                        <option value="terpopuler" {{ request('sort') == 'terpopuler' ? 'selected' : '' }}>Terpopuler</option>
-                        <option value="rating" {{ request('sort') == 'rating' ? 'selected' : '' }}>Rating Tertinggi</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary w-100">Filter</button>
-                </div>
-            </form>
-        </div>
 
         <!-- Wisata List -->
         <div class="wisata-list">
@@ -100,10 +66,7 @@
                                         @endforeach
                                     </div>
                                 </div>
-                                <div class="wisata-card-footer">
-                                    <a href="{{ route('pemilik.wisata.show', $item->id) }}" class="btn btn-view">
-                                        <i class="fas fa-eye"></i> Detail
-                                    </a>
+                                <div class="wisata-card-footer">    
                                     <a href="{{ route('pemilik.wisata.edit', $item->id) }}" class="btn btn-edit">
                                         <i class="fas fa-edit"></i> Edit
                                     </a>
