@@ -20,19 +20,19 @@ class HomeController extends Controller
             ->take(6)
             ->get();
 
-
-
         // Ambil semua kategori
         $kategori = KategoriWisata::orderBy('urutan')
             ->take(5)
             ->get();
 
-        // Ambil event yang akan datang
+        // Ambil event yang akan datang (status aktif dan tanggal mulai > hari ini)
         $event_mendatang = EventWisata::where('status', 'aktif')
             ->where('tanggal_mulai', '>', now())
-            ->with('wisata')
-            ->orderBy('tanggal_mulai')
-            ->take(3)
+            ->with(['wisata' => function($query) {
+                $query->select('id', 'nama', 'alamat');
+            }])
+            ->orderBy('tanggal_mulai', 'asc')
+            ->take(6)
             ->get();
 
         // Ambil wisata populer (berdasarkan jumlah dilihat)

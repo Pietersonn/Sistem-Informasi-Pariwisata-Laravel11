@@ -23,6 +23,7 @@ use App\Http\Controllers\Frontend\ProfilController;
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/wisata', [FrontendWisataController::class, 'index'])->name('wisata.index');
 Route::get('/wisata/detail/{slug}', [FrontendWisataController::class, 'show'])->name('wisata.detail');
+Route::get('/event', [FrontendWisataController::class, 'index'])->name('event.index');
 
 // ==============================
 // GUEST ONLY ROUTES (HANYA NON-LOGIN)
@@ -128,7 +129,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/event', [EventController::class, 'store'])->name('event.store');
         Route::get('/event/{event}/edit', [EventController::class, 'edit'])->name('event.edit');
         Route::put('/event/{event}', [EventController::class, 'update'])->name('event.update');
-        Route::delete('/event/{event}', [EventController::class, 'destroy'])->name('wisata.destroy');
+        Route::delete('/event/{event}', [EventController::class, 'destroy'])->name('event.destroy');
 
         // Route Kategori
         Route::get('/kategori', [KategoriWisataController::class, 'index'])->name('kategori.index');

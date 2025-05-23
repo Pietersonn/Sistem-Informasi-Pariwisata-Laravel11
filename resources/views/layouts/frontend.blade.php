@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{ asset('css/wisata-list.css') }}">
     <link rel="stylesheet" href="{{ asset('css/favorit-custom.css') }}">
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pemilik-edit.css') }}">
 
 
     <!-- Leaflet CSS -->
