@@ -527,40 +527,6 @@
             </div>
         </div>
     @endif
-
-    <!-- Event Serupa -->
-    @if($event_serupa->count() > 0)
-        <div class="event-content">
-            <h3 class="section-title">
-                <i class="fas fa-calendar-week"></i>
-                Event Serupa
-            </h3>
-            <div class="related-events">
-                @foreach($event_serupa as $similar)
-                    <div class="related-event-card">
-                        <div class="related-event-image">
-                            <img src="{{ $similar->poster ? asset($similar->poster) : asset('images/placeholder-event.jpg') }}" 
-                                 alt="{{ $similar->nama }}">
-                        </div>
-                        <div class="related-event-content">
-                            <h5 class="related-event-title">{{ Str::limit($similar->nama, 50) }}</h5>
-                            <div class="related-event-date">
-                                <i class="fas fa-calendar-alt"></i>
-                                {{ $similar->tanggal_mulai->format('d M Y') }}
-                            </div>
-                            <div class="related-event-location">
-                                <i class="fas fa-map-marker-alt"></i>
-                                {{ $similar->wisata->nama }}
-                            </div>
-                            <a href="{{ route('event.detail', $similar->id) }}" class="btn btn-outline-primary btn-sm mt-2">
-                                Lihat Detail
-                            </a>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    @endif
 </div>
 @endsection
 
