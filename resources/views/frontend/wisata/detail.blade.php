@@ -139,6 +139,21 @@
                                     <div class="mt-2">
                                         <p>{{ $review->komentar }}</p>
                                     </div>
+                                    @if ($review->balasan && $review->balasan->count() > 0)
+                                        <div class="balasan-container">
+                                            @foreach ($review->balasan as $balasan)
+                                                <div class="balasan-item">
+                                                    <div class="balasan-header">
+                                                        <span class="balasan-badge">Pemilik</span>
+                                                        <span class="balasan-author">{{ $balasan->pengguna->name }}</span>
+                                                        <span
+                                                            class="balasan-date">{{ $balasan->created_at->diffForHumans() }}</span>
+                                                    </div>
+                                                    <p class="balasan-content">{{ $balasan->balasan }}</p>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
                                 </div>
                             @endforeach
                         @else
@@ -490,6 +505,5 @@
                     });
                 }
             });
-
         </script>
     @endpush

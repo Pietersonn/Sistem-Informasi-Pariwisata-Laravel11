@@ -134,6 +134,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/event/{event}/edit', [AdminEventController::class, 'edit'])->name('event.edit');
         Route::put('/event/{event}', [AdminEventController::class, 'update'])->name('event.update');
         Route::delete('/event/{event}', [AdminEventController::class, 'destroy'])->name('event.destroy');
+        Route::put('/event/{event}/update-status', [AdminEventController::class, 'updateStatus'])->name('event.update-status');
 
         // Route Kategori
         Route::get('/kategori', [KategoriWisataController::class, 'index'])->name('kategori.index');

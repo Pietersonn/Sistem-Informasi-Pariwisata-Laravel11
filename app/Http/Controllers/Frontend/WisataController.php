@@ -83,10 +83,17 @@ class WisataController extends Controller
                 ->exists();
         }
 
-        // Ambil ulasan
+        // Ambil ulasan dengan balasan
         $ulasan = Ulasan::where('id_wisata', $wisata->id)
             ->where('status', 'ditampilkan')
-            ->with('pengguna')
+            ->with([
+                'pengguna',
+                'balasan' => function ($query) use ($wisata) {
+                    // Hanya balasan dari pemilik wisata
+                    $query->where('id_pengguna', $wisata->id_pemilik)
+                        ->with('pengguna');
+                }
+            ])
             ->latest()
             ->take(5)
             ->get();
@@ -107,7 +114,6 @@ class WisataController extends Controller
             'sudahDifavorit'
         ));
     }
-
     // Menambahkan ke favorit
     public function addToFavorite($slug)
     {

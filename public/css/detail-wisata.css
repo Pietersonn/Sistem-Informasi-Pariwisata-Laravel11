@@ -339,6 +339,96 @@ body.modal-open {
     overflow-y: auto !important;
 }
 
+/* Styling untuk Balasan Pemilik */
+.balasan-container {
+    margin-top: 15px;
+    margin-left: 20px;
+    border-left: 3px solid #F0D27F;
+    padding-left: 15px;
+    background-color: rgba(240, 210, 127, 0.05);
+    border-radius: 0 8px 8px 0;
+}
+
+.balasan-item {
+    padding: 12px 0;
+    border-bottom: 1px dashed rgba(240, 210, 127, 0.3);
+}
+
+.balasan-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.balasan-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.balasan-badge {
+    background-color: #F0D27F;
+    color: #000;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.balasan-author {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.balasan-date {
+    color: #666;
+    font-size: 0.8rem;
+    margin-left: auto;
+}
+
+.balasan-content {
+    margin: 0;
+    color: #444;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    padding-left: 0;
+}
+
+/* Responsive styling untuk balasan */
+@media (max-width: 768px) {
+    .balasan-container {
+        margin-left: 10px;
+        padding-left: 10px;
+    }
+
+    .balasan-header {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .balasan-date {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 3px;
+    }
+
+    .balasan-badge {
+        font-size: 0.7rem;
+        padding: 2px 6px;
+    }
+
+    .balasan-author {
+        font-size: 0.85rem;
+    }
+
+    .balasan-content {
+        font-size: 0.85rem;
+    }
+}
+
 /* Media queries for responsive design */
 @media (max-width: 992px) {
     .detail-grid {
