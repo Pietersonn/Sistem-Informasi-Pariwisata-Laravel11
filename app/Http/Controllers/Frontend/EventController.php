@@ -10,9 +10,6 @@ use Carbon\Carbon;
 
 class EventController extends Controller
 {
-    /**
-     * Display a listing of events.
-     */
     public function index(Request $request)
     {
         $query = EventWisata::where('status', 'aktif')
