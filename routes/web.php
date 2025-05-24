@@ -65,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
         return view('frontend.profil.dashboard');
     })->name('profil');
     Route::put('/profile/update', [ProfilController::class, 'update'])->name('profile.update');
-    
+
     // Logout
     Route::get('/signout', [SessionsController::class, 'destroy']);
 });
@@ -76,7 +76,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'role:pemilik_wisata'])->prefix('pemilik')->name('pemilik.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [PemilikWisataController::class, 'dashboard'])->name('dashboard');
-    
+
     // Manajemen Wisata
     Route::get('/wisata', [PemilikWisataController::class, 'wisataIndex'])->name('wisata.index');
     Route::get('/wisata/create', [PemilikWisataController::class, 'wisataCreate'])->name('wisata.create');
@@ -84,17 +84,17 @@ Route::middleware(['auth', 'role:pemilik_wisata'])->prefix('pemilik')->name('pem
     Route::get('/wisata/{id}', [PemilikWisataController::class, 'wisataShow'])->name('wisata.show');
     Route::get('/wisata/{id}/edit', [PemilikWisataController::class, 'wisataEdit'])->name('wisata.edit');
     Route::put('/wisata/{id}', [PemilikWisataController::class, 'wisataUpdate'])->name('wisata.update');
-    
+
     // Manajemen Gambar
     Route::delete('/gambar/{id}', [PemilikWisataController::class, 'hapusGambar'])->name('gambar.destroy');
-    
+
     // Manajemen Event
     Route::get('/event', [PemilikWisataController::class, 'eventIndex'])->name('event.index');
     Route::get('/event/create', [PemilikWisataController::class, 'eventCreate'])->name('event.create');
     Route::post('/event', [PemilikWisataController::class, 'eventStore'])->name('event.store');
     Route::get('/event/{id}/edit', [PemilikWisataController::class, 'eventEdit'])->name('event.edit');
     Route::put('/event/{id}', [PemilikWisataController::class, 'eventUpdate'])->name('event.update');
-    
+
     // Manajemen Ulasan
     Route::get('/ulasan', [PemilikWisataController::class, 'ulasanIndex'])->name('ulasan.index');
     Route::post('/ulasan/{id}/balas', [PemilikWisataController::class, 'balasUlasan'])->name('ulasan.balas');
@@ -104,9 +104,7 @@ Route::middleware(['auth', 'role:pemilik_wisata'])->prefix('pemilik')->name('pem
 // ADMIN ROUTES
 // ==============================
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::get('profile', function () {
         return view('profile');
     })->name('profile');
@@ -133,8 +131,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/event', [AdminEventController::class, 'store'])->name('event.store');
         Route::get('/event/{event}/edit', [AdminEventController::class, 'edit'])->name('event.edit');
         Route::put('/event/{event}', [AdminEventController::class, 'update'])->name('event.update');
+        Route::put('/event/{event}/status', [AdminEventController::class, 'updateStatus'])->name('event.update-status');
         Route::delete('/event/{event}', [AdminEventController::class, 'destroy'])->name('event.destroy');
-        Route::put('/event/{event}/update-status', [AdminEventController::class, 'updateStatus'])->name('event.update-status');
 
         // Route Kategori
         Route::get('/kategori', [KategoriWisataController::class, 'index'])->name('kategori.index');
@@ -165,7 +163,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             Route::get('/ulasan', [LaporanController::class, 'ulasan'])->name('ulasan');
             Route::get('/kunjungan', [LaporanController::class, 'kunjungan'])->name('kunjungan');
             Route::get('/event', [LaporanController::class, 'event'])->name('event');
-            Route::get('/ekspor/{jenis}', [LaporanController::class, 'eksporPdf'])->name('ekspor');
+
+            // Routes untuk export PDF
+            Route::get('/wisata/pdf', [LaporanController::class, 'eksporPdf'])->defaults('jenis', 'wisata')->name('wisata.pdf');
+            Route::get('/ulasan/pdf', [LaporanController::class, 'eksporPdf'])->defaults('jenis', 'ulasan')->name('ulasan.pdf');
+            Route::get('/event/pdf', [LaporanController::class, 'eksporPdf'])->defaults('jenis', 'event')->name('event.pdf');
+            Route::get('/kunjungan/pdf', [LaporanController::class, 'eksporPdf'])->defaults('jenis', 'kunjungan')->name('kunjungan.pdf');
         });
     });
 });

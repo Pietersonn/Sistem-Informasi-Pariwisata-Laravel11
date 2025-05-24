@@ -13,16 +13,16 @@ class EventWisata extends Model
     protected $table = 'event_wisata';
 
     protected $fillable = [
-        'id_wisata', 
-        'nama', 
-        'deskripsi', 
-        'tanggal_mulai', 
-        'tanggal_selesai', 
-        'poster', 
+        'id_wisata',
+        'nama',
+        'deskripsi',
+        'tanggal_mulai',
+        'tanggal_selesai',
+        'poster',
         'status'
     ];
 
-    // PERBAIKAN: Gunakan $casts instead of $dates
+    // Cast untuk datetime
     protected $casts = [
         'tanggal_mulai' => 'datetime',
         'tanggal_selesai' => 'datetime',
@@ -30,25 +30,19 @@ class EventWisata extends Model
         'updated_at' => 'datetime',
     ];
 
-    // Hapus $dates karena sudah deprecated
-    // protected $dates = [
-    //     'tanggal_mulai', 
-    //     'tanggal_selesai'
-    // ];
-
-    // Relasi dengan Wisata
+    // Relasi dengan Wisata - dengan handling NULL
     public function wisata()
     {
         return $this->belongsTo(Wisata::class, 'id_wisata');
     }
 
-    // Scope untuk event yang sedang berlangsung
+    // Scope untuk event yang berlangsung
     public function scopeBerlangsung($query)
     {
         $now = Carbon::now();
         return $query->where('status', 'aktif')
-                     ->where('tanggal_mulai', '<=', $now)
-                     ->where('tanggal_selesai', '>=', $now);
+            ->where('tanggal_mulai', '<=', $now)
+            ->where('tanggal_selesai', '>=', $now);
     }
 
     // Scope untuk event mendatang
@@ -56,17 +50,16 @@ class EventWisata extends Model
     {
         $now = Carbon::now();
         return $query->where('status', 'aktif')
-                     ->where('tanggal_mulai', '>', $now);
+            ->where('tanggal_mulai', '>', $now);
     }
 
-    // Accessor untuk status event
+    // Accessor untuk status label
     public function getStatusLabelAttribute()
     {
-        return match($this->status) {
+        return match ($this->status) {
             'aktif' => 'Aktif',
             'selesai' => 'Selesai',
             'dibatalkan' => 'Dibatalkan',
-            'menunggu_persetujuan' => 'Menunggu Persetujuan',
             default => 'Tidak Dikenal'
         };
     }
@@ -81,11 +74,11 @@ class EventWisata extends Model
     public function getStatusDinamis()
     {
         $now = Carbon::now();
-        
+
         if ($this->status !== 'aktif') {
             return $this->status;
         }
-        
+
         if ($now < $this->tanggal_mulai) {
             return 'mendatang';
         } elseif ($now >= $this->tanggal_mulai && $now <= $this->tanggal_selesai) {
@@ -95,16 +88,11 @@ class EventWisata extends Model
         }
     }
 
-    // Method untuk format tanggal yang lebih aman
+    // Method untuk format tanggal yang aman
     public function getTanggalMulaiFormatted($format = 'd M Y')
     {
         try {
-            if ($this->tanggal_mulai instanceof Carbon) {
-                return $this->tanggal_mulai->format($format);
-            }
-            
-            // Jika masih string, convert ke Carbon dulu
-            return Carbon::parse($this->tanggal_mulai)->format($format);
+            return $this->tanggal_mulai ? $this->tanggal_mulai->format($format) : 'Tanggal tidak tersedia';
         } catch (\Exception $e) {
             return 'Tanggal tidak valid';
         }
@@ -113,14 +101,24 @@ class EventWisata extends Model
     public function getTanggalSelesaiFormatted($format = 'd M Y')
     {
         try {
-            if ($this->tanggal_selesai instanceof Carbon) {
-                return $this->tanggal_selesai->format($format);
-            }
-            
-            // Jika masih string, convert ke Carbon dulu
-            return Carbon::parse($this->tanggal_selesai)->format($format);
+            return $this->tanggal_selesai ? $this->tanggal_selesai->format($format) : 'Tanggal tidak tersedia';
         } catch (\Exception $e) {
             return 'Tanggal tidak valid';
         }
+    }
+
+    // Accessor untuk nama wisata yang aman
+    public function getNamaWisataAttribute()
+    {
+        return $this->wisata ? $this->wisata->nama : 'Wisata Tidak Ditemukan';
+    }
+
+    // Accessor untuk URL poster yang aman
+    public function getPosterUrlAttribute()
+    {
+        if ($this->poster && file_exists(public_path($this->poster))) {
+            return asset($this->poster);
+        }
+        return null;
     }
 }
