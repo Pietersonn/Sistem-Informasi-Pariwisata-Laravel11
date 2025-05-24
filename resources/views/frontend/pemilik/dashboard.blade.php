@@ -106,63 +106,7 @@
                 </div>
             </div>
 
-            <div class="row">
 
-                <!-- Ulasan Terbaru -->
-                <div class="col-lg-6 mb-4">
-                    <div class="dashboard-card">
-                        <div class="dashboard-card-header">
-                            <h3><i class="fas fa-comments"></i> Ulasan Terbaru</h3>
-                        </div>
-                        <div class="dashboard-card-body">
-                            @if (count($ulasanTerbaru) > 0)
-                                <div class="recent-review-list">
-                                    @foreach ($ulasanTerbaru as $ulasan)
-                                        <div class="recent-review-item">
-                                            <div class="recent-review-header">
-                                                <div class="reviewer-info">
-                                                    <img src="{{ $ulasan->pengguna->foto_profil_url ?? asset('images/default.png') }}"
-                                                        alt="{{ $ulasan->pengguna->name }}" class="reviewer-avatar">
-                                                    <div>
-                                                        <h5>{{ $ulasan->pengguna->name }}</h5>
-                                                        <div class="review-meta">
-                                                            <span
-                                                                class="review-date">{{ $ulasan->created_at->format('d M Y') }}</span>
-                                                            <span class="review-separator">•</span>
-                                                            <span class="review-place">{{ $ulasan->wisata->nama }}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="review-rating">
-                                                    @for ($i = 1; $i <= 5; $i++)
-                                                        @if ($i <= $ulasan->rating)
-                                                            <i class="fas fa-star"></i>
-                                                        @else
-                                                            <i class="far fa-star"></i>
-                                                        @endif
-                                                    @endfor
-                                                </div>
-                                            </div>
-                                            <div class="review-content">
-                                                <p>{{ Str::limit($ulasan->komentar, 150) }}</p>
-                                            </div>
-                                            <div class="review-actions">
-                                                <a href="{{ route('pemilik.ulasan.index') }}#ulasan-{{ $ulasan->id }}"
-                                                    class="btn-reply"><i class="fas fa-reply"></i> Balas</a>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @else
-                                <div class="empty-state">
-                                    <i class="fas fa-comment-alt"></i>
-                                    <p>Belum ada ulasan untuk ditampilkan</p>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 @endsection
