@@ -8,10 +8,11 @@ use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\Admin\WisataController;
 use App\Http\Controllers\Admin\KategoriWisataController;
 use App\Http\Controllers\Admin\UlasanController;
-use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\EventController as FrontendEventController;
 use App\Http\Controllers\Frontend\PemilikWisataController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\WisataController as FrontendWisataController;
@@ -23,9 +24,10 @@ use App\Http\Controllers\Frontend\ProfilController;
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/wisata', [FrontendWisataController::class, 'index'])->name('wisata.index');
 Route::get('/wisata/detail/{slug}', [FrontendWisataController::class, 'show'])->name('wisata.detail');
-Route::get('/event', [EventController::class, 'index'])->name('event.index');
-Route::get('/event/{id}', [EventController::class, 'show'])->name('event.detail');
 
+// PERBAIKAN: Gunakan Frontend EventController untuk routes publik
+Route::get('/event', [FrontendEventController::class, 'index'])->name('event.index');
+Route::get('/event/{id}', [FrontendEventController::class, 'show'])->name('event.detail');
 
 // ==============================
 // GUEST ONLY ROUTES (HANYA NON-LOGIN)
@@ -125,13 +127,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::put('/wisata/{wisata}', [WisataController::class, 'update'])->name('wisata.update');
         Route::delete('/wisata/{wisata}', [WisataController::class, 'destroy'])->name('wisata.destroy');
 
-        // Route Event
-        Route::get('/event', [EventController::class, 'index'])->name('event.index');
-        Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
-        Route::post('/event', [EventController::class, 'store'])->name('event.store');
-        Route::get('/event/{event}/edit', [EventController::class, 'edit'])->name('event.edit');
-        Route::put('/event/{event}', [EventController::class, 'update'])->name('event.update');
-        Route::delete('/event/{event}', [EventController::class, 'destroy'])->name('event.destroy');
+        // Route Event - PERBAIKAN: Gunakan AdminEventController untuk admin routes
+        Route::get('/event', [AdminEventController::class, 'index'])->name('event.index');
+        Route::get('/event/create', [AdminEventController::class, 'create'])->name('event.create');
+        Route::post('/event', [AdminEventController::class, 'store'])->name('event.store');
+        Route::get('/event/{event}/edit', [AdminEventController::class, 'edit'])->name('event.edit');
+        Route::put('/event/{event}', [AdminEventController::class, 'update'])->name('event.update');
+        Route::delete('/event/{event}', [AdminEventController::class, 'destroy'])->name('event.destroy');
 
         // Route Kategori
         Route::get('/kategori', [KategoriWisataController::class, 'index'])->name('kategori.index');

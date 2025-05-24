@@ -105,7 +105,7 @@
     }
 
     .event-image {
-        height: 200px;
+        height: 500px;
         position: relative;
         overflow: hidden;
     }

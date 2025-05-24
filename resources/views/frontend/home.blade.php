@@ -3,178 +3,255 @@
 @section('title', 'Wisata Kabupaten Hulu Sungai Tengah')
 
 @push('styles')
-    <style>
-        .hero-section {
-            background-image: url('{{ asset('images/hero-image.png') }}');
-            background-size: cover;
-            background-position: center;
-            height: 780px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: #fff;
+<link rel="stylesheet" href="{{ asset('css/home.css') }}">
+<style>
+    .hero-section {
+        background-image: url('{{ asset('images/hero-image.png') }}');
+        background-size: cover;
+        background-position: center;
+        height: 780px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #fff;
+        padding: 0 20px;
+    }
+
+    /* Event Carousel Section */
+    .event-carousel-section {
+        padding: 20px 0;
+        background-color: #f8f9fa;
+    }
+
+    .event-section-header {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .event-main-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 15px;
+    }
+
+    /* Carousel Container */
+    .event-carousel-container {
+        position: relative;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 60px;
+    }
+
+    /* Navigation Arrows */
+    .carousel-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #fff;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 10;
+        color: #667eea;
+        font-size: 18px;
+    }
+
+    .carousel-nav:hover {
+        background: #667eea;
+        color: #fff;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .carousel-nav-prev {
+        left: 0;
+    }
+
+    .carousel-nav-next {
+        right: 0;
+    }
+
+    /* Carousel Track */
+    .event-carousel-track {
+        display: flex;
+        gap: 25px;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        padding: 10px 5px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .event-carousel-track::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Event Cards */
+    .event-carousel-card {
+        flex: 0 0 280px;
+        background: #fff;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .event-carousel-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Card Image */
+    .event-card-image {
+        height: 350px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .event-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .event-carousel-card:hover .event-card-image img {
+        transform: scale(1.05);
+    }
+
+    /* Placeholder Image */
+    .event-placeholder-image {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 3rem;
+    }
+
+    /* Card Content */
+    .event-card-content {
+        padding: 20px;
+        text-align: left;
+    }
+
+    .event-count {
+        font-size: 14px;
+        color: #718096;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .event-card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #2d3748;
+        margin: 0;
+        line-height: 1.3;
+    }
+
+    /* No Events State */
+    .no-events-message {
+        text-align: center;
+        padding: 60px 20px;
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .no-events-icon {
+        font-size: 4rem;
+        color: #cbd5e0;
+        margin-bottom: 20px;
+    }
+
+    .no-events-message h4 {
+        font-size: 1.5rem;
+        color: #4a5568;
+        margin-bottom: 10px;
+    }
+
+    .no-events-message p {
+        color: #718096;
+        margin-bottom: 0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .event-carousel-container {
+            padding: 0 50px;
+        }
+        
+        .event-carousel-card {
+            flex: 0 0 260px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .event-main-title {
+            font-size: 2rem;
+        }
+        
+        .event-carousel-container {
+            padding: 0 40px;
+        }
+        
+        .carousel-nav {
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+        }
+        
+        .event-carousel-card {
+            flex: 0 0 240px;
+        }
+        
+        .event-card-image {
+            height: 160px;
+        }
+        
+        .event-card-content {
+            padding: 15px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .event-carousel-section {
+            padding: 60px 0;
+        }
+        
+        .event-carousel-container {
             padding: 0 20px;
         }
-
-        /* Event Section Styles */
-        .event-card {
-            background: #fff;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            height: 100%;
+        
+        .carousel-nav {
+            display: none;
         }
-
-        .event-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        
+        .event-carousel-card {
+            flex: 0 0 200px;
         }
-
-        .event-image {
-            position: relative;
-            overflow: hidden;
-            height: 200px;
+        
+        .event-card-title {
+            font-size: 1.1rem;
         }
-
-        .event-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .event-card:hover .event-image img {
-            transform: scale(1.05);
-        }
-
-        .event-date-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            text-align: center;
-            min-width: 60px;
-        }
-
-        .event-status {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .event-status.aktif {
-            background: rgba(40, 167, 69, 0.9);
-            color: white;
-        }
-
-        .event-status.selesai {
-            background: rgba(108, 117, 125, 0.9);
-            color: white;
-        }
-
-        .event-info {
-            padding: 20px;
-        }
-
-        .event-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #2d3748;
-            line-height: 1.3;
-        }
-
-        .event-location {
-            display: flex;
-            align-items: center;
-            color: #718096;
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-
-        .event-location i {
-            margin-right: 8px;
-            color: #e53e3e;
-        }
-
-        .event-description {
-            color: #4a5568;
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 15px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .event-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 15px;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .event-duration {
-            font-size: 12px;
-            color: #718096;
-            font-weight: 500;
-        }
-
-        .view-event {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .view-event:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-            color: white;
-        }
-
-        .no-events {
-            text-align: center;
-            padding: 60px 20px;
-            color: #718096;
-        }
-
-        .no-events i {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            opacity: 0.5;
-        }
-
-        .no-events h4 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #4a5568;
-        }
-
-        .no-events p {
-            font-size: 1rem;
-            margin-bottom: 20px;
-        }
-    </style>
+    }
+</style>
 @endpush
 
 @section('content')
@@ -224,68 +301,6 @@
                     </a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Event Mendatang Section -->
-    <section class="section">
-        <div class="container">
-            <div class="section-header">
-                <div>
-                    <h2 class="section-title1">Event Mendatang</h2>
-                    <p class="section-subtitle">Jangan lewatkan event-event menarik di destinasi wisata terbaik</p>
-                </div>
-                @if(count($event_mendatang) > 0)
-                    <a href="{{ route('event.index') }}" class="view-all">
-                        Lihat Semua Event <i class="fas fa-arrow-right"></i>
-                    </a>
-                @endif
-            </div>
-
-            @if(count($event_mendatang) > 0)
-                <div class="wisata-grid">
-                    @foreach($event_mendatang as $event)
-                        <div class="event-card">
-                            <div class="event-image">
-                                <img src="{{ $event->poster ? asset($event->poster) : asset('images/placeholder-event.jpg') }}" 
-                                     alt="{{ $event->nama }}">
-                                <div class="event-date-badge">
-                                    {{ $event->tanggal_mulai->format('d M') }}
-                                </div>
-                                <div class="event-status {{ $event->status }}">
-                                    {{ ucfirst($event->status) }}
-                                </div>
-                            </div>
-                            <div class="event-info">
-                                <h3 class="event-title">{{ $event->nama }}</h3>
-                                <p class="event-location">
-                                    <i class="fas fa-map-marker-alt"></i> 
-                                    {{ $event->wisata->nama }}
-                                </p>
-                                <p class="event-description">
-                                    {{ Str::limit($event->deskripsi, 100) }}
-                                </p>
-                                <div class="event-footer">
-                                    <div class="event-duration">
-                                        <i class="fas fa-calendar-alt"></i>
-                                        {{ $event->tanggal_mulai->format('d M') }} - {{ $event->tanggal_selesai->format('d M Y') }}
-                                    </div>
-                                    <a href="{{ route('event.detail', $event->id) }}" class="view-event">
-                                        Lihat Detail
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                <div class="no-events">
-                    <i class="fas fa-calendar-times"></i>
-                    <h4>Belum Ada Event</h4>
-                    <p>Saat ini belum ada event yang dijadwalkan. Pantau terus untuk event-event menarik!</p>
-                    <a href="{{ route('wisata.index') }}" class="cta-button">Jelajahi Wisata</a>
-                </div>
-            @endif
         </div>
     </section>
 
@@ -350,7 +365,7 @@
         </div>
     </section>
     
-
+    
     <!-- Call to Action -->
     <section class="cta-section">
         <div class="cta-container">
@@ -361,36 +376,145 @@
             <a href="{{ route('wisata.index') }}" class="cta-button">Jelajahi Sekarang</a>
         </div>
     </section>
+
+        <!-- Event Section-->
+    <section class="event-carousel-section">
+        <div class="container">
+            <div class="event-section-header">
+                <h2 class="event-main-title">Event Wisata</h2>
+            </div>
+
+            @if(count($event_mendatang) > 0)
+                <div class="event-carousel-container">
+                    <!-- Navigation Arrows -->
+                    <button class="carousel-nav carousel-nav-prev" id="prevBtn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="carousel-nav carousel-nav-next" id="nextBtn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+
+                    <!-- Carousel Track -->
+                    <div class="event-carousel-track" id="eventCarousel">
+                        @foreach($event_mendatang as $event)
+                            <div class="event-carousel-card" data-event-id="{{ $event->id }}">
+                                <div class="event-card-image">
+                                    @if($event->poster && file_exists(public_path($event->poster)))
+                                        <img src="{{ asset($event->poster) }}" alt="{{ $event->nama }}">
+                                    @else
+                                        <div class="event-placeholder-image">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="event-card-content">
+                                    <div class="event-count">1 Event</div>
+                                    <h3 class="event-card-title">{{ Str::limit($event->nama, 25) }}</h3>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @else
+                <div class="no-events-message">
+                    <div class="no-events-icon">
+                        <i class="fas fa-calendar-times"></i>
+                    </div>
+                    <h4>Belum Ada Event</h4>
+                    <p>Saat ini belum ada event yang dijadwalkan.</p>
+                </div>
+            @endif
+        </div>
+    </section>
 @endsection
 
 @push('scripts')
-    <script>
-        // Optional: Add animation effects when scrolling
-        document.addEventListener('DOMContentLoaded', function() {
-            const animateOnScroll = function() {
-                const elements = document.querySelectorAll('.kategori-item, .wisata-card, .event-card');
-
-                elements.forEach(element => {
-                    const elementPosition = element.getBoundingClientRect().top;
-                    const screenPosition = window.innerHeight;
-
-                    if (elementPosition < screenPosition) {
-                        element.style.opacity = '1';
-                        element.style.transform = 'translateY(0)';
-                    }
-                });
-            };
-
-            // Initial styles for animation
-            const elements = document.querySelectorAll('.kategori-item, .wisata-card, .event-card');
-            elements.forEach(element => {
-                element.style.opacity = '0';
-                element.style.transform = 'translateY(20px)';
-                element.style.transition = 'all 0.3s ease';
+<script>
+    // Event Carousel JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+        const carousel = document.getElementById('eventCarousel');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        if (!carousel || !prevBtn || !nextBtn) return;
+        
+        const cardWidth = 305; // 280px width + 25px gap
+        let currentPosition = 0;
+        const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+        
+        // Next button functionality
+        nextBtn.addEventListener('click', function() {
+            const newPosition = Math.min(currentPosition + cardWidth * 2, maxScroll);
+            carousel.scrollTo({
+                left: newPosition,
+                behavior: 'smooth'
             });
-
-            window.addEventListener('scroll', animateOnScroll);
-            animateOnScroll(); // Run once on page load
+            currentPosition = newPosition;
+            updateButtonStates();
         });
-    </script>
+        
+        // Previous button functionality
+        prevBtn.addEventListener('click', function() {
+            const newPosition = Math.max(currentPosition - cardWidth * 2, 0);
+            carousel.scrollTo({
+                left: newPosition,
+                behavior: 'smooth'
+            });
+            currentPosition = newPosition;
+            updateButtonStates();
+        });
+        
+        // Update button states
+        function updateButtonStates() {
+            prevBtn.style.opacity = currentPosition <= 0 ? '0.5' : '1';
+            prevBtn.style.pointerEvents = currentPosition <= 0 ? 'none' : 'auto';
+            
+            nextBtn.style.opacity = currentPosition >= maxScroll ? '0.5' : '1';
+            nextBtn.style.pointerEvents = currentPosition >= maxScroll ? 'none' : 'auto';
+        }
+        
+        // Handle manual scrolling
+        carousel.addEventListener('scroll', function() {
+            currentPosition = carousel.scrollLeft;
+            updateButtonStates();
+        });
+        
+        // Initial button state
+        updateButtonStates();
+        
+        // Add click functionality to cards
+        const eventCards = document.querySelectorAll('.event-carousel-card');
+        eventCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const eventId = this.dataset.eventId;
+                if (eventId) {
+                    window.location.href = `/event/${eventId}`;
+                }
+            });
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Apply animation to cards
+        document.querySelectorAll('.event-carousel-card, .wisata-card, .kategori-item').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+            observer.observe(card);
+        });
+    });
+</script>
 @endpush

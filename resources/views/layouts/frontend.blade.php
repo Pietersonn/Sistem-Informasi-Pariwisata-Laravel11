@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{ asset('css/favorit-custom.css') }}">
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
     <link rel="stylesheet" href="{{ asset('css/pemilik-edit.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/event-custom.css') }}">
 
 
     <!-- Leaflet CSS -->
