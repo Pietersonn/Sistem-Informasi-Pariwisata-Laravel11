@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Carbon\Carbon;
 
-
 class EventWisata extends Model
 {
     use HasFactory;
@@ -23,10 +22,19 @@ class EventWisata extends Model
         'status'
     ];
 
-    protected $dates = [
-        'tanggal_mulai', 
-        'tanggal_selesai'
+    // PERBAIKAN: Gunakan $casts instead of $dates
+    protected $casts = [
+        'tanggal_mulai' => 'datetime',
+        'tanggal_selesai' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
+
+    // Hapus $dates karena sudah deprecated
+    // protected $dates = [
+    //     'tanggal_mulai', 
+    //     'tanggal_selesai'
+    // ];
 
     // Relasi dengan Wisata
     public function wisata()
@@ -58,6 +66,7 @@ class EventWisata extends Model
             'aktif' => 'Aktif',
             'selesai' => 'Selesai',
             'dibatalkan' => 'Dibatalkan',
+            'menunggu_persetujuan' => 'Menunggu Persetujuan',
             default => 'Tidak Dikenal'
         };
     }
@@ -66,5 +75,52 @@ class EventWisata extends Model
     public function getSelesaiAttribute()
     {
         return $this->tanggal_selesai < Carbon::now();
+    }
+
+    // Method untuk mengecek status event secara dinamis
+    public function getStatusDinamis()
+    {
+        $now = Carbon::now();
+        
+        if ($this->status !== 'aktif') {
+            return $this->status;
+        }
+        
+        if ($now < $this->tanggal_mulai) {
+            return 'mendatang';
+        } elseif ($now >= $this->tanggal_mulai && $now <= $this->tanggal_selesai) {
+            return 'berlangsung';
+        } else {
+            return 'selesai';
+        }
+    }
+
+    // Method untuk format tanggal yang lebih aman
+    public function getTanggalMulaiFormatted($format = 'd M Y')
+    {
+        try {
+            if ($this->tanggal_mulai instanceof Carbon) {
+                return $this->tanggal_mulai->format($format);
+            }
+            
+            // Jika masih string, convert ke Carbon dulu
+            return Carbon::parse($this->tanggal_mulai)->format($format);
+        } catch (\Exception $e) {
+            return 'Tanggal tidak valid';
+        }
+    }
+
+    public function getTanggalSelesaiFormatted($format = 'd M Y')
+    {
+        try {
+            if ($this->tanggal_selesai instanceof Carbon) {
+                return $this->tanggal_selesai->format($format);
+            }
+            
+            // Jika masih string, convert ke Carbon dulu
+            return Carbon::parse($this->tanggal_selesai)->format($format);
+        } catch (\Exception $e) {
+            return 'Tanggal tidak valid';
+        }
     }
 }

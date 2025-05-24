@@ -23,7 +23,9 @@ use App\Http\Controllers\Frontend\ProfilController;
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/wisata', [FrontendWisataController::class, 'index'])->name('wisata.index');
 Route::get('/wisata/detail/{slug}', [FrontendWisataController::class, 'show'])->name('wisata.detail');
-Route::get('/event', [FrontendWisataController::class, 'index'])->name('event.index');
+Route::get('/event', [EventController::class, 'index'])->name('event.index');
+Route::get('/event/{id}', [EventController::class, 'show'])->name('event.detail');
+
 
 // ==============================
 // GUEST ONLY ROUTES (HANYA NON-LOGIN)
